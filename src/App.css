@@ -2047,6 +2047,10 @@ body{
     padding-left: 3.9% !important;
   }
 
+  .topnav button{
+    padding-left: 5% !important; 
+  }
+
 }
 
 
@@ -2104,6 +2108,7 @@ body{
   .topnav button{
     padding-left: 4% !important; 
   }
+
   .emailResult{
     width: 91.7% !important;
   }
