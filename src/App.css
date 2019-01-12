@@ -630,7 +630,7 @@ input[type="password"]:focus,
 textarea:focus,
 select:focus {
   color: #000000;
-  box-shadow: 0 0 5px rgba(0, 166, 80, 0.8);
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   border: 1px solid #00a650;
 }
 
@@ -1552,7 +1552,7 @@ input::-moz-focus-inner {
 .s-header {
   z-index: 500;
   width: 90%;
-  height: 78px;
+  height: 100px;
   padding-left: 10%;
   background-color: #FFFFFF;
   position: absolute;
@@ -1591,8 +1591,8 @@ input::-moz-focus-inner {
 }
 
 .header-logo img {
-  width: 100px;
-  height: 100px;
+  width: 240px;
+  height: 70px;
 }
 
 /* ------------------------------------------------------------------- 
@@ -1791,8 +1791,8 @@ input::-moz-focus-inner {
 
 @media only screen and (max-width:1200px) {
   .header-logo img {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 60px;
   }
 
   .header-nav-wrap .header-main-nav {
@@ -1827,12 +1827,12 @@ input::-moz-focus-inner {
 
   .header-logo {
     margin: 0;
-    left: 15%;
+    left: 5%;
   }
 
   .header-logo img {
-    width: 100px;
-    height: 100px;
+    width: 170px;
+    height: 50px;
   }
 
   .header-nav-wrap {
@@ -1896,8 +1896,8 @@ input::-moz-focus-inner {
   }
 
   .header-logo img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 40px;
   }
 
   .header-nav-wrap {
@@ -2155,8 +2155,8 @@ body{
   border-bottom-right-radius: 0 !important;
   height: 46px;
   padding-left: 15px !important;
-  border: 1px solid #D62469 !important; 
-  background-color: rgba(222, 177, 252, 0.24);
+  border: 1px solid #5E06D2/* #D62469;  */ !important; 
+  background-color: rgba(95, 6, 210, 0.048);
   vertical-align: middle;
   font-family: "Comic Sans MS", cursive, sans-serif;
   /* box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19); */
@@ -2185,7 +2185,7 @@ body{
 .topnav .search-container button {
   float: right;
   width: 28%;
-  background: #D62469;
+  background: #5E06D2;/* #D62469;  */
   color: #FFFFFF;
   font-size: 1.2em;
   letter-spacing: 1px;
@@ -2202,7 +2202,7 @@ body{
 .topnav .search-container button:hover {
   /* background: #fff;
   color: #D62469; */
-  background: #D62469;
+  background: #5E06D2;/* #D62469;  */
   color: #FFFFFF;
   /* border: 2px solid #D62469; */
 }
@@ -2240,7 +2240,7 @@ body{
 
 .resultBlock{
   align-content: center;
-  height: 80px;
+  height: auto;
   padding-left: 0.3%;
   border-radius: 10px;
   margin-top: -5px; 
@@ -2252,21 +2252,32 @@ body{
 }
 
 .source{
-  width: 15%;
+  width: 20%;
   font-size: 0.33em;
   font-weight: 100;
   color: #665f5f;
   text-align: right;
 }
 
+.source i{
+  cursor: pointer;
+} 
+
 .email{
   width: 75%;
 }
 .email p{
-  font-weight: 100;
+  font-size: 1.8em !important;
 }
 
 .url p{
   font-size: 2em;
   color: #635959;
+}
+
+.url a{
+  font-weight: 50;
+  font-size: 0.8em;
+  text-decoration: underline;
+  color: #3EA2EE;
 }

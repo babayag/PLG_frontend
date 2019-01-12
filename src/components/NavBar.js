@@ -22,8 +22,6 @@ export class NavBar extends Component {
                         <li><a href="blog.html" title="blog">Blog</a></li>	
                     </ul> */}
                 </nav>
-
-                <button class="header-menu-toggle"><span>Menu</span></button>
             
             </header> 
         );
