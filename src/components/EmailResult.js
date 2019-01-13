@@ -44,7 +44,7 @@ export class EmailResult extends Component {
                         this.state.showResult?
                             <div class="url">
                                 { this.props.result.url.map((url) =>
-                                <p key={url.toString()}>
+                                <p >
                                    <a href={url}> {url} </a>
                                 </p>
                                 )}            

@@ -20,7 +20,7 @@ body {
  * ## links
  * ------------------------------------------------------------------- */
 a {
-  color: #00a650;
+  color: #3C3C3C;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
@@ -41,76 +41,10 @@ a:active {
  * 
  * ------------------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: 600;
   color: #000000;
   text-rendering: optimizeLegibility;
-}
-
-h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
-  margin-top: 6rem;
-  margin-bottom: 1.6rem;
-}
-
-@media only screen and (max-width:600px) {
-  h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
-    margin-top: 5.6rem;
-  }
-
-}
-
-h5, .h5, h6, .h6 {
-  margin-top: 4.8rem;
-  margin-bottom: 1.2rem;
-}
-
-@media only screen and (max-width:600px) {
-  h5, .h5, h6, .h6 {
-    margin-top: 4rem;
-    margin-bottom: 0.8rem;
-  }
-
-}
-
-h1, .h1 {
-  font-size: 3.6rem;
-  line-height: 1.222;
-  letter-spacing: -.1rem;
-}
-
-@media only screen and (max-width:600px) {
-  h1, .h1 {
-    font-size: 3.3rem;
-    letter-spacing: -.07rem;
-  }
-
-}
-
-h2, .h2 {
-  font-size: 3rem;
-  line-height: 1.2;
-}
-
-h3, .h3 {
-  font-size: 2.4rem;
-  line-height: 1.1667;
-}
-
-h4, .h4 {
-  font-size: 2.1rem;
-  line-height: 1.333;
-}
-
-h5, .h5 {
-  font-size: 1.8rem;
-  line-height: 1.333;
-}
-
-h6, .h6 {
-  font-size: 1.6rem;
-  line-height: 1.25;
-  text-transform: uppercase;
-  letter-spacing: .16rem;
 }
 
 p img {
@@ -118,7 +52,7 @@ p img {
 }
 
 p.lead {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: 300;
   font-size: 2.6rem;
   line-height: 1.538;
@@ -289,66 +223,6 @@ hr {
 }
 
 /* ------------------------------------------------------------------- 
- * ## Lists
- * ------------------------------------------------------------------- */
-ol {
-  list-style: decimal;
-}
-
-ul {
-  list-style: disc;
-}
-
-li {
-  display: list-item;
-}
-
-ol,
-ul {
-  margin-left: 1.6rem;
-}
-
-ul li {
-  padding-left: .4rem;
-}
-
-ul ul,
-ul ol,
-ol ol,
-ol ul {
-  margin: .8rem 0 .8rem 1.6rem;
-}
-
-ul.disc li {
-  display: list-item;
-  list-style: none;
-  padding: 0 0 0 .8rem;
-  position: relative;
-}
-
-ul.disc li::before {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #00a650;
-  position: absolute;
-  left: -16px;
-  top: 11px;
-  vertical-align: middle;
-}
-
-dt {
-  margin: 0;
-  color: #00a650;
-}
-
-dd {
-  margin: 0 0 0 2rem;
-}
-
-/* ------------------------------------------------------------------- 
  * ## responsive video container
  * ------------------------------------------------------------------- */
 .video-container {
@@ -451,7 +325,7 @@ form,
 }
 
 .pace .pace-progress {
-  background: #00a650;
+  background: #3C3C3C;
   position: fixed;
   z-index: 900;
   top: 0;
@@ -495,7 +369,7 @@ form,
   margin-left: -30px;
   margin-top: -30px;
   padding: 0;
-  background-color: #00a650;
+  background-color: #3C3C3C;
   border-radius: 100%;
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
   animation: sk-scaleout 1.0s infinite ease-in-out;
@@ -536,7 +410,7 @@ fieldset {
   border: none;
 }
 
-input[type="email"],
+/* input[type="email"], */
 input[type="number"],
 input[type="search"],
 input[type="text"],
@@ -631,12 +505,12 @@ textarea:focus,
 select:focus {
   color: #000000;
   box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-  border: 1px solid #00a650;
+  border: 1px solid #9aa5a0;
 }
 
 label,
 legend {
-  font-family: "IBM Plex Sans", sans-serif;
+  /* font-family: "IBM Plex Sans", sans-serif; */
   font-weight: 700;
   font-size: 1.4rem;
   line-height: 1.714;
@@ -722,7 +596,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: #00a650;
+  -webkit-text-fill-color: #3C3C3C;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -737,14 +611,12 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"] {
   display: inline-block;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
-  text-transform: uppercase;
-  letter-spacing: .4rem;
   height: 6rem;
   line-height: 5.6rem;
-  padding: 0 3.2rem;
+  letter-spacing: 0.05rem;
   margin: 0 .4rem 1.6rem 0;
   border-radius: 5px;
   color: #000000;
@@ -754,8 +626,7 @@ input[type="button"] {
   cursor: pointer;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background-color: #c5c5c5;
-  border: .2rem solid #c5c5c5;
+  border: .2rem solid #c5c5c500;
 }
 
 .btn:hover,
@@ -768,8 +639,7 @@ button:focus,
 input[type="submit"]:focus,
 input[type="reset"]:focus,
 input[type="button"]:focus {
-  background-color: #b8b8b8;
-  border-color: #b8b8b8;
+
   color: #000000;
   outline: 0;
 }
@@ -781,8 +651,8 @@ button.btn--primary,
 input[type="submit"].btn--primary,
 input[type="reset"].btn--primary,
 input[type="button"].btn--primary {
-  background: #00a650;
-  border-color: #00a650;
+  background: #3C3C3C;
+  border-color: #3C3C3C;
   color: #FFFFFF;
 }
 
@@ -1064,7 +934,7 @@ input::-moz-focus-inner {
 }
 
 .stats-tabs li a:hover {
-  color: #00a650;
+  color: #3C3C3C;
 }
 
 .stats-tabs li a em {
@@ -1263,7 +1133,7 @@ input::-moz-focus-inner {
 
 .pgn .current,
 .pgn .current:hover {
-  background-color: #00a650;
+  background-color: #3C3C3C;
   color: white;
 }
 
@@ -1371,7 +1241,7 @@ input::-moz-focus-inner {
 
 .subhead {
   margin-top: 0;
-  color: #00a650;
+  color: #3C3C3C;
   font-size: 2.4rem;
   line-height: 1.1667;
   margin-bottom: .8rem;
@@ -1399,7 +1269,7 @@ input::-moz-focus-inner {
   display: inline-block;
   height: 1px;
   width: 320px;
-  background-color: #00a650;
+  background-color: #3C3C3C;
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -1463,7 +1333,7 @@ input::-moz-focus-inner {
 
 .slick-slider .slick-dots li.slick-active button,
 .slick-slider .slick-dots li:hover button {
-  background: #00a650;
+  background: #3C3C3C;
 }
 
 /* ------------------------------------------------------------------- 
@@ -1518,6 +1388,8 @@ input::-moz-focus-inner {
 
 }
 
+
+
 @media only screen and (max-width:500px) {
   .display-1 {
     font-size: 4rem;
@@ -1551,12 +1423,15 @@ input::-moz-focus-inner {
  * ------------------------------------------------------------------- */
 .s-header {
   z-index: 500;
-  width: 90%;
+  width: 100%;
   height: 100px;
   padding-left: 10%;
   background-color: #FFFFFF;
   position: absolute;
   top: 0px;
+  position: fixed;
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
+  vertical-align: middle;
 }
 
 .s-header.sticky {
@@ -1631,11 +1506,11 @@ input::-moz-focus-inner {
 
 .header-nav-wrap .header-main-nav li a:hover,
 .header-nav-wrap .header-main-nav li a:focus {
-  color: #00a650;
+  color: #3C3C3C;
 }
 
 .header-nav-wrap .header-main-nav li.current a {
-  color: #00a650;
+  color: #3C3C3C;
 }
 
 .header-nav-wrap .header-social {
@@ -1670,7 +1545,7 @@ input::-moz-focus-inner {
 
 .header-nav-wrap .header-social li a:hover,
 .header-nav-wrap .header-social li a:focus {
-  background-color: #00a650;
+  background-color: #3C3C3C;
 }
 
 
@@ -1927,7 +1802,7 @@ body{
 }
 
 .landingPage{
-  padding-top: 100px;
+  padding-top: 160px;
 }
 
 
@@ -1982,11 +1857,11 @@ body{
   }
 
   .emailResult{
-    width: 55.5% !important;
+    width: 56.2% !important;
   }
 
   .resultBlock{
-    padding-left: 2.2% !important;
+    padding-left: 3.7% !important;
   }
 
   .email p{
@@ -2013,14 +1888,15 @@ body{
   
   .topnav{
     width: 64% !important;
+    padding-top: 15px !important;
   }
 
   .emailResult{
-    width: 65.7% !important;
+    width: 66.5% !important;
   }
 
   .resultBlock{
-    padding-left: 2% !important;
+    padding-left: 3.4% !important;
   }
 
 }
@@ -2040,15 +1916,19 @@ body{
   }
 
   .emailResult{
-    width: 73.4% !important;
+    width: 74.4% !important;
   }
 
   .resultBlock{
-    padding-left: 3.9% !important;
+    padding-left: 5.3% !important;
   }
 
-  .topnav button{
-    padding-left: 5% !important; 
+  .email{
+    width: 70% !important;
+  }
+
+  .source{
+    width: 25% !important;
   }
 
 }
@@ -2068,11 +1948,11 @@ body{
   }
 
   .emailResult{
-    width: 83.7% !important;
+    width: 84.7% !important;
   }
 
   .resultBlock{
-    padding-left: 3.9% !important;
+    padding-left: 5.1% !important;
   }
 
   .centerDiv p{
@@ -2080,13 +1960,21 @@ body{
     padding-right: 10%;
   }
 
+  .source{
+    width: 30% !important;
+  }
+
+  .email{
+    width: 65% !important;
+  }
+
   .email p{
     font-weight: 100;
-    font-size: 1.5em !important;;
+    font-size: 1.5em !important;
   }
   
   .url p{
-    font-size: 1.2em !important;
+    font-size: 1.5em !important;
     color: #635959 
   }
 
@@ -2110,11 +1998,11 @@ body{
   }
 
   .emailResult{
-    width: 91.7% !important;
+    width: 93% !important;
   }
 
   .resultBlock{
-    padding-left: 1.9% !important;
+    padding-left: 2.9% !important;
   }
 
 }
@@ -2134,15 +2022,15 @@ body{
 
   .topnav button{
     padding-left: 2% !important; 
-    height: 60.9px;
-    margin-top: -92px !important;
+    height: 60.2px;
+    margin-top: -90px !important;
   }
   .emailResult{
-    width: 91.7% !important;
+    width: 93% !important;
   }
 
   .resultBlock{
-    padding-left: 1.9% !important;
+    padding-left: 2.9% !important;
   }
 
 }
@@ -2155,10 +2043,10 @@ body{
 }
 
 .searchBarBox input{
-  width: 70%;
+  width: 71.5%;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
-  height: 46px;
+  height: 60px;
   padding-left: 15px !important;
   border: 1px solid #5E06D2/* #D62469;  */ !important; 
   background-color: rgba(95, 6, 210, 0.048);
@@ -2173,7 +2061,7 @@ body{
   overflow: hidden;
   display: inline-block;
   width: 47%;
-  height: 78px !important ;
+  height: 108px !important ;
   padding: 1.2%;
   border-radius: 5px;  
   background-color: #ffffff;
@@ -2224,10 +2112,10 @@ body{
   text-align: left;
   padding-left: 2%;
   background-color: #ffffff;
-  width: 47.6%;
+  width: 48.02%;
   display: inline-block;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   border: 1px solid #ecdddd;
   margin: 0%;
   box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
@@ -2235,7 +2123,7 @@ body{
 
 .emailResult p{
   font-size: 2.3em;
-  line-height: 30px; 
+  line-height: 25px; 
 }
 
 .theResults p{
@@ -2246,14 +2134,15 @@ body{
 .resultBlock{
   align-content: center;
   height: auto;
-  padding-left: 0.3%;
+  padding-left: 1.9%;
   border-radius: 10px;
-  margin-top: -5px; 
+  margin-top: -8px; 
   
 }
 
 .source, .email, .url{
   display: inline-block;
+  
 }
 
 .source{
@@ -2285,4 +2174,120 @@ body{
   font-size: 0.8em;
   text-decoration: underline;
   color: #3EA2EE;
+}
+
+.authenticationDiv{
+  padding-top: 28px;
+  width: 37%;
+  float: right;
+}
+
+.authenticationDiv .login{
+  font-size: 2.1em;
+  margin-right: 20px;
+  color: #5E06D2;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+.authenticationDiv .register{
+  font-size: 2.1em;
+  font-weight: 300;
+  margin: 0 !important;
+  height: 45px !important;
+  line-height: 0px !important;
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #5E06D2 !important;
+  color: #ffffff;
+}
+
+.authenticationDiv .register a{
+  text-decoration: none;
+  all: unset;
+}
+
+.authenticationDiv .register:hover{
+  background-color: #FFFFFF !important;
+  color: #5E06D2;
+  border: 2px solid #5E06D2;
+}
+
+
+
+/* ---------------- SIGN UP PAGE -------------- */
+.signUpDiv{
+
+  padding-top: 50px;
+}
+
+.inputsBlockParent{
+  padding-left: 0;
+  margin-top: 50px;
+}
+
+.signUpDiv .inputsBlockParent .inputsBlock{
+  display: inline-block;
+}
+
+.signUpDiv .logoUrl img{
+  width: 35%;
+}
+
+.inputsBlock{
+  padding-top: 3rem;
+  background-color: #FFFFFF;
+  border: 1px solid #ccc6c6; 
+  border-radius: 10px;
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.inputsBlock h2{
+  font-size: 2.5em;
+}
+
+.inputsBlock p{
+  font-size: 1.3em; 
+  margin-top: 5px;
+}
+
+.signUpBtn{
+  height: 45px !important;
+  line-height: 0 !important;
+  border: 1px solid #bdabab;
+  margin-right: 0;
+  background-color: #5E06D2;
+  color: #fff;
+}
+
+.signUpBtn:hover{
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.emailInput{
+  height: 45px;
+  margin-bottom: 0px;
+  font-size: 1.5em;
+  border: 1px solid #bdabab;
+  border-radius: 5px;
+}
+
+.signupForm{
+  margin-bottom: 10px !important;
+}
+
+.inputsBlock a{
+  color: #3EA2EE;
+}
+
+
+@media only screen and (max-width:578px) {
+  .signUpDiv {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
 }

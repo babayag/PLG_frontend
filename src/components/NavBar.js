@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../plg_logo.png';
+import {BrowserRouter, Route} from "react-router-dom";
 
+import { SignupPage } from "./SignupPage";
+import logo from '../plg_logo.png';
 
 export class NavBar extends Component {
     render() {
@@ -8,20 +10,15 @@ export class NavBar extends Component {
             <header class="s-header">
 
                 <div class="header-logo">
-                    <a class="site-logo" href="https://google.com">
+                    <a class="site-logo" href="/">
                         <img src={logo} alt="Homepage"/>
                     </a>
                 </div>
 
-                <nav class="row header-nav-wrap wide">
-                    {/* <ul class="header-main-nav">
-                        <li class="current"><a class="smoothscroll" href="https://google.com" title="intro">Intro</a></li>
-                        <li><a class="smoothscroll" href="https://google.com" title="about">About</a></li>
-                        <li><a class="smoothscroll" href="https://google.com" title="features">Features</a></li>
-                        <li><a class="smoothscroll" href="https://google.com" title="pricing">Pricing</a></li>
-                        <li><a href="blog.html" title="blog">Blog</a></li>	
-                    </ul> */}
-                </nav>
+                <div class="authenticationDiv">
+                    <a href="/login" class="login">Log In</a>   
+                    <a href="/signup"> <button class="register">Register </button></a>
+                </div>
             
             </header> 
         );

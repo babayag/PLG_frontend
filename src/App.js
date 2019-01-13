@@ -1,20 +1,38 @@
 import React, { Component } from 'react';
-import { NavBar } from "./components/NavBar";
-import { LandingPage } from "./components/LandingPage";
-import { SearchBar } from "./components/SearchBar";
+import {BrowserRouter, Route} from "react-router-dom";
+
+// import { NavBar } from "./components/NavBar";
+// import { LandingPage } from "./components/LandingPage";
+// import { SearchBar } from "./components/SearchBar";
+import { SignupPage } from "./components/SignupPage";
+import { LoginPage } from "./components/LoginPage";
+import { WholeLandingPage } from "./components/WholeLandingPage";
 
 import './App.css';
 
 class App extends Component {
   render() {
     return (
+      
       <div className="App">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-        <NavBar/>
+       
+        <BrowserRouter>
+          <Route exact path="/" component={WholeLandingPage} />
+        </BrowserRouter>
+        
+        <BrowserRouter>
+          <Route path="/signup" component={SignupPage} />
+        </BrowserRouter>
+
+        <BrowserRouter>
+          <Route path="/login" component={LoginPage} />
+        </BrowserRouter>
+       
+        {/* <NavBar/>
 
         <LandingPage/>
 
-        <SearchBar/>
+        <SearchBar/> */}
 
       </div>
     );
