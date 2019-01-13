@@ -1556,7 +1556,9 @@ input::-moz-focus-inner {
   padding-left: 10%;
   background-color: #FFFFFF;
   position: absolute;
+  position: fixed;
   top: 0px;
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19) ;
 }
 
 .s-header.sticky {

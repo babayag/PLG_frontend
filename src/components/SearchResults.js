@@ -47,13 +47,13 @@ export class SearchResults extends Component {
         //this.props.emailList.data
     }
     render() {
-        const resultat = this.state.list//this.props.emailList;
+        const resultat = this.props.emailList; //this.state.list
         if(resultat !== undefined)
         {
             return (
            
                 <div>
-                        {this.state.list.map(item => (
+                        {this.props.emailList.data.map(item => (
                             <div class="theResults">
                                 <p> <EmailResult result= {item}/></p>
                                 <span>{item.description}</span>

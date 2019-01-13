@@ -54,7 +54,7 @@ export class SearchBar extends Component {
         const devUrl = 'http://127.0.0.1:8000/api/lead/testSharing';
         const ProductionURL = 'api/lead/testSharing';
         try {
-            const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
+            const res = await axios.post(ProductionURL, { url : this.state.message}) //await fetch(devUrl);
             const emails = res.data
             //const emails = await res.json();
             console.log(res.data);
@@ -93,9 +93,9 @@ export class SearchBar extends Component {
                     </div>
                     <div class="quaterWidthDiv"> </div>
                 </div>
-                {/* { this.state.isAboutVisible ? <SearchResults emailList={this.state.emails ? this.state.emails : null}/> : null } */}
                 <div class="appendedResultBlock">    
-                    <SearchResults emailListe={this.state.list}/>
+                    {/* <SearchResults emailListe={this.state.list}/> */}
+                    { this.state.isAboutVisible ? <SearchResults emailList={this.state.emails ? this.state.emails : null}/> : null }
                 </div>    
                 <div class="notReadyDiv"> 
                     <p>
