@@ -2275,6 +2275,7 @@ body{
 .url p{
   font-size: 2em;
   color: #635959;
+  overflow: hidden;
 }
 
 .url a{

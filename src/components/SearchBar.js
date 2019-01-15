@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { SearchResults } from "./SearchResults";
-
+import loader from '../loader.gif';
 const list = [
     {
       'email': 'azerty@HTMLAllCollection.com',
@@ -40,16 +40,22 @@ const list = [
   ];
 
 export class SearchBar extends Component {
-    state = {
-        isAboutVisible: false,
-        emails : [],
-        message :"",
-        list : list,
+
+    constructor(){
+        super()
+        this.state = {
+            isAboutVisible: false,
+            emails : [],
+            isload : true,
+            message :"",
+            list : list,
+        }
     }
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
       };
     async findEmails() {
+        //this.state.isload = false;
         this.state.isAboutVisible = true;
         const devUrl = 'http://127.0.0.1:8000/api/lead/testSharing';
         const ProductionURL = 'api/lead/testSharing';
@@ -69,6 +75,11 @@ export class SearchBar extends Component {
         }
         //console.log(this.state.isAboutVisible);
       }
+      showAndHide(){
+        this.setState({
+            isload : false
+        })
+    }
     render() {
         return (
             <div>
@@ -82,16 +93,19 @@ export class SearchBar extends Component {
                             onChange={this.handleChange}
                             value={this.state.message}
                             placeholder="medievaltimes.com"/>
-                            <button onClick={() => this.findEmails()} >Find My Leads</button>
+                            <button onClick={() => this.findEmails()}>Find My Leads</button>
                             
                         </div>
+                        
                         {/* <div class="searchBarIndication">
                             <p> Just enter a domain name and watch the magic happen! <br/>
                                 For instance try google.com or medievaltimes.com
                             </p> 
                         </div> */}
                     </div>
-                    <div class="quaterWidthDiv"> </div>
+                    <div class="quaterWidthDiv">
+                    { this.state.isload ? null : <img src={loader} /> }
+                    </div>
                 </div>
                 <div class="appendedResultBlock">    
                     {/* <SearchResults emailListe={this.state.list}/> */}

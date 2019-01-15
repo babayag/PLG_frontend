@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../plg_logo.png';
 
-
 export class NavBar extends Component {
     render() {
         return (
