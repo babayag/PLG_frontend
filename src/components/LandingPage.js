@@ -6,7 +6,7 @@ export class LandingPage extends Component {
         return (
             <div className="landingPage">
                 <div className="presentationText">
-                    <h1> Get B2B Leads in just Seconds!</h1>
+                    <h1> Get B2B Leads in Just Seconds!</h1>
                     <div className="quaterWidthDiv"> </div>
                     <div className="centerDiv"> 
                         <p> LeadmeHome helps you to cut down your B2B lead

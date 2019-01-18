@@ -5,7 +5,7 @@ import Store from "./reducers/index";
 import { SignupPage } from "./components/SignupPage";
 import { LoginPage } from "./components/LoginPage";
 import { WholeLandingPage } from "./components/WholeLandingPage";
-//import  TestIt  from "./components/TestIt";
+// import  TestIt  from "./components/TestIt";
 
 import './App.css';
 
@@ -15,19 +15,19 @@ class App extends Component {
     return (
       
       <div className="App">
-      <Provider store={Store}>
-        <BrowserRouter>
-          <Route exact path="/" component={WholeLandingPage} />
-        </BrowserRouter>
+        <Provider store={Store}>
+          <BrowserRouter>
+            <Route exact path="/" component={WholeLandingPage} />
+          </BrowserRouter>
+          
+          <BrowserRouter>
+            <Route path="/signup" component={SignupPage} />
+          </BrowserRouter>
+          
+          <BrowserRouter>
+            <Route exact path="/login" component={LoginPage} />
+          </BrowserRouter>
         
-        <BrowserRouter>
-          <Route path="/signup" component={SignupPage} />
-        </BrowserRouter>
-        
-        <BrowserRouter>
-          <Route exact path="/login" component={LoginPage} />
-        </BrowserRouter>
-       
         </Provider>
       </div>
       
