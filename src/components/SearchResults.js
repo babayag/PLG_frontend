@@ -51,7 +51,6 @@ export class SearchResults extends Component {
                 {this.state.list.map(item => (
                 <div class="theResults">
                     <p> <EmailResult result= {item}/></p>
-                    <span>{item.description}</span>
                 </div>
                 ))}
             </div>

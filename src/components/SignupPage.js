@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { GoogleAuth } from "./googleAuth";
+
 import logo from '../plg_logo.png';
 
 export class SignupPage extends Component {
+
    render() {
       return (
          <div class="signUpDiv text-center">
@@ -16,6 +19,7 @@ export class SignupPage extends Component {
                     <h2>Apply for Your Free Account</h2>
                     <p> LeadMeHome is a FREE tool to our community members </p>
 
+                    <GoogleAuth/>
                     <form class="signupForm" action="/">
                         <div class="form-group">
                             <label for="email">Your best Email Address:</label>
@@ -27,6 +31,9 @@ export class SignupPage extends Component {
                     <div class="col-md-12">
                         <p>By Applying you agree to our <a href=""> Terms of Service and Privacy</a></p>
                     </div>
+
+                                        
+
                 </div>
             </div>
          </div>
