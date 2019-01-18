@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GoogleAuth } from "./googleAuth";
+// import { GoogleAuth } from "./googleAuth";
 
 import logo from '../plg_logo.png';
 
@@ -19,11 +19,11 @@ export class SignupPage extends Component {
                     <h2>Apply for Your Free Account</h2>
                     <p> LeadMeHome is a FREE tool to our community members </p>
 
-                    <GoogleAuth/>
+                    {/* <GoogleAuth/> */}
                     <form class="signupForm" action="/">
                         <div class="form-group">
                             <label for="email">Your best Email Address:</label>
-                            <input type="email" class="col-md-9 emailInput" id="email" placeholder="Enter email" name="email"/>
+                            <input type="email" class="col-md-9 emailInput" id="email" placeholder="Enter email" name="email" required/>
                         </div>
                         
                         <button type="submit" class="signUpBtn col-md-9">Apply Now</button>

@@ -40,20 +40,37 @@ const list = [
   
 
 export class SearchResults extends Component {
-
-    constructor(props) {
+    constructor(props)
+    {
         super(props);
-        this.state = { list };
+        this.state = { list }
+        //this.props.emailList.data
     }
     render() {
-        return (
-            <div>
-                {this.state.list.map(item => (
-                <div class="theResults">
-                    <p> <EmailResult result= {item}/></p>
+        const resultat = this.props.emailList; //this.state.list
+        if(resultat !== undefined)
+        {
+            return (
+           
+                <div>
+                        {this.props.emailList.data.map(item => (
+                            <div class="theResults">
+                                <p> <EmailResult result= {item}/></p>
+                                <span>{item.description}</span>
+                            </div>
+                            ))}
                 </div>
-                ))}
-            </div>
-        );
+            );
+        }
+        else
+        {
+            return (
+           
+                <div>
+                       oops not find
+                </div>
+            );
+        }
+        
     }
 }
