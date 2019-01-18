@@ -4,17 +4,17 @@ import React, { Component } from 'react';
 export class LandingPage extends Component {
     render() {
         return (
-            <div class="landingPage">
-                <div class="presentationText">
+            <div className="landingPage">
+                <div className="presentationText">
                     <h1> Get B2B Leads in just Seconds!</h1>
-                    <div class="quaterWidthDiv"> </div>
-                    <div class="centerDiv"> 
+                    <div className="quaterWidthDiv"> </div>
+                    <div className="centerDiv"> 
                         <p> LeadmeHome helps you to cut down your B2B lead
                             generation cost and effort by providing you with email 
                             addresses of your ideal audience.
                         </p>
                     </div>
-                    <div class="quaterWidthDiv"> </div>
+                    <div className="quaterWidthDiv"> </div>
                 </div>
                 
             </div>

@@ -58,7 +58,7 @@ export class SearchBar extends Component {
         //this.state.isload = false;
         this.state.isAboutVisible = true;
         const devUrl = 'http://127.0.0.1:8000/api/lead/testSharing';
-        const ProductionURL = 'api/lead/testSharing';
+        //const ProductionURL = 'api/lead/testSharing';
         try {
             const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
             const emails = res.data
@@ -83,10 +83,10 @@ export class SearchBar extends Component {
     render() {
         return (
             <div>
-                <div class="searchBarBox">
-                    <div class="quaterWidthDiv"> </div>
-                    <div class="topnav">
-                        <div class="search-container">
+                <div className="searchBarBox">
+                    <div className="quaterWidthDiv"> </div>
+                    <div className="topnav">
+                        <div className="search-container">
                             
                             <input type="text"
                             name="message"
@@ -103,15 +103,15 @@ export class SearchBar extends Component {
                             </p> 
                         </div> */}
                     </div>
-                    <div class="quaterWidthDiv">
+                    <div className="quaterWidthDiv">
                     { this.state.isload ? null : <img src={loader} /> }
                     </div>
                 </div>
-                <div class="appendedResultBlock">    
+                <div className="appendedResultBlock">    
                     {/* <SearchResults emailListe={this.state.list}/> */}
                     { this.state.isAboutVisible ? <SearchResults emailList={this.state.emails ? this.state.emails : null}/> : null }
                 </div>    
-                <div class="notReadyDiv"> 
+                <div className="notReadyDiv"> 
                     <p>
                         Not Ready to Get Started? Learn More {/*<!-- will be a link to allow page scroll-->*/}
                     </p>
