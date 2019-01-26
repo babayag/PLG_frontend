@@ -67,7 +67,7 @@ export class SearchResults extends Component {
             return (
            
                 <div>
-                       oops not find
+                       Oops not found
                 </div>
             );
         }

@@ -1,43 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { SearchResults } from "./SearchResults";
-import loader from '../loader.gif';
-const list = [
-    {
-      'email': 'azerty@HTMLAllCollection.com',
-      'url': [
-        'www.googleAPI.com',
-    ]
-      
-    },
-    {
-        'email': 'qwerty@gmail.com',
-        'url': [
-            'www.googleAPI.com',
-            'www.googleAPI.cm',
-            'www.googleAPI.fr',
-        ]
-    },
-    {
-      'email': 'qwwertz@yahoo.de',
-      'url': [
-        'www.google52API.com',
-        'www.go4454ogleAPI.com',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        ]
-    }
-  ];
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner} from '@fortawesome/free-solid-svg-icons'
+
+const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin/>
 
 export class SearchBar extends Component {
 
@@ -46,20 +13,22 @@ export class SearchBar extends Component {
         this.state = {
             isAboutVisible: false,
             emails : [],
-            isload : true,
+            isload : false,
             message :"",
-            list : list,
         }
     }
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
       };
+      
     async findEmails() {
-        //this.state.isload = false;
+        await this.showAndHide();
+        this.state.isload = false;
         this.state.isAboutVisible = true;
         const devUrl = 'http://127.0.0.1:8000/api/lead/testSharing';
         //const ProductionURL = 'api/lead/testSharing';
         try {
+           
             const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
             const emails = res.data
             //const emails = await res.json();
@@ -67,18 +36,21 @@ export class SearchBar extends Component {
             this.setState({
                 emails
             });
-            //console.log(this.state.emails);
-            //console.log(this.state.isAboutVisible);
             
         } catch (e) {
           console.log(e);
         }
-        //console.log(this.state.isAboutVisible);
       }
-      showAndHide(){
+      showAndHide(){ 
         this.setState({
-            isload : false
+            isload : true, 
         })
+    }
+    _handleKeyPress = e => {
+        if(e.keyCode === 13){ 
+            this.findEmails()
+        } 
+        
     }
     render() {
         return (
@@ -92,9 +64,13 @@ export class SearchBar extends Component {
                             name="message"
                             onChange={this.handleChange}
                             value={this.state.message}
-                            placeholder="medievaltimes.com"/>
-                            <button onClick={() => this.findEmails()}>Find My Leads</button>
-                            
+                            placeholder="medievaltimes.com"
+                            onKeyDown={this._handleKeyPress}
+                            />
+                            <div >
+                                <button onClick={() => this.findEmails} disabled={this.state.isload}><span>{ this.state.isload ? <span>{spinner}</span> :  <span>Find My Leads</span>  }</span></button>
+                                {/* <button onClick={() => this.showAndHide()}>Find My Leads</button> */}
+                            </div>
                         </div>
                         
                         {/* <div class="searchBarIndication">
@@ -104,7 +80,6 @@ export class SearchBar extends Component {
                         </div> */}
                     </div>
                     <div className="quaterWidthDiv">
-                    { this.state.isload ? null : <img src={loader} /> }
                     </div>
                 </div>
                 <div className="appendedResultBlock">    

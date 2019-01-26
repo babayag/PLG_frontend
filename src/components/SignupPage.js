@@ -5,7 +5,7 @@ import logo from '../plg_logo.png';
 
 export class SignupPage extends Component {
 
-   render() {
+    render() {
       return (
          <div class="signUpDiv text-center">
             <div class="navbar-brand">

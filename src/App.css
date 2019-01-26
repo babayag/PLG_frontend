@@ -426,7 +426,7 @@ input[type="search"],
 input[type="text"],
 input[type="tel"],
 input[type="url"],
-input[type="password"],
+/* input[type="password"], */
 textarea,
 select {
   display: block;
@@ -1789,6 +1789,17 @@ input::-moz-focus-inner {
   .header-nav-wrap {
     padding: 120px 40px 64px;
   }
+  
+  .topnav .search-container button {
+    margin-top: -90.5px !important;
+    height: 61px;
+  }
+
+  .email p{
+    width: 60%;
+    overflow-wrap: break-word !important;
+    
+  }
 
 }
 
@@ -1878,7 +1889,8 @@ body{
 
   .email p{
     font-weight: 100;
-    font-size: 1.8em !important;;
+    font-size: 1.8em !important;
+    
   }
   
   .url p{
@@ -2104,6 +2116,11 @@ body{
   /* box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19); */
 }
 
+.topnav .search-container button:disabled{
+  opacity: 0.7;
+  cursor: no-drop;
+}
+
 .topnav .search-container button:hover {
   /* background: #fff;
   color: #D62469; */
@@ -2111,6 +2128,7 @@ body{
   color: #FFFFFF;
   /* border: 2px solid #D62469; */
 }
+
 
 
 .searchBarIndication p{
@@ -2157,6 +2175,16 @@ body{
   
 }
 
+.url{
+  width: 75%;
+}
+
+.fa-2x{ 
+  margin-bottom: -4px !important;
+}
+
+
+
 .source{
   width: 20%;
   font-size: 0.33em;
@@ -2174,12 +2202,15 @@ body{
 }
 .email p{
   font-size: 1.8em !important;
+  text-overflow: ellipsis !important; 
+  width: 90%;
 }
 
 .url p{
   font-size: 2em;
   color: #635959;
-  overflow: hidden;
+  text-overflow: ellipsis !important; 
+
 }
 
 .url a{
@@ -2187,6 +2218,11 @@ body{
   font-size: 0.8em;
   text-decoration: underline;
   color: #3EA2EE;
+  text-overflow: ellipsis !important;
+  display: block !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  
 }
 
 .authenticationDiv{
@@ -2287,6 +2323,18 @@ body{
   border: 1px solid #bdabab;
   border-radius: 5px;
 }
+.logInInputs{
+  margin-top: 20px;
+}
+
+.invisibleWord{
+  color: transparent
+
+}
+
+.loginBtn{
+  margin-top: 8px;
+}
 
 .signupForm{
   margin-bottom: 10px !important;
@@ -2303,4 +2351,45 @@ body{
     padding-right: 15px;
   }
 
+  .header-logo, .authenticationDiv{  
+    padding-left: 0% !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .site-logo{
+    padding-left: 0 !important;
+    margin-left: -7% !important;
+  }
+
+  .header-logo{
+    margin-top: -30px;
+  }
+
+  .authenticationDiv{
+    margin-top: 75px;
+  }
+
+  .authenticationDiv .register{
+
+    height: 40px !important;
+
+  }
+
+  .s-header{
+    height: 170px;
+    padding-left: 0;
+  }
+
+  .landingPage{
+    padding-top: 200px;
+  }
+
+}
+
+
+@media only screen and (max-width:378px) {
+  .site-logo{
+    margin-left: -15% !important;
+  }
 }
