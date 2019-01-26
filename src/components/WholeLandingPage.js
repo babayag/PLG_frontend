@@ -19,8 +19,7 @@ export class WholeLandingPage extends Component {
                 <LandingPage/>
 
                 <SearchBar/>
-                {/* <i className="fa fa-angle-down"></i><i className="fa fa-angle-down"></i><i className="fa fa-angle-down"></i> */}
-              
+                
             </div>
         );
     }

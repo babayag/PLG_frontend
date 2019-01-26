@@ -53,12 +53,13 @@ export class SearchResults extends Component {
             return (
            
                 <div>
+                    
                         {this.props.emailList.data.map(item => (
-                            <div class="theResults">
+                            <div class="theResults"> 
                                 <p> <EmailResult result= {item}/></p>
                                 <span>{item.description}</span>
                             </div>
-                            ))}
+                        ))}
                 </div>
             );
         }

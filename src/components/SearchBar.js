@@ -44,6 +44,7 @@ export class SearchBar extends Component {
       showAndHide(){ 
         this.setState({
             isload : true, 
+            isAboutVisible : false
         })
     }
     _handleKeyPress = e => {
@@ -68,7 +69,7 @@ export class SearchBar extends Component {
                             onKeyDown={this._handleKeyPress}
                             />
                             <div >
-                                <button onClick={() => this.findEmails} disabled={this.state.isload}><span>{ this.state.isload ? <span>{spinner}</span> :  <span>Find My Leads</span>  }</span></button>
+                                <button onClick={() => this.findEmails()} disabled={this.state.isload}><span>{ this.state.isload ? <span>{spinner}</span> :  <span>Find My Leads</span>  }</span></button>
                                 {/* <button onClick={() => this.showAndHide()}>Find My Leads</button> */}
                             </div>
                         </div>
@@ -83,7 +84,6 @@ export class SearchBar extends Component {
                     </div>
                 </div>
                 <div className="appendedResultBlock">    
-                    {/* <SearchResults emailListe={this.state.list}/> */}
                     { this.state.isAboutVisible ? <SearchResults emailList={this.state.emails ? this.state.emails : null}/> : null }
                 </div>    
                 <div className="notReadyDiv"> 
