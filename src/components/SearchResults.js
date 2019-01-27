@@ -46,32 +46,35 @@ export class SearchResults extends Component {
         this.state = { list }
         //this.props.emailList.data
     }
+
+    countSources(){
+        if(this.props.emailList.data.length === 0){
+           return <span>No email found.</span> 
+        } else if(this.props.emailList.data.length === 1){
+            return <span>1 Email found.</span>
+        } else{
+            return <span> {this.props.emailList.data.length} Emails found.</span>
+        }
+    }
+
+    isOdd(num) { return num % 2;}
+    
     render() {
         const resultat = this.props.emailList; //this.state.list
-        if(resultat !== undefined)
-        {
-            return (
-           
-                <div>
-                    
-                        {this.props.emailList.data.map(item => (
-                            <div class="theResults"> 
-                                <p> <EmailResult result= {item}/></p>
-                                <span>{item.description}</span>
-                            </div>
-                        ))}
+        return (
+            <div>
+                <div class="emailResult numberOfEmails">
+                    <p class=""> {this.countSources()}  
+                    </p>
                 </div>
-            );
-        }
-        else
-        {
-            return (
-           
-                <div>
-                       Oops not found
-                </div>
-            );
-        }
-        
+                    {this.props.emailList.data.slice(0, (this.props.emailList.data.length + 1)/2).map(item => (
+                        <div class="theResults"> 
+                            <p> <EmailResult result= {item}/></p>
+                            <span>{item.description}</span>
+                        </div>
+                    ))}
+            </div>
+        );
+       
     }
 }

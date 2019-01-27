@@ -1883,6 +1883,12 @@ body{
     width: 56.2% !important;
   }
 
+  .numberOfEmails{
+    margin-left: 23% !important;
+    width: 54% !important;
+    font-size: 0.8em;
+  }
+
   .resultBlock{
     padding-left: 3.7% !important;
   }
@@ -1903,7 +1909,7 @@ body{
 
 @media only screen and (max-width:1000px) {
   .quaterWidthDiv{
-    width: 15%;
+    width: 15.1%;
   }
 
   .centerDiv{
@@ -1916,7 +1922,13 @@ body{
   }
 
   .emailResult{
-    width: 66.5% !important;
+    width: 66.3% !important;
+  }
+
+  .numberOfEmails{
+    margin-left: 18% !important;
+    width: 64% !important;
+    font-size: 0.8em;
   }
 
   .resultBlock{
@@ -1947,6 +1959,12 @@ body{
     padding-left: 5.3% !important;
   }
 
+  .numberOfEmails{
+    margin-left: 15% !important;
+    width: 70% !important;
+    font-size: 0.8em;
+  }
+
   .email{
     width: 70% !important;
   }
@@ -1973,6 +1991,12 @@ body{
 
   .emailResult{
     width: 84.7% !important;
+  }
+
+  .numberOfEmails{
+    margin-left: 10% !important;
+    width: 80% !important;
+    font-size: 0.8em;
   }
 
   .resultBlock{
@@ -2025,6 +2049,14 @@ body{
     width: 93% !important;
   }
 
+  .numberOfEmails{
+    margin-left: 5% !important;
+    width: 90% !important;
+    font-size: 0.8em;
+  }
+
+  
+
   .resultBlock{
     padding-left: 2.9% !important;
   }
@@ -2047,10 +2079,16 @@ body{
   .topnav button{
     padding-left: 2% !important; 
     height: 60.2px;
-    margin-top: -90px !important;
+    margin-top: -92.5px !important;
   }
   .emailResult{
     width: 93% !important;
+  }
+
+  .numberOfEmails{
+    margin-left: 5% !important;
+    width: 90% !important;
+    font-size: 0.8em;
   }
 
   .resultBlock{
@@ -2345,7 +2383,7 @@ body{
 }
 
 
-@media only screen and (max-width:578px) {
+@media only screen and (max-width:588px) {
   .signUpDiv {
     padding-left: 15px;
     padding-right: 15px;
@@ -2395,5 +2433,20 @@ body{
 }
 
 .numberOfEmails{
-  
+  margin-left: 26.5%;
+  width: 47%;
+  margin-top: -13px;
+  height: 40px;
+  padding-top: 0;
+  border: 0 !important;
+  text-align: center;
+  font-size: 0.8em;
 }
+
+.notification-awesome {
+  background-color: rgba(0, 0, 0, 0.849) ;
+  border-left: 10px solid #ff0000 !important;  
+  width: 140% !important;
+  font-size: 1.2em !important;  
+}
+

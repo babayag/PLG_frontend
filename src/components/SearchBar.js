@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 import { SearchResults } from "./SearchResults";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner} from '@fortawesome/free-solid-svg-icons'
@@ -8,39 +10,61 @@ const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin
 
 export class SearchBar extends Component {
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             isAboutVisible: false,
             emails : [],
             isload : false,
             message :"",
         }
+        this.addNotification = this.addNotification.bind(this);
+        this.notificationDOMRef = React.createRef();
     }
+     
+      addNotification() {
+        this.notificationDOMRef.current.addNotification({
+          title: "Error",
+          message: "Please enter a domain name like 'facebookcom' ",
+          type: "awesome",
+          insert: "top",
+          container: "bottom-left",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: { duration: 2000 },
+          dismissable: { click: true }
+        });
+      }
+
     handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
       };
       
-    async findEmails() {
-        await this.showAndHide();
-        this.state.isload = false;
-        this.state.isAboutVisible = true;
-        const devUrl = 'http://127.0.0.1:8000/api/lead/testSharing';
-        //const ProductionURL = 'api/lead/testSharing';
-        try {
-           
-            const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
-            const emails = res.data
-            //const emails = await res.json();
-            console.log(res.data);
-            this.setState({
-                emails
-            });
+    async findEmails() { 
+        var regEx = /\w+\.\w+/ 
+        if(!regEx.test(this.state.message)) {
+            this.addNotification();
+        }else{
+            await this.showAndHide();
+            this.state.isload = false;
+            this.state.isAboutVisible = true;
+            const devUrl = 'http://127.0.0.1:8000/api/lead/testSharing';
+            //const ProductionURL = 'api/lead/testSharing';
+            try {
             
-        } catch (e) {
-          console.log(e);
+                const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
+                const emails = res.data
+                //const emails = await res.json();
+                console.log(res.data);
+                this.setState({
+                    emails
+                });
+                
+            } catch (e) {
+            console.log(e);
+            }
         }
-      }
+    }
       showAndHide(){ 
         this.setState({
             isload : true, 
@@ -91,6 +115,10 @@ export class SearchBar extends Component {
                         Not Ready to Get Started? Learn More {/*<!-- will be a link to allow page scroll-->*/}
                     </p>
                 </div>
+                <ReactNotification types={[{
+                    htmlClasses: ["notification-awesome"],
+                    name: "awesome"
+                }]} ref={this.notificationDOMRef} />
             </div>
         );
     }

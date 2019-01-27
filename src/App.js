@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter , Route} from "react-router-dom";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 import { Provider } from 'react-redux';
 import Store from "./reducers/index";
 import { SignupPage } from "./components/SignupPage";
@@ -29,6 +31,8 @@ class App extends Component {
           </BrowserRouter>
         
         </Provider>
+
+        
       </div>
       
     );
