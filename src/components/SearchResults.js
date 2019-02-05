@@ -57,14 +57,17 @@ export class SearchResults extends Component {
         }
     }
 
-    isOdd(num) { return num % 2;}
+    isOdd(num) { 
+        return num % 2;
+    }
     
     render() {
         const resultat = this.props.emailList; //this.state.list
         return (
             <div>
                 <div class="emailResult numberOfEmails">
-                    <p class=""> {this.countSources()}  
+                    <p class=""> 
+                        {this.countSources()}  
                     </p>
                 </div>
                     {this.props.emailList.data.slice(0, (this.props.emailList.data.length + 1)/2).map(item => (

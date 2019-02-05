@@ -6,12 +6,12 @@ export class LandingPage extends Component {
         return (
             <div className="landingPage">
                 <div className="presentationText">
-                    <h1> Get B2B Leads in Just Seconds!</h1>
+                    <h1> Paying for Email Addresses in 2019 SUCK</h1>
                     <div className="quaterWidthDiv"> </div>
                     <div className="centerDiv"> 
-                        <p> LeadmeHome helps you to cut down your B2B lead
-                            generation cost and effort by providing you with email 
-                            addresses of your ideal audience.
+                        <p> Thank Goodness LeadmeHome Finds the email addresses 
+                            of my prospects for FREE… without  having to count any 
+                            requests or credits or pay for csv imports
                         </p>
                     </div>
                     <div className="quaterWidthDiv"> </div>
