@@ -1830,9 +1830,9 @@ body{
 
 .presentationText h1{ text-align: center;
   color: #282828;
-  font-weight: 300;
+  font-weight: 900;
   font-family: 'Futura' !important;
-  font-size: 3.3em;
+  font-size: 3.6em;
 }
 
 .presentationText p{
@@ -2267,6 +2267,23 @@ body{
   padding-top: 28px;
   width: 37%;
   float: right;
+}
+
+.menuDiv{
+  padding-top: 37px;
+  width: 50%;
+  float: right;
+}
+
+.menuDiv a{
+  font-size: 18px;
+  font-weight: 800;
+
+}
+
+.menuDiv a:hover, .knowMoreLink:hover{
+  text-decoration: none !important;
+  color: #5e06d2;
 }
 
 .authenticationDiv .login{

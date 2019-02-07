@@ -15,9 +15,14 @@ export class NavBar extends Component {
                     </a>
                 </div>
 
+                <div className="menuDiv">
+                    <a className="menuLink" href="https://support.leadmehome.io/blog/">Blog</a>
+
+                </div>
+
                 <div className="authenticationDiv">
-                    <a href="/login" className="login">Log In</a>   
-                    <a href="/signup"> <button className="register">Register </button></a>
+                    {/* <a href="/login" className="login">Log In</a>    */}
+                    {/* <a href="/signup"> <button className="register">Register </button></a> */}
                 </div>
             
             </header> 

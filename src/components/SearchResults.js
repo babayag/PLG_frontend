@@ -70,7 +70,17 @@ export class SearchResults extends Component {
                         {this.countSources()}  
                     </p>
                 </div>
-                    {this.props.emailList.data.slice(0, (this.props.emailList.data.length + 1)/2).map(item => (
+                    {/* this is used to display just the half of the results */  
+                    /* {this.props.emailList.data.slice(0, (this.props.emailList.data.length + 1)/2).map(item => (
+                        (this.props.emailList.data.length).map(item => (
+                        <div class="theResults"> 
+                            <p> <EmailResult result= {item}/></p>
+                            <span>{item.description}</span>
+                        </div>
+                     */ }
+                        
+                        {/* This displays all the results */
+                            (this.props.emailList.data).map(item => (
                         <div class="theResults"> 
                             <p> <EmailResult result= {item}/></p>
                             <span>{item.description}</span>

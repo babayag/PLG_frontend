@@ -93,7 +93,7 @@ export class SearchBar extends Component {
                             onKeyDown={this._handleKeyPress}
                             />
                             <div >
-                                <button onClick={() => this.findEmails()} disabled={this.state.isload}><span>{ this.state.isload ? <span>{spinner}</span> :  <span>Find My Leads</span>  }</span></button>
+                                <button onClick={() => this.findEmails()} disabled={this.state.isload}><span>{ this.state.isload ? <span>{spinner}</span> :  <span>Get Email Addresses</span>  }</span></button>
                                 {/* <button onClick={() => this.showAndHide()}>Find My Leads</button> */}
                             </div>
                         </div>
@@ -112,7 +112,7 @@ export class SearchBar extends Component {
                 </div>    
                 <div className="notReadyDiv"> 
                     <p>
-                        Not Ready to Get Started? Learn More {/*<!-- will be a link to allow page scroll-->*/}
+                        Not Ready to Get Started? <a className="knowMoreLink" href="https://support.leadmehome.io/blog/"> Learn More </a> {/*<!-- Link that sends to the Blog-->*/}
                     </p>
                 </div>
                 <ReactNotification types={[{
