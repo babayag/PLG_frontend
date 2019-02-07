@@ -112,7 +112,7 @@ export class SearchBar extends Component {
                 </div>    
                 <div className="notReadyDiv"> 
                     <p>
-                        Not Ready to Get Started? <a className="knowMoreLink" href="https://support.leadmehome.io/blog/"> Learn More </a> {/*<!-- Link that sends to the Blog-->*/}
+                        Not Ready to Get Started? <u> <a className="knowMoreLink" href="https://support.leadmehome.io/blog/"> Learn More </a> </u>{/*<!-- Link that sends to the Blog-->*/}
                     </p>
                 </div>
                 <ReactNotification types={[{

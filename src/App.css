@@ -2281,7 +2281,17 @@ body{
 
 }
 
-.menuDiv a:hover, .knowMoreLink:hover{
+.knowMoreLink{
+  color: #5f06d2d5;
+
+}
+
+.knowMoreLink:hover{
+  text-decoration: none !important;
+  color: #5e06d2;
+}
+
+.menuDiv a:hover{
   text-decoration: none !important;
   color: #5e06d2;
 }
