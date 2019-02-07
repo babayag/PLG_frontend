@@ -107,7 +107,8 @@ export class SearchBar extends Component {
                     <div className="quaterWidthDiv">
                     </div>
                 </div>
-                <div className="appendedResultBlock">    
+                <div className="appendedResultBlock">  
+                     
                     { this.state.isAboutVisible ? <SearchResults emailList={this.state.emails ? this.state.emails : null}/> : null }
                 </div>    
                 <div className="notReadyDiv"> 

@@ -2123,7 +2123,7 @@ body{
   overflow: hidden;
   display: inline-block;
   width: 47%;
-  height: 108px !important ;
+  height: 102px !important ;
   padding: 1.2%;
   border-radius: 5px;  
   background-color: #ffffff;
@@ -2191,7 +2191,21 @@ body{
 
 .emailResult p{
   font-size: 2.3em;
-  line-height: 25px; 
+  line-height: 25px;
+   
+}
+
+.exportBtn{
+  height: 30px !important;
+  line-height: 0 !important; 
+  background-color: #D25F06;
+  color: #fff !important; 
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.exportBtn:hover{
+	color: #fff;
 }
 
 .theResults p{
@@ -2463,11 +2477,25 @@ body{
   margin-left: 26.5%;
   width: 47%;
   margin-top: -13px;
+  margin-bottom: 8px;
   height: 40px;
   padding-top: 0;
   border: 0 !important;
   text-align: center;
   font-size: 0.8em;
+}
+
+.numberOfEmails1{
+  margin-top: -3px;
+}
+
+.numberInExportBtn{
+  border-radius: 50%;
+  background-color: #fff;
+  color: #D25F06;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-left: 6px;
 }
 
 .notification-awesome {
