@@ -16,7 +16,7 @@ export class NavBar extends Component {
                 </div>
 
                 <div className="menuDiv">
-                    <a className="menuLink" href="https://support.leadmehome.io/blog/">Blog</a>
+                    <a className="menuLink" href="https://support.leadmehome.io/blog/">Top Articles</a>
 
                 </div>
 
