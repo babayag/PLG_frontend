@@ -28,16 +28,16 @@ export class EmailResult extends Component {
                     </div> 
                     <div class="source">
                         <p class=""> 
-                         {/* {this.props.result.url.length === 1 ? 
+                         {this.props.result.url.length === 1 ? 
                             <p>{this.props.result.url.length} source {this.state.showUpIcon ? 
-                                <i class="fa fa-angle-down" onClick={()=>this.showAndHide()}></i>
+                                <i className="fa fa-angle-down" onClick={()=>this.showAndHide()}></i>
                                 : <i class="fa fa-angle-up" onClick={()=>this.showAndHide()}></i> }
                             </p>
                             : <p>{this.props.result.url.length} sources {this.state.showUpIcon ? 
                                 <i class="fa fa-angle-down" onClick={()=>this.showAndHide()}></i>
                                 : <i class="fa fa-angle-up" onClick={()=>this.showAndHide()}></i> }
                             </p>
-                         } */}
+                         }
                         </p>  
                     </div>
                     {     

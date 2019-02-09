@@ -78,11 +78,11 @@ var inputForRenderingTest = [
 ]
 
 it('renders EmailResult without crashing', () => {
-  var input = inputForRenderingTest[0];
+  var input = inputForRenderingTest[2];
   const wrapper = shallow(<EmailResult result={input}/>);
   // const instance = wrapper.instance();
   
-  console.log(wrapper.email)
+  alert(wrapper.debug())
   console.log(wrapper.props.email)
   // wrapper.props.result = input;
   expect(wrapper.result).toBe("input");
