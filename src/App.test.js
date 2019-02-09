@@ -85,7 +85,7 @@ it('renders EmailResult without crashing', () => {
   alert(wrapper.debug())
   console.log(wrapper.props.email)
   // wrapper.props.result = input;
-  expect(wrapper.result).toBe("input");
+  expect(wrapper.props.email).toBe("i@f.d");
   // expect(instance.returnJsonObject("itkamer.com")).toBe("itkamer.com.json");
   // expect(wrapper.state('counter')).toBe(1);
 });
