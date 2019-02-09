@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { EmailResult } from "./EmailResult";
+import { CSVLink, CSVDownload } from "react-csv";
 
 const list = [
     {
@@ -37,7 +38,6 @@ const list = [
         ]
     }
   ];
-  
 
 export class SearchResults extends Component {
     constructor(props)
@@ -47,9 +47,12 @@ export class SearchResults extends Component {
         //this.props.emailList.data
     }
 
+
+
     countSources(){
         if(this.props.emailList.length-1 <= 0){
            return <span>No Email Address Found.</span> 
+
         } else if(this.props.emailList.length-1 === 1){
             return <span>1 Email Address Found. <button className="exportBtn">Export <span className="numberInExportBtn">1</span></button> </span>
         } else{
@@ -67,9 +70,26 @@ export class SearchResults extends Component {
         return (
             <div>
                 <div class="emailResult numberOfEmails">
-                    <p class="text-center numberOfEmails1"> 
-                        {this.countSources()}  
+                    <p class="text-center numberOfEmails1">
+                        {this.countSources()} 
+                        
+                        <CSVLink
+                            filename={"my-file.csv"}
+                            className="btn exportBtn"
+                            target="_blank"
+                            data={this.props.emailList.data}
+                            asyncOnClick={true}
+                            onClick={
+                                this.exportDatasToCsv
+                            }
+                        >    
+                            Export
+                            <span className="numberInExportBtn">
+                                {this.props.emailList.data.length}
+                            </span> 
+                        </CSVLink>                      
                     </p>
+                    
                 </div>
                     {/* this is used to display just the half of the results */  
                     /* {this.props.emailList.data.slice(0, (this.props.emailList.data.length + 1)/2).map(item => (
