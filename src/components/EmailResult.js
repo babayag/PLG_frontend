@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleUp, faSpinner, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
-const angleUp = <FontAwesomeIcon icon={faAngleUp} />
-const angleDown = <FontAwesomeIcon icon={faAngleDown} />
-const spinner = <FontAwesomeIcon icon={faSpinner} />
 
 export class EmailResult extends Component {
     constructor(){
@@ -22,8 +17,8 @@ export class EmailResult extends Component {
         })
     }
 
-    render() {
 
+    render() {
         return (
             <div class="resultBlock"> 
                 <div class="quaterWidthDiv"> </div>
@@ -33,16 +28,16 @@ export class EmailResult extends Component {
                     </div> 
                     <div class="source">
                         <p class=""> 
-                         {this.props.result.url.length === 1 ? 
+                         {/* {this.props.result.url.length === 1 ? 
                             <p>{this.props.result.url.length} source {this.state.showUpIcon ? 
-                                <i onClick={()=>this.showAndHide()}>{angleDown}</i>
-                                : <i onClick={()=>this.showAndHide()}>{angleUp}</i> }
+                                <i class="fa fa-angle-down" onClick={()=>this.showAndHide()}></i>
+                                : <i class="fa fa-angle-up" onClick={()=>this.showAndHide()}></i> }
                             </p>
                             : <p>{this.props.result.url.length} sources {this.state.showUpIcon ? 
-                                <i onClick={()=>this.showAndHide()}>{angleDown}</i>
-                                : <i onClick={()=>this.showAndHide()}>{angleUp}</i> }
+                                <i class="fa fa-angle-down" onClick={()=>this.showAndHide()}></i>
+                                : <i class="fa fa-angle-up" onClick={()=>this.showAndHide()}></i> }
                             </p>
-                         }
+                         } */}
                         </p>  
                     </div>
                     {     
