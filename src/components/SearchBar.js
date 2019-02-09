@@ -6,10 +6,15 @@ import { SearchResults } from "./SearchResults";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner} from '@fortawesome/free-solid-svg-icons'
 
+
+//import JsonFile from '../jsonFiles/itkamer.com.json';
+
+//var JsonFile = require('../jsonFiles/itkamer.com.json')
+
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin/>
+var jsonFilesInTheDirectory = ["itkamer.com.json", "cr7.com.json", "medievaltimes.com.json", "paness-iiht.com.json" ]
 
 export class SearchBar extends Component {
-
     constructor(props){
         super(props)
         this.state = {
@@ -22,26 +27,28 @@ export class SearchBar extends Component {
         this.notificationDOMRef = React.createRef();
     }
      
-      addNotification() {
+    addNotification() {
         this.notificationDOMRef.current.addNotification({
-          title: "Error",
-          message: "Please enter a domain name like 'facebookcom' ",
-          type: "awesome",
-          insert: "top",
-          container: "bottom-left",
-          animationIn: ["animated", "fadeIn"],
-          animationOut: ["animated", "fadeOut"],
-          dismiss: { duration: 2000 },
-          dismissable: { click: true }
+            title: "Error",
+            message: "Please enter a domain name like 'medievaltimes.com' ",
+            type: "awesome",
+            insert: "top",
+            container: "bottom-left",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: { duration: 3000 },
+            dismissable: { click: true }
         });
-      }
+    }
 
     handleChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
-      };
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    };
       
-    async findEmails() { 
-        var regEx = /\w+\.\w+/ 
+    async findEmails() {          
+        var regEx = /\w+\.\w+/; 
         if(!regEx.test(this.state.message)) {
             this.addNotification();
         }else{
@@ -52,10 +59,19 @@ export class SearchBar extends Component {
             //const ProductionURL = 'api/lead/testSharing';
             try {
             
-                const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
-                const emails = res.data
+                // const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
+                
+                /* This will browse on our cached files to see
+                if the request has been done 
+                once alredy */
+                var returnedFile = this.returnJsonObject(this.state.message);
+                if(returnedFile != 'undefined'){
+                    var JsonFile = require("../jsonFiles/" + returnedFile);
+                }
+                const emails = JsonFile;
+
                 //const emails = await res.json();
-                console.log(res.data);
+                // console.log(emails);
                 this.setState({
                     emails
                 });
@@ -63,6 +79,8 @@ export class SearchBar extends Component {
             } catch (e) {
             console.log(e);
             }
+
+            
         }
     }
       showAndHide(){ 
@@ -71,12 +89,26 @@ export class SearchBar extends Component {
             isAboutVisible : false
         })
     }
-    _handleKeyPress = e => {
+    _handleKeyPress = e => { // When user presses on a keyboardtouch
         if(e.keyCode === 13){ 
             this.findEmails()
         } 
         
     }
+
+    /*This functions browses the array containing the JSON files and 
+    returns the one cprresponding to the user input  */
+    returnJsonObject(userInput){ 
+        for(var i=0; i<jsonFilesInTheDirectory.length; i++){
+            var fileName = jsonFilesInTheDirectory[i].replace('.json', '');
+            if(userInput == fileName) { //alert(jsonFilesInTheDirectory[i])
+                return jsonFilesInTheDirectory[i];
+                 
+            }            
+        }
+        
+    }
+
     render() {
         return (
             <div>
