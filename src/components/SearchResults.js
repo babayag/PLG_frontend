@@ -56,7 +56,7 @@ export class SearchResults extends Component {
         } else if(this.props.emailList.data.length-1 === 1){
             return <span>1 Email Address Found.  </span>
         } else{
-            return <span> {this.props.emailList.data.length} Emails Addresses Found. </span>
+            return <span> {this.props.emailList.data.length} Email Addresses Found. </span>
         }
     }
 
