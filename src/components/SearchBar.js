@@ -120,13 +120,6 @@ export class SearchBar extends Component {
         }
     }
 
-    findThisFile(file){
-        if(file != "undefined"){
-            var theFile = require("../jsonFiles/" + file);
-            return theFile
-        }
-    }
-
       showAndHide(){ 
         this.setState({
             isload : true, 
