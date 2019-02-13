@@ -2203,6 +2203,7 @@ body{
   padding-left: 12px;
   padding-right: 12px;
   margin-bottom: 0;
+  margin-left: 6px;
 }
 
 .exportBtn:hover{
