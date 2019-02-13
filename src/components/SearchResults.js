@@ -50,13 +50,13 @@ export class SearchResults extends Component {
 
 
     countSources(){
-        if(this.props.emailList.length-1 <= 0){
+        if(this.props.emailList.data.length-1 <= 0){
            return <span>No Email Address Found.</span> 
 
-        } else if(this.props.emailList.length-1 === 1){
-            return <span>1 Email Address Found. <button className="exportBtn">Export <span className="numberInExportBtn">1</span></button> </span>
+        } else if(this.props.emailList.data.length-1 === 1){
+            return <span>1 Email Address Found.  </span>
         } else{
-            return <span> {this.props.emailList.length-1} Emails Addresses Found. <button className="exportBtn">Export <span className="numberInExportBtn">{this.props.emailList.length-1}</span></button></span>
+            return <span> {this.props.emailList.data.length-1} Emails Addresses Found. </span>
         }
     }
 
@@ -101,12 +101,12 @@ export class SearchResults extends Component {
                      */ }
                         
                         {/* This displays all the results */
-                            (this.props.emailList.slice(0, (this.props.emailList.length - 1)).map(item => (
+                            (this.props.emailList.data).map(item => (
                                 <div class="theResults"> 
                                     <p> <EmailResult result= {item}/></p>
                                     <span>{item.description}</span>
                                 </div>
-                            )))
+                            ))
                         }
             </div>
         );

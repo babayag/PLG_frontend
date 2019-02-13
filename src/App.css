@@ -2197,11 +2197,12 @@ body{
 
 .exportBtn{
   height: 30px !important;
-  line-height: 0 !important; 
+  line-height: 1 !important; 
   background-color: #D25F06;
   color: #fff !important; 
   padding-left: 12px;
   padding-right: 12px;
+  margin-bottom: 0;
 }
 
 .exportBtn:hover{
@@ -2285,13 +2286,14 @@ body{
 
 .menuDiv{
   padding-top: 37px;
-  width: 35%;
+  width: 45%;
   float: right;
 }
 
 .menuDiv a{
   font-size: 18px;
   font-weight: 800;
+  margin-right: 35px;
 
 }
 

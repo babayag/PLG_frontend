@@ -7,12 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner} from '@fortawesome/free-solid-svg-icons'
 
 
-//import JsonFile from '../jsonFiles/itkamer.com.json';
-
-//var JsonFile = require('../jsonFiles/itkamer.com.json')
-
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin/>
-var jsonFilesInTheDirectory = ["itkamer.com.json", "cr7.com.json", "medievaltimes.com.json", "paness-iiht.com.json" ]
 
 export class SearchBar extends Component {
     constructor(props){
@@ -22,6 +17,9 @@ export class SearchBar extends Component {
             emails : [],
             isload : false,
             message :"",
+            foundJSONobject: '',  //the name of the JSON object corresponding to user input
+            domainIsNew: false,  // if the user input matches nothing
+            isSecfinished: false //if the second request 
         }
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
@@ -46,34 +44,72 @@ export class SearchBar extends Component {
             [e.target.name]: e.target.value
         });
     };
+
+    /*This method returns from the server an array with the names of all the JSON files
+    and the picks out the one corresponding to the user input */
+    async getDomainNames(userInput) {
+        const devUrl = 'http://127.0.0.1:8000/api/lead/getDomains';
+        try {
+            const res = await axios.post(devUrl, { url : this.state.message}); 
+ 
+            var domains = res.data.toString();
+            domains = domains.slice(1,-2); 
+            domains = domains.split(",");
+            var domain;  
+            for(var i=0; i<domains.length; i++){  
+                var fileName = domains[i].replace('.json', '');
+                if(userInput == fileName) { 
+                    domain = domains[i];
+                    // this.setState({
+                    //     foundJSONobject: domain,
+                    //     domainIsNew: true
+                    // }) ;
+                    return domain;                 
+                }else{
+                    // this.setState({
+                    //     domainIsNew: false
+                    // })
+                }
+            }         
+            
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
       
-    async findEmails() {          
+    async findEmails() {
         var regEx = /\w+\.\w+/; 
         if(!regEx.test(this.state.message)) {
             this.addNotification();
-        }else{
+        }else{       
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
             const devUrl = 'http://leadmehome.io/api/lead/testSharing';
             //const ProductionURL = 'api/lead/testSharing';
             try {
-            
-                // const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
+                const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
                 
+                // const emails = await res.json();
+                // alert(res.data.data); 
+                // console.log(emails);
+
+
                 /* This will browse on our cached files to see
                 if the request has been done 
-                once alredy */
-                var returnedFile = this.returnJsonObject(this.state.message);
-                if(returnedFile != 'undefined'){
-                    var JsonFile = require("../jsonFiles/" + returnedFile);
-                }
-                const emails = JsonFile;
+                once alredy */ 
+                //var returnedFile = this.returnJsonObject(this.state.message);
+                // alert(returnedFile);
+                // if(returnedFile != 'undefined'){
+                //     var JsonFile = require("../jsonFiles/" + returnedFile);
+                // }
+                // const emails = JsonFile;
 
-                //const emails = await res.json();
-                // console.log(emails);
+                const emails = await res.data;
+                console.log(emails);
                 this.setState({
-                    emails
+                    emails: emails
                 });
                 
             } catch (e) {
@@ -83,6 +119,14 @@ export class SearchBar extends Component {
             
         }
     }
+
+    findThisFile(file){
+        if(file != "undefined"){
+            var theFile = require("../jsonFiles/" + file);
+            return theFile
+        }
+    }
+
       showAndHide(){ 
         this.setState({
             isload : true, 
@@ -98,15 +142,46 @@ export class SearchBar extends Component {
 
     /*This functions browses the array containing the JSON files and 
     returns the one cprresponding to the user input  */
-    returnJsonObject(userInput){ 
-        for(var i=0; i<jsonFilesInTheDirectory.length; i++){
-            var fileName = jsonFilesInTheDirectory[i].replace('.json', '');
-            if(userInput == fileName) { //alert(jsonFilesInTheDirectory[i])
-                return jsonFilesInTheDirectory[i];
-                 
-            }            
+    /*returnJsonObject(userInput){ 
+        var domain;
+            for(var i=0; i<data.length; i++){
+                var fileName = data[i].replace('.json', '');
+                if(userInput == fileName) { //alert(jsonFilesInTheDirectory[i])
+                    domain = data[i]; // alert(domain);
+                    return domain;
+                }            
+            }
+        return domain;
+    }*/
+
+    /*This Function reads the txt file that contains the names of 
+    the domains that have been found already */
+    readTextFile(file, callback){ 
+        var rawFile = new XMLHttpRequest();
+        var allText;
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function (){
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status == 0)
+                {
+                    allText = rawFile.responseText;
+                    allText = allText.slice(0,-3)+"]";
+                    // rawFile.send(allText);
+                    callback(allText);
+                    // alert(allText)
+                    // rawFile.send("TTTTTTTT")
+                    // return "allText";
+                    // return "allText";
+
+                }
+            }
+            
         }
         
+        rawFile.send(null);
+        // return allText;
+        // return  rawFile.open("GET", file, false);
     }
 
     render() {
