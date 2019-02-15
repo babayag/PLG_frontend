@@ -1,65 +1,55 @@
 import React, { Component } from 'react';
 import { EmailResult } from "./EmailResult";
 import { CSVLink, CSVDownload } from "react-csv";
+import { SeeMoreButton } from "./SeeMoreButton"; 
 
-const list = [
-    {
-      'email': 'azerty@HTMLAllCollection.com',
-      'url': [
-        'www.googleAPI.com',
-    ]
-      
-    },
-    {
-        'email': 'qwerty@gmail.com',
-        'url': [
-            'www.googleAPI.com',
-            'www.googleAPI.cm',
-            'www.googleAPI.fr',
-        ]
-    },
-    {
-      'email': 'qwwertz@yahoo.de',
-      'url': [
-        'www.google52API.com',
-        'www.go4454ogleAPI.com',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        ]
-    }
-  ];
+
+
 
 export class SearchResults extends Component {
     constructor(props)
     {
         super(props);
-        this.state = { list }
-        //this.props.emailList.data
+        // this.state = { list }
+        //this.props.emailList
     }
 
+    sendDataToExport(){
+        this.props.router.push({
+            pathname: '/export',
+            state: {
+              id: 7,
+              color: 'green'
+            }
+          })
+    }
 
-
-    countSources(){
-        if(this.props.emailList.data.length === 0){
+    countSources(){  
+        if(this.props.emailList.length === 0){
            return <span>No Email Address Found.</span> 
 
-        } else if(this.props.emailList.data.length === 1){
-            return <span>1 Email Address Found.  
-                        <CSVLink
+        } else if(this.props.emailList.length === 1){
+            return <span>1 Email Address Found. 
+                        {/* <a href="/export"> */}
+                            <button className="exportBtn"
+                                onClick={() => { this.props.router.push({
+                                    pathname: '/export',
+                                    state: {
+                                        color: 'green'
+                                    }
+                                  })
+                                }} 
+                            >Export
+                                <span className="numberInExportBtn">
+                                    {this.props.emailList.length}
+                                </span>
+                            </button> 
+                        {/* </a> */}
+                        {/* <CSVLink
                             filename={"my-file.csv"}
                             className="btn exportBtn"
                             target="_blank"
-                            data={this.props.emailList.data}
+                            data={this.props.emailList}
                             asyncOnClick={true}
                             onClick={
                                 this.exportDatasToCsv
@@ -67,17 +57,32 @@ export class SearchResults extends Component {
                         >    
                             Export
                             <span className="numberInExportBtn">
-                                {this.props.emailList.data.length}
+                                {this.props.emailList.length}
                             </span> 
-                        </CSVLink>  
+                        </CSVLink>   */}
                    </span>
         } else{
-            return <span> {this.props.emailList.data.length} Email Addresses Found. 
-                        <CSVLink
+            return <span> {this.props.emailList.length} Email Addresses Found. 
+                        {/* <a href="/export"> */}
+                        <button className="exportBtn"
+                                onClick={() => { this.props.push({
+                                    pathname: '/export',
+                                    state: {
+                                        color: 'green'
+                                    }
+                                  })
+                                }} 
+                            >Export
+                                <span className="numberInExportBtn">
+                                    {this.props.emailList.length}
+                                </span>
+                            </button> 
+                        {/* </a> */}
+                        {/* <CSVLink
                             filename={"my-file.csv"}
                             className="btn exportBtn"
                             target="_blank"
-                            data={this.props.emailList.data}
+                            data={this.props.emailList}
                             asyncOnClick={true}
                             onClick={
                                 this.exportDatasToCsv
@@ -85,9 +90,9 @@ export class SearchResults extends Component {
                         >    
                             Export
                             <span className="numberInExportBtn">
-                                {this.props.emailList.data.length}
+                                {this.props.emailList.length}
                             </span> 
-                        </CSVLink>  
+                        </CSVLink>   */}
                     </span>
         }
     }
@@ -108,22 +113,28 @@ export class SearchResults extends Component {
                     
                 </div>
                     {/* this is used to display just the half of the results */  
-                    /* {this.props.emailList.data.slice(0, (this.props.emailList.data.length + 1)/2).map(item => (
-                        (this.props.emailList.data.length).map(item => (
+                    /* {this.props.emailList.slice(0, (this.props.emailList.length + 1)/2).map(item => (
+                        (this.props.emailList.length).map(item => (
                         <div class="theResults"> 
                             <p> <EmailResult result= {item}/></p>
                             <span>{item.description}</span>
                         </div>
-                     */ }
+                     */ 
+                    }
                         
-                        {/* This displays all the results */
-                            (this.props.emailList.data).map(item => (
-                                <div class="theResults"> 
-                                    <p> <EmailResult result= {item}/></p>
-                                    <span>{item.description}</span>
-                                </div>
-                            ))
-                        }
+                    {/* This displays all the results */
+                        (this.props.emailList).map(item => (
+                            <div class="theResults"> 
+                                <p> <EmailResult result= {item}/></p>
+                                <span>{item.description}</span>
+                            </div>
+                        ))
+                    }
+
+                    {/* <div>
+                        <SeeMoreButton />
+                    </div> */}
+                    
             </div>
         );
        

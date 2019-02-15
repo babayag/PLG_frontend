@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Provider } from 'react-redux';
 import ReactNotification from "react-notifications-component";
+import {BrowserRouter , Route} from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
 import { SearchResults } from "./SearchResults";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner} from '@fortawesome/free-solid-svg-icons';
+import { SeeMoreButton } from "./SeeMoreButton"; 
+
 
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin/>
@@ -17,9 +21,8 @@ export class SearchBar extends Component {
             emails : [],
             isload : false,
             message :"",
-            foundJSONobject: '',  //the name of the JSON object corresponding to user input
-            domainIsNew: false,  // if the user input matches nothing
-            isSecfinished: false //if the second request 
+            valueOfp: 0
+           
         }
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
@@ -44,39 +47,6 @@ export class SearchBar extends Component {
             [e.target.name]: e.target.value
         });
     };
-
-    /*This method returns from the server an array with the names of all the JSON files
-    and the picks out the one corresponding to the user input */
-    async getDomainNames(userInput) {
-        const devUrl = 'http://127.0.0.1:8000/api/lead/getDomains';
-        try {
-            const res = await axios.post(devUrl, { url : this.state.message}); 
- 
-            var domains = res.data.toString();
-            domains = domains.slice(1,-2); 
-            domains = domains.split(",");
-            var domain;  
-            for(var i=0; i<domains.length; i++){  
-                var fileName = domains[i].replace('.json', '');
-                if(userInput == fileName) { 
-                    domain = domains[i];
-                    // this.setState({
-                    //     foundJSONobject: domain,
-                    //     domainIsNew: true
-                    // }) ;
-                    return domain;                 
-                }else{
-                    // this.setState({
-                    //     domainIsNew: false
-                    // })
-                }
-            }         
-            
-        } catch (e) {
-            console.log(e);
-        }
-
-    }
       
     async findEmails() {
         var regEx = /\w+\.\w+/; 
@@ -86,30 +56,16 @@ export class SearchBar extends Component {
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
-            const devUrl = 'http://leadmehome.io/api/lead/testSharing';
-            //const ProductionURL = 'api/lead/testSharing';
+            const devUrl = 'http://127.0.0.1:8000/api/lead/testSharing';
+            //const ProductionURL = 'api/lead/testSharing'; 
             try {
-                const res = await axios.post(devUrl, { url : this.state.message}) //await fetch(devUrl);
-                
-                // const emails = await res.json();
-                // alert(res.data.data); 
-                // console.log(emails);
-
-
-                /* This will browse on our cached files to see
-                if the request has been done 
-                once alredy */ 
-                //var returnedFile = this.returnJsonObject(this.state.message);
-                // alert(returnedFile);
-                // if(returnedFile != 'undefined'){
-                //     var JsonFile = require("../jsonFiles/" + returnedFile);
-                // }
-                // const emails = JsonFile;
-
-                const emails = await res.data;
-                console.log(emails);
+                const res = await axios.post(devUrl, { url : this.state.message, p:this.state.valueOfp}) //await fetch(devUrl);
+                const emails = await res.data.data[0];
+                const valueOfp = await res.data.data[1];
+                console.log(valueOfp);
                 this.setState({
-                    emails: emails
+                    emails: emails,
+                    valueOfp : valueOfp 
                 });
                 
             } catch (e) {
@@ -133,53 +89,12 @@ export class SearchBar extends Component {
         
     }
 
-    /*This functions browses the array containing the JSON files and 
-    returns the one cprresponding to the user input  */
-    /*returnJsonObject(userInput){ 
-        var domain;
-            for(var i=0; i<data.length; i++){
-                var fileName = data[i].replace('.json', '');
-                if(userInput == fileName) { //alert(jsonFilesInTheDirectory[i])
-                    domain = data[i]; // alert(domain);
-                    return domain;
-                }            
-            }
-        return domain;
-    }*/
-
-    /*This Function reads the txt file that contains the names of 
-    the domains that have been found already */
-    readTextFile(file, callback){ 
-        var rawFile = new XMLHttpRequest();
-        var allText;
-        rawFile.open("GET", file, false);
-        rawFile.onreadystatechange = function (){
-            if(rawFile.readyState === 4)
-            {
-                if(rawFile.status === 200 || rawFile.status == 0)
-                {
-                    allText = rawFile.responseText;
-                    allText = allText.slice(0,-3)+"]";
-                    // rawFile.send(allText);
-                    callback(allText);
-                    // alert(allText)
-                    // rawFile.send("TTTTTTTT")
-                    // return "allText";
-                    // return "allText";
-
-                }
-            }
-            
-        }
-        
-        rawFile.send(null);
-        // return allText;
-        // return  rawFile.open("GET", file, false);
-    }
-
+    
     render() {
         return (
             <div>
+               
+                
                 <div className="searchBarBox">
                     <div className="quaterWidthDiv"> </div>
                     <div className="topnav">
@@ -192,7 +107,7 @@ export class SearchBar extends Component {
                             placeholder="medievaltimes.com"
                             onKeyDown={this._handleKeyPress}
                             />
-                            <div >
+                            <div>
                                 <button onClick={() => this.findEmails()} disabled={this.state.isload}><span>{ this.state.isload ? <span>{spinner}</span> :  <span>Get Email Addresses</span>  }</span></button>
                                 {/* <button onClick={() => this.showAndHide()}>Find My Leads</button> */}
                             </div>
@@ -216,6 +131,11 @@ export class SearchBar extends Component {
                         Not Ready to Get Started? <u> <a className="knowMoreLink" href="https://support.leadmehome.io/blog/"> Learn More </a> </u>{/*<!-- Link that sends to the Blog-->*/}
                     </p>
                 </div>
+                
+                <div>
+                    <SeeMoreButton />
+                </div>
+
                 <ReactNotification types={[{
                     htmlClasses: ["notification-awesome"],
                     name: "awesome"
