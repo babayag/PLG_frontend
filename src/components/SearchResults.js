@@ -11,7 +11,8 @@ export class SearchResults extends Component {
     {
         super(props);
         this.state = { 
-            emails: this.props.emailList
+            emails: this.props.emailList,
+            fileName: this.props.requestedUrl
          }
         //this.props.emailList
     }
@@ -34,7 +35,7 @@ export class SearchResults extends Component {
         } else if(this.state.emails.length === 1){
             return <span>1 Email Address Found. 
                         {/* <a href="/export"> */}
-                            <button className="exportBtn"
+                            {/* <button className="exportBtn"
                                 onClick={() => { this.props.router.push({
                                     pathname: '/export',
                                     state: {
@@ -46,10 +47,10 @@ export class SearchResults extends Component {
                                 <span className="numberInExportBtn">
                                     {this.state.emails.length}
                                 </span>
-                            </button> 
+                            </button>  */}
                         {/* </a> */}
-                        {/* <CSVLink
-                            filename={"my-file.csv"}
+                        <CSVLink
+                            filename={this.state.fileName+".csv"}
                             className="btn exportBtn"
                             target="_blank"
                             data={this.state.emails}
@@ -62,12 +63,12 @@ export class SearchResults extends Component {
                             <span className="numberInExportBtn">
                                 {this.state.emails.length}
                             </span> 
-                        </CSVLink>   */}
+                        </CSVLink>  
                    </span>
         } else{
             return <span> {this.state.emails.length} Email Addresses Found. 
                         {/* <a href="/export"> */}
-                        <button className="exportBtn"
+                        {/* <button className="exportBtn"
                                 onClick={() => { this.props.router.push({
                                     pathname: '/export',
                                     state: {
@@ -79,10 +80,10 @@ export class SearchResults extends Component {
                                 <span className="numberInExportBtn">
                                     {this.state.emails.length}
                                 </span>
-                            </button> 
+                            </button>  */}
                         {/* </a> */}
-                        {/* <CSVLink
-                            filename={"my-file.csv"}
+                        <CSVLink
+                            filename={this.state.fileName+".csv"}
                             className="btn exportBtn"
                             target="_blank"
                             data={this.state.emails}
@@ -95,7 +96,7 @@ export class SearchResults extends Component {
                             <span className="numberInExportBtn">
                                 {this.state.emails.length}
                             </span> 
-                        </CSVLink>   */}
+                        </CSVLink>  
                     </span>
         }
     }
@@ -106,7 +107,7 @@ export class SearchResults extends Component {
     updateEmails = (newEmails) => {
         console.log(this.state.emails);
         this.setState({
-            emails: newEmails.concat(this.state.emails) 
+            emails: this.state.emails.concat(newEmails) 
         })
         console.log(this.state.emails);
     }

@@ -16,7 +16,7 @@ export class ExportPage extends Component{
 
     testData(){
         var data = this.props;
-        alert(data);
+        // alert(data);
         console.log(data);
     }
 
@@ -26,11 +26,11 @@ export class ExportPage extends Component{
                 <NavBar/>
                 <div id="container">
                     {this.testData()}
-                    <CSVLink
+                    {/* <CSVLink
                         filename={"my-file.csv"}
                         className="btn exportBtn"
                         target="_blank"
-                        data={this.props.emailList.data}
+                        // data={this.props.emailList.data}
                         asyncOnClick={true}
                         onClick={
                             this.exportDatasToCsv
@@ -38,9 +38,9 @@ export class ExportPage extends Component{
                     >    
                         Export
                         <span className="numberInExportBtn">
-                            {this.props.emailList.data.length}
+                            {/* {this.props.emailList.data.length} 
                         </span> 
-                    </CSVLink>  
+                    </CSVLink>   */}
                     
                     <button id="exportButton">Export        <i >{externalLink}</i></button>
                     <button id="downloadButton">Download   <i >{download}</i></button>

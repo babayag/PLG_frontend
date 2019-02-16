@@ -33,9 +33,9 @@ class App extends Component {
             <Route exact path="/login" component={LoginPage} />
           </BrowserRouter>
 
-          <BrowserRouter>
+          {/* <BrowserRouter>
             <Route exact path="/export" component={ExportPage}  />
-          </BrowserRouter>
+          </BrowserRouter> */}
 
         </Provider>
 

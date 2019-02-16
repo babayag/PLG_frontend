@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Provider } from 'react-redux';
 import ReactNotification from "react-notifications-component";
-import {BrowserRouter , Route} from "react-router-dom";
+import {BrowserRouter , Route, Link} from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
 import { SearchResults } from "./SearchResults";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { SeeMoreButton } from "./SeeMoreButton"; 
+import {ExportPage} from './ExportPage';
 
 
 
@@ -23,6 +24,7 @@ export class SearchBar extends Component {
             message :"",
             latestSearch: "",
             valueOfp: 0,
+            redirect: false,
             firstResults: []   /*this is used to send the value of the first results to 
             the SeeMoreButton so that it will continue the search based on these results  */
            
@@ -102,11 +104,10 @@ export class SearchBar extends Component {
         
     }
 
-    
     render() {
+
         return (
             <div>
-               
                 
                 <div className="searchBarBox">
                     <div className="quaterWidthDiv"> </div>
@@ -147,6 +148,10 @@ export class SearchBar extends Component {
                 {/* <div>
                     <SeeMoreButton />
                 </div> */}
+
+                {/* <Route path="/export" render={() => <ExportPage name={"this.props.isload"}/>} />   */}
+
+                <Route path="/export" component={ExportPage}/>
 
                 <ReactNotification types={[{
                     htmlClasses: ["notification-awesome"],
