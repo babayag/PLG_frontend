@@ -2159,6 +2159,11 @@ body{
   cursor: no-drop;
 }
 
+button:disabled{
+  opacity: 0.7;
+  cursor: no-drop;
+}
+
 .topnav .search-container button:hover {
   /* background: #fff;
   color: #D62469; */
@@ -2508,3 +2513,117 @@ body{
   font-size: 1.2em !important;  
 }
 
+
+/*-------------------EXPORT PAGE------------------------*/
+.downBloc{
+  z-index: 600;
+  width: 86%;
+  position: absolute;
+  position: fixed;
+  bottom: 0px;
+  height: 100px;
+  background-color: #FFFFFF;
+}
+
+#container{
+  margin-top: 100px;
+  margin-right: 7% ; 
+  margin-left: 7% ;
+  height: 600px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(backgroundphone.jpg);
+}
+
+#exportButton{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  background-color: #5E06D2;
+  color: white;
+}
+
+#downloadButton{
+  position: absolute;
+  top: 70%;
+  left: 43%;
+  background-color: #D25E06;
+  color: white;
+}
+
+@media only screen and (min-width:500px){
+  #exportButton{
+    left: 42%;
+    width: 100px;
+  }
+  #downloadButton{
+    left: 47%;
+  }
+}
+
+@media only screen and (min-width:700px){
+  #downloadButton{
+    left: 50%;
+  }
+}
+
+@media only screen and (min-width:850px){
+  #container{
+    height: 890px !important; 
+    margin-right: 7% !important; 
+    margin-left: 7% !important;
+    background-image: url(exportBackground.jpg) !important;
+  }
+
+  #exportButton{
+    left: 44%;
+    width: 130px;
+  }
+
+  #downloadButton{
+    top : 80%;
+    left: 53%;
+  }
+}
+
+@media only screen and (min-width:1000px){
+  #exportButton{
+    left: 46%;
+    width: 130px;
+  }
+
+  #downloadButton{
+    width: 150px;
+  }
+}
+
+@media only screen and (min-width:1300px){
+  #exportButton{
+    left: 47.5%;
+    width: 130px;
+  }
+}
+
+
+/*---------------------SEE MORE BUTTON COMPONENT------------------------- */
+.seeMoreBtnParent{
+  margin-left: 2%;
+}
+
+.seeMoreBtnParentFirstChild{
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  height: 60px;
+  padding-bottom: 10px !important;
+  padding-top: 10px !important;
+}
+.seeMoreBtnParentFirstChild button{
+  height: 40px;
+  line-height: 0;
+  margin: 0 !important;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(181, 174, 189);
+  color : rgb(107, 98, 98);
+  padding-left: 15px;
+  padding-right: 15px;
+}
