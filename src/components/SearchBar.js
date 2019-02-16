@@ -21,7 +21,10 @@ export class SearchBar extends Component {
             emails : [],
             isload : false,
             message :"",
-            valueOfp: 0
+            latestSearch: "",
+            valueOfp: 0,
+            firstResults: []   /*this is used to send the value of the first results to 
+            the SeeMoreButton so that it will continue the search based on these results  */
            
         }
         this.addNotification = this.addNotification.bind(this);
@@ -52,7 +55,13 @@ export class SearchBar extends Component {
         var regEx = /\w+\.\w+/; 
         if(!regEx.test(this.state.message)) {
             this.addNotification();
-        }else{       
+        }else{  
+            /*this resets the value of p so that it is 0 for each new research */
+            this.setState({
+                valueOfp: 0
+            });
+            
+
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
@@ -65,14 +74,18 @@ export class SearchBar extends Component {
                 console.log(valueOfp);
                 this.setState({
                     emails: emails,
-                    valueOfp : valueOfp 
+                    valueOfp : valueOfp,
+                    firstResults: res.data.data /*set the value of the state*/ 
                 });
                 
             } catch (e) {
             console.log(e);
             }
-
             
+            /*Sets the value of the lastest search to whar the user has entered */
+            this.setState({
+                latestSearch: this.state.message
+            });
         }
     }
 
@@ -124,17 +137,16 @@ export class SearchBar extends Component {
                 </div>
                 <div className="appendedResultBlock">  
                      
-                    { this.state.isAboutVisible ? <SearchResults emailList={this.state.emails ? this.state.emails : null}/> : null }
+                    { this.state.isAboutVisible ? <SearchResults firstResults={this.state.firstResults} requestedUrl={this.state.message} emailList={this.state.emails ? this.state.emails : null}/> : null }
                 </div>    
                 <div className="notReadyDiv"> 
                     <p>
                         Not Ready to Get Started? <u> <a className="knowMoreLink" href="https://support.leadmehome.io/blog/"> Learn More </a> </u>{/*<!-- Link that sends to the Blog-->*/}
                     </p>
                 </div>
-                
-                <div>
+                {/* <div>
                     <SeeMoreButton />
-                </div>
+                </div> */}
 
                 <ReactNotification types={[{
                     htmlClasses: ["notification-awesome"],

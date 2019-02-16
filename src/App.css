@@ -2159,6 +2159,11 @@ body{
   cursor: no-drop;
 }
 
+button:disabled{
+  opacity: 0.7;
+  cursor: no-drop;
+}
+
 .topnav .search-container button:hover {
   /* background: #fff;
   color: #D62469; */
@@ -2600,7 +2605,7 @@ body{
 }
 
 
-/*---------------------SEE MORE BUTTON ------------------------- */
+/*---------------------SEE MORE BUTTON COMPONENT------------------------- */
 .seeMoreBtnParent{
   margin-left: 2%;
 }
@@ -2612,7 +2617,7 @@ body{
   padding-bottom: 10px !important;
   padding-top: 10px !important;
 }
-.seeMoreBtnParent button{
+.seeMoreBtnParentFirstChild button{
   height: 40px;
   line-height: 0;
   margin: 0 !important;

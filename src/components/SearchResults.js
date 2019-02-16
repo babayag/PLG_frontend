@@ -10,9 +10,12 @@ export class SearchResults extends Component {
     constructor(props)
     {
         super(props);
-        // this.state = { list }
+        this.state = { 
+            emails: this.props.emailList
+         }
         //this.props.emailList
     }
+
 
     sendDataToExport(){
         this.props.router.push({
@@ -25,10 +28,10 @@ export class SearchResults extends Component {
     }
 
     countSources(){  
-        if(this.props.emailList.length === 0){
+        if(this.state.emails.length === 0){
            return <span>No Email Address Found.</span> 
 
-        } else if(this.props.emailList.length === 1){
+        } else if(this.state.emails.length === 1){
             return <span>1 Email Address Found. 
                         {/* <a href="/export"> */}
                             <button className="exportBtn"
@@ -41,7 +44,7 @@ export class SearchResults extends Component {
                                 }} 
                             >Export
                                 <span className="numberInExportBtn">
-                                    {this.props.emailList.length}
+                                    {this.state.emails.length}
                                 </span>
                             </button> 
                         {/* </a> */}
@@ -49,7 +52,7 @@ export class SearchResults extends Component {
                             filename={"my-file.csv"}
                             className="btn exportBtn"
                             target="_blank"
-                            data={this.props.emailList}
+                            data={this.state.emails}
                             asyncOnClick={true}
                             onClick={
                                 this.exportDatasToCsv
@@ -57,15 +60,15 @@ export class SearchResults extends Component {
                         >    
                             Export
                             <span className="numberInExportBtn">
-                                {this.props.emailList.length}
+                                {this.state.emails.length}
                             </span> 
                         </CSVLink>   */}
                    </span>
         } else{
-            return <span> {this.props.emailList.length} Email Addresses Found. 
+            return <span> {this.state.emails.length} Email Addresses Found. 
                         {/* <a href="/export"> */}
                         <button className="exportBtn"
-                                onClick={() => { this.props.push({
+                                onClick={() => { this.props.router.push({
                                     pathname: '/export',
                                     state: {
                                         color: 'green'
@@ -74,7 +77,7 @@ export class SearchResults extends Component {
                                 }} 
                             >Export
                                 <span className="numberInExportBtn">
-                                    {this.props.emailList.length}
+                                    {this.state.emails.length}
                                 </span>
                             </button> 
                         {/* </a> */}
@@ -82,7 +85,7 @@ export class SearchResults extends Component {
                             filename={"my-file.csv"}
                             className="btn exportBtn"
                             target="_blank"
-                            data={this.props.emailList}
+                            data={this.state.emails}
                             asyncOnClick={true}
                             onClick={
                                 this.exportDatasToCsv
@@ -90,20 +93,26 @@ export class SearchResults extends Component {
                         >    
                             Export
                             <span className="numberInExportBtn">
-                                {this.props.emailList.length}
+                                {this.state.emails.length}
                             </span> 
                         </CSVLink>   */}
                     </span>
         }
     }
 
-    isOdd(num) { 
-        return num % 2;
+    /*this function updates the value of emails by concataining 
+    the new search (when we press on show more Button)
+    results to the first search result */
+    updateEmails = (newEmails) => {
+        console.log(this.state.emails);
+        this.setState({
+            emails: newEmails.concat(this.state.emails) 
+        })
+        console.log(this.state.emails);
     }
     
-    render() {  /* We remove 1 to the length because the last object in the json 
-        files is not an object we want to read */
-        const resultat = this.props.emailList; //this.state.list
+    render() { 
+        const resultat = this.state.emails; //this.state.list
         return (
             <div>
                 <div class="emailResult numberOfEmails">
@@ -113,8 +122,8 @@ export class SearchResults extends Component {
                     
                 </div>
                     {/* this is used to display just the half of the results */  
-                    /* {this.props.emailList.slice(0, (this.props.emailList.length + 1)/2).map(item => (
-                        (this.props.emailList.length).map(item => (
+                    /* {this.state.emails.slice(0, (this.state.emails.length + 1)/2).map(item => (
+                        (this.state.emails.length).map(item => (
                         <div class="theResults"> 
                             <p> <EmailResult result= {item}/></p>
                             <span>{item.description}</span>
@@ -123,17 +132,21 @@ export class SearchResults extends Component {
                     }
                         
                     {/* This displays all the results */
-                        (this.props.emailList).map(item => (
+                        (this.state.emails).map(item => (
                             <div class="theResults"> 
                                 <p> <EmailResult result= {item}/></p>
-                                <span>{item.description}</span>
+                                {/* <span>{item.description}</span> */}
                             </div>
                         ))
                     }
 
-                    {/* <div>
-                        <SeeMoreButton />
-                    </div> */}
+                    
+                <SeeMoreButton  
+                    requestedUrl={this.props.requestedUrl}
+                    firstResults={this.props.firstResults}
+                    updateEmails={this.updateEmails} /*this updates the value of the state everytime a new search is done */
+                />
+                    
                     
             </div>
         );
