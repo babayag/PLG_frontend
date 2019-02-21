@@ -34,11 +34,7 @@ class App extends Component {
           </BrowserRouter>
 
           <BrowserRouter>
-<<<<<<< HEAD
-            <Route exact path="/export" component={ExportPage}  />
-=======
             <Route exact path={"/export"} component={ExportPage}  />
->>>>>>> 9838f70e57493c3c079435a2501602bb69088554
           </BrowserRouter>
 
         </Provider>

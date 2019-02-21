@@ -30,7 +30,7 @@ export class ExportPage extends Component{
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/downloadEmails';
             //const ProductionURL = 'api/lead/testSharing'; 
             try {
-                const res = await axios.post(devUrlLocal, { url : this.state.domain }) //await fetch(devUrl);
+                const res = await axios.post(devUrl, { url : this.state.domain }) //await fetch(devUrl);
                 const emails = await res.data.data
                 this.setState({
                     emails: emails,
@@ -51,26 +51,31 @@ export class ExportPage extends Component{
             <div>
                 <NavBar/>
                 <div id="container">
-                    
-                    <CSVLink
-                        id="exportButton"
-                        filename={"my-file.csv"}
-                        className="exportBtn"
-                        target="_blank"
-                        data={this.state.emails}
-                        asyncOnClick={true}
-                        onClick={
-                            this.exportDatasToCsv
-                        }
-                    >    
-                        Export
-                        <span className="numberInExportBtn">
-                             {this.state.emails.length} 
-                        </span> 
-                    </CSVLink>  
-                     
-                    <button id="downloadButton">Download   <i >{download}</i></button>
-                    <div class="downBloc"></div>
+                    <div className="quaterWidthDiv"> </div>
+                    <div className="exportBtnParent">
+                        <CSVLink
+                            filename={this.state.domain + ".csv"}
+                            className="exportButton"
+                            target="_blank"
+                            data={this.state.emails}
+                            asyncOnClick={true}
+                            onClick={
+                                this.exportDatasToCsv
+                            }
+                        >    
+                            Export
+                            <span className="numberInExportBtn">
+                                {this.state.emails.length} 
+                            </span> 
+                        </CSVLink>  
+                    </div>  
+                    <div className="downloadBtnParent">
+                        <a href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
+                            <button className="downloadButton">Download   <i >{download}</i></button>
+                        </a>
+                        {/* <div class="downBloc"></div> */}
+                        <div className="quaterWidthDiv"> </div>
+                    </div>
                 </div>
             </div>
         );
