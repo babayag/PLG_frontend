@@ -68,7 +68,7 @@ export class ExportPage extends Component{
                              {this.state.emails.length} 
                         </span> 
                     </CSVLink>  
-                    
+                     
                     <button id="downloadButton">Download   <i >{download}</i></button>
                     <div class="downBloc"></div>
                 </div>
