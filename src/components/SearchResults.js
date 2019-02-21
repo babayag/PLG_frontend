@@ -141,13 +141,14 @@ export class SearchResults extends Component {
                         ))
                     }
 
-                    
-                <SeeMoreButton  
-                    requestedUrl={this.props.requestedUrl}
-                    firstResults={this.props.firstResults}
-                    updateEmails={this.updateEmails} /*this updates the value of the state everytime a new search is done */
-                />
-                    
+                {this.state.emails.length === 0 ?   
+                    null :  
+                    <SeeMoreButton  
+                        requestedUrl={this.props.requestedUrl}
+                        firstResults={this.props.firstResults}
+                        updateEmails={this.updateEmails} /*this updates the value of the state everytime a new search is done */
+                    />
+                } 
                     
             </div>
         );
