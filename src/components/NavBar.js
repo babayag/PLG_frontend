@@ -15,9 +15,15 @@ export class NavBar extends Component {
                     </a>
                 </div>
 
+                <div className="menuDiv">
+                    <a className="menuLink" href="https://support.leadmehome.io/blog/">Top Articles</a>
+                    <a className="menuLink" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">I Suck at Cold Email Course</a>
+
+                </div>
+
                 <div className="authenticationDiv">
-                    <a href="/login" className="login">Log In</a>   
-                    <a href="/signup"> <button className="register">Register </button></a>
+                    {/* <a href="/login" className="login">Log In</a>    */}
+                    {/* <a href="/signup"> <button className="register">Register </button></a> */}
                 </div>
             
             </header> 

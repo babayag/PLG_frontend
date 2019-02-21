@@ -1,78 +1,154 @@
 import React, { Component } from 'react';
 import { EmailResult } from "./EmailResult";
+import { CSVLink, CSVDownload } from "react-csv";
+import { SeeMoreButton } from "./SeeMoreButton"; 
 
-const list = [
-    {
-      'email': 'azerty@HTMLAllCollection.com',
-      'url': [
-        'www.googleAPI.com',
-    ]
-      
-    },
-    {
-        'email': 'qwerty@gmail.com',
-        'url': [
-            'www.googleAPI.com',
-            'www.googleAPI.cm',
-            'www.googleAPI.fr',
-        ]
-    },
-    {
-      'email': 'qwwertz@yahoo.de',
-      'url': [
-        'www.google52API.com',
-        'www.go4454ogleAPI.com',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        'www.googgggleAPI.cm',
-        'www.googleAPI.fr',
-        'www.googleAPI.cr',
-        'www.googleAPI.de',
-        ]
-    }
-  ];
-  
+
+
 
 export class SearchResults extends Component {
     constructor(props)
     {
         super(props);
-        this.state = { list }
-        //this.props.emailList.data
+        this.state = { 
+            emails: this.props.emailList,
+            fileName: this.props.requestedUrl
+         }
+        //this.props.emailList
     }
 
-    countSources(){
-        if(this.props.emailList.data.length === 0){
-           return <span>No email found.</span> 
-        } else if(this.props.emailList.data.length === 1){
-            return <span>1 Email found.</span>
+
+    sendDataToExport(){
+        this.props.router.push({
+            pathname: '/export',
+            state: {
+              id: 7,
+              color: 'green'
+            }
+          })
+    }
+
+    countSources(){  
+        if(this.state.emails.length === 0){
+           return <span>No Email Address Found.</span> 
+
+        } else if(this.state.emails.length === 1){
+            return <span>1 Email Address Found. 
+                        {/* <a href="/export"> */}
+                            {/* <button className="exportBtn"
+                                onClick={() => { this.props.router.push({
+                                    pathname: '/export',
+                                    state: {
+                                        color: 'green'
+                                    }
+                                  })
+                                }} 
+                            >Export
+                                <span className="numberInExportBtn">
+                                    {this.state.emails.length}
+                                </span>
+                            </button>  */}
+                        {/* </a> */}
+                        <CSVLink
+                            filename={this.state.fileName+".csv"}
+                            className="btn exportBtn"
+                            target="_blank"
+                            data={this.state.emails}
+                            asyncOnClick={true}
+                            onClick={
+                                this.exportDatasToCsv
+                            }
+                        >    
+                            Export
+                            <span className="numberInExportBtn">
+                                {this.state.emails.length}
+                            </span> 
+                        </CSVLink>  
+                   </span>
         } else{
-            return <span> {this.props.emailList.data.length} Emails found.</span>
+            return <span> {this.state.emails.length} Email Addresses Found. 
+                        {/* <a href="/export"> */}
+                        {/* <button className="exportBtn"
+                                onClick={() => { this.props.router.push({
+                                    pathname: '/export',
+                                    state: {
+                                        color: 'green'
+                                    }
+                                  })
+                                }} 
+                            >Export
+                                <span className="numberInExportBtn">
+                                    {this.state.emails.length}
+                                </span>
+                            </button>  */}
+                        {/* </a> */}
+                        <CSVLink
+                            filename={this.state.fileName+".csv"}
+                            className="btn exportBtn"
+                            target="_blank"
+                            data={this.state.emails}
+                            asyncOnClick={true}
+                            onClick={
+                                this.exportDatasToCsv
+                            }
+                        >    
+                            Export
+                            <span className="numberInExportBtn">
+                                {this.state.emails.length}
+                            </span> 
+                        </CSVLink>  
+                    </span>
         }
     }
 
-    isOdd(num) { return num % 2;}
+    /*this function updates the value of emails by concataining 
+    the new search (when we press on show more Button)
+    results to the first search result */
+    updateEmails = (newEmails) => {
+        console.log(this.state.emails);
+        this.setState({
+            emails: this.state.emails.concat(newEmails) 
+        })
+        console.log(this.state.emails);
+    }
     
-    render() {
-        const resultat = this.props.emailList; //this.state.list
+    render() { 
+        const resultat = this.state.emails; //this.state.list
         return (
             <div>
                 <div class="emailResult numberOfEmails">
-                    <p class=""> {this.countSources()}  
+                    <p class="text-center numberOfEmails1">
+                        {this.countSources()}                     
                     </p>
+                    
                 </div>
-                    {this.props.emailList.data.slice(0, (this.props.emailList.data.length + 1)/2).map(item => (
+                    {/* this is used to display just the half of the results */  
+                    /* {this.state.emails.slice(0, (this.state.emails.length + 1)/2).map(item => (
+                        (this.state.emails.length).map(item => (
                         <div class="theResults"> 
                             <p> <EmailResult result= {item}/></p>
                             <span>{item.description}</span>
                         </div>
-                    ))}
+                     */ 
+                    }
+                        
+                    {/* This displays all the results */
+                        (this.state.emails).map(item => (
+                            <div class="theResults"> 
+                                <p> <EmailResult result= {item}/></p>
+                                {/* <span>{item.description}</span> */}
+                            </div>
+                        ))
+                    }
+
+                    
+                <SeeMoreButton  
+                    requestedUrl={this.props.requestedUrl}
+                    firstResults={this.props.firstResults}
+                    updateEmails={this.updateEmails} /*this updates the value of the state everytime a new search is done */
+                />
+                    
+                    
             </div>
         );
        

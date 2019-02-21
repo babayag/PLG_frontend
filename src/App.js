@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, View, Text } from 'react';
 import {BrowserRouter , Route} from "react-router-dom";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
@@ -7,6 +8,7 @@ import Store from "./reducers/index";
 import { SignupPage } from "./components/SignupPage";
 import { LoginPage } from "./components/LoginPage";
 import { WholeLandingPage } from "./components/WholeLandingPage";
+import { ExportPage } from "./components/ExportPage";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -17,6 +19,7 @@ class App extends Component {
     return (
       
       <div className="App">
+
         <Provider store={Store}>
           <BrowserRouter>
             <Route exact path="/" component={WholeLandingPage} />
@@ -29,7 +32,11 @@ class App extends Component {
           <BrowserRouter>
             <Route exact path="/login" component={LoginPage} />
           </BrowserRouter>
-        
+
+          {/* <BrowserRouter>
+            <Route exact path="/export" component={ExportPage}  />
+          </BrowserRouter> */}
+
         </Provider>
 
         
