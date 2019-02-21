@@ -68,9 +68,10 @@ export class SearchBar extends Component {
             this.state.isload = false;
             this.state.isAboutVisible = true;
             const devUrl = 'http://leadmehome.io/api/lead/testSharing';
+            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
             //const ProductionURL = 'api/lead/testSharing'; 
             try {
-                const res = await axios.post(devUrl, { url : this.state.message, p:this.state.valueOfp}) //await fetch(devUrl);
+                const res = await axios.post(devUrlLocal, { url : this.state.message, p:this.state.valueOfp}) //await fetch(devUrl);
                 const emails = await res.data.data[0];
                 const valueOfp = await res.data.data[1];
                 console.log(valueOfp);
@@ -79,6 +80,8 @@ export class SearchBar extends Component {
                     valueOfp : valueOfp,
                     firstResults: res.data.data /*set the value of the state*/ 
                 });
+
+                localStorage.setItem('domain',this.state.message);
                 
             } catch (e) {
             console.log(e);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { EmailResult } from "./EmailResult";
+import {BrowserRouter , Route, Link} from "react-router-dom";
 import { CSVLink, CSVDownload } from "react-csv";
 import { SeeMoreButton } from "./SeeMoreButton"; 
 
@@ -34,8 +35,8 @@ export class SearchResults extends Component {
 
         } else if(this.state.emails.length === 1){
             return <span>1 Email Address Found. 
-                        {/* <a href="/export"> */}
-                            {/* <button className="exportBtn"
+                        <a href="/export">
+                            <button className="exportBtn"
                                 onClick={() => { this.props.router.push({
                                     pathname: '/export',
                                     state: {
@@ -47,56 +48,21 @@ export class SearchResults extends Component {
                                 <span className="numberInExportBtn">
                                     {this.state.emails.length}
                                 </span>
-                            </button>  */}
-                        {/* </a> */}
-                        <CSVLink
-                            filename={this.state.fileName+".csv"}
-                            className="btn exportBtn"
-                            target="_blank"
-                            data={this.state.emails}
-                            asyncOnClick={true}
-                            onClick={
-                                this.exportDatasToCsv
-                            }
-                        >    
-                            Export
-                            <span className="numberInExportBtn">
-                                {this.state.emails.length}
-                            </span> 
-                        </CSVLink>  
+                            </button>
+                         </a>
                    </span>
         } else{
             return <span> {this.state.emails.length} Email Addresses Found. 
-                        {/* <a href="/export"> */}
-                        {/* <button className="exportBtn"
-                                onClick={() => { this.props.router.push({
-                                    pathname: '/export',
-                                    state: {
-                                        color: 'green'
-                                    }
-                                  })
-                                }} 
+                        <a href="/export">
+                        <button className="exportBtn"
+                                
                             >Export
                                 <span className="numberInExportBtn">
                                     {this.state.emails.length}
                                 </span>
-                            </button>  */}
-                        {/* </a> */}
-                        <CSVLink
-                            filename={this.state.fileName+".csv"}
-                            className="btn exportBtn"
-                            target="_blank"
-                            data={this.state.emails}
-                            asyncOnClick={true}
-                            onClick={
-                                this.exportDatasToCsv
-                            }
-                        >    
-                            Export
-                            <span className="numberInExportBtn">
-                                {this.state.emails.length}
-                            </span> 
-                        </CSVLink>  
+                            </button>
+                        </a>
+                       
                     </span>
         }
     }
