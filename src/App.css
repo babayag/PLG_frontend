@@ -2553,7 +2553,7 @@ button:disabled{
 
 #exportButton{
   position: absolute;
-  top: 40%;
+  top: 43%;
   left: 40%;
   background-color: #5E06D2;
   color: white;
@@ -2561,7 +2561,7 @@ button:disabled{
 
 #downloadButton{
   position: absolute;
-  top: 70%;
+  top: 80%;
   left: 43%;
   background-color: #D25E06;
   color: white;
