@@ -24,6 +24,7 @@ export class BulkSearch extends Component {
                 <div class="fileReader"> 
                     <h3>Drag and Drop or Click to Import your CSV File</h3>
                     {reader}
+                    <button> Bulk Search  </button>
                 </div>
 
             </div>
