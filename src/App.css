@@ -2719,3 +2719,31 @@ button:disabled{
   }
 
 }
+
+/* ------------------- BULK SEARCH PAGE --------------------- */
+.bulkSearchContainer{
+  margin-top: 100px;
+}
+
+.fileReader{
+  text-align: center;
+  padding-top: 30px;
+}
+
+.fileReader h3{
+  font-size: 2em !important;
+}
+
+.csvContainer{
+  font-size: 1.5em;
+}
+
+.csv-input{
+  background-color: #5f06d234;
+  cursor: pointer;
+  padding: 10px;
+  display: block;
+  margin: 15px auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
