@@ -1432,14 +1432,14 @@ input::-moz-focus-inner {
  *
  * ------------------------------------------------------------------- */
 .s-header {
+  display: block;
   z-index: 500;
   width: 100%;
   min-height: 100px;
   height: auto;
   padding-left: 10%;
   background-color: #FFFFFF;
-  position: absolute;
-  position: fixed;
+  /* position: absolute; */
   top: 0px;
   position: fixed;
   box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
@@ -1716,6 +1716,13 @@ input::-moz-focus-inner {
     width: 55% !important;
     padding-top: 20px !important;
   }
+  .ctaColdEmails{
+    font-size: 2.5em !important;
+  }
+  .downloadBtnParent{
+    margin-top: 140px !important;
+  }
+
   
 }
 
@@ -2465,9 +2472,10 @@ button:disabled{
     margin-left: -7% !important;
   }
 
-  /* .header-logo{
-    margin-top: -30px;
-  } */
+  .ctaColdEmails{
+    font-size: 2em !important;
+  }
+
 
   .authenticationDiv{
     /* margin-top: 75px; */
@@ -2568,6 +2576,7 @@ button:disabled{
   padding-left: 30px;
   padding-right: 30px;
   color: #fff;
+  margin-left: 6%;
 }
 
 .downloadButton:focus{
@@ -2580,7 +2589,7 @@ button:disabled{
 
 .downloadBtnParent{
   text-align: center;
-  margin-top: 290px;
+  margin-top: 170px;
   margin-left: 25%;
 }
 
@@ -2598,7 +2607,7 @@ button:disabled{
   height: 600px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-image: url(backgroundphone.jpg);
+  background-image: url(backgroundPhone.PNG);
 }
 
 
@@ -2619,11 +2628,17 @@ button:disabled{
     height: 890px !important; 
     /* margin-right: 7% !important; 
     margin-left: 7% !important; */
-    background-image: url(exportBackground.jpg) !important;
+    background-image: url(exportPage.PNG) !important;
   }
 
 }
 
+.ctaColdEmails{
+  font-size: 3em;
+  font-weight: bolder;
+  width: 50%;
+  margin-left: 20%;
+}
 
 /*---------------------SEE MORE BUTTON COMPONENT------------------------- */
 .seeMoreBtnParent{
@@ -2703,4 +2718,32 @@ button:disabled{
     min-height: 120px;
   }
 
+}
+
+/* ------------------- BULK SEARCH PAGE --------------------- */
+.bulkSearchContainer{
+  margin-top: 100px;
+}
+
+.fileReader{
+  text-align: center;
+  padding-top: 30px;
+}
+
+.fileReader h3{
+  font-size: 2em !important;
+}
+
+.csvContainer{
+  font-size: 1.5em;
+}
+
+.csv-input{
+  background-color: #5f06d234;
+  cursor: pointer;
+  padding: 10px;
+  display: block;
+  margin: 15px auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
