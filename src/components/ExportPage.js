@@ -70,9 +70,11 @@ export class ExportPage extends Component{
                         </CSVLink>  
                     </div>  
                     <div className="downloadBtnParent">
+                        <p className="ctaColdEmails"> I Suck at Cold Emails Course </p>
                         <a href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
-                            <button className="downloadButton">Download   <i >{download}</i></button>
+                            <button className="downloadButton"> Begin Lesson 1   </button>
                         </a>
+                        
                         {/* <div class="downBloc"></div> */}
                         <div className="quaterWidthDiv"> </div>
                     </div>

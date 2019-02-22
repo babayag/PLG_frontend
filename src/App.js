@@ -9,6 +9,7 @@ import { SignupPage } from "./components/SignupPage";
 import { LoginPage } from "./components/LoginPage";
 import { WholeLandingPage } from "./components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
+import { BulkSearch } from "./components/BulkSearch";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -35,6 +36,10 @@ class App extends Component {
 
           <BrowserRouter>
             <Route exact path={"/export"} component={ExportPage}  />
+          </BrowserRouter>
+
+          <BrowserRouter>
+            <Route exact path={"/bulksearch"} component={BulkSearch}  />
           </BrowserRouter>
 
         </Provider>
