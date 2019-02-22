@@ -1432,14 +1432,14 @@ input::-moz-focus-inner {
  *
  * ------------------------------------------------------------------- */
 .s-header {
+  display: block;
   z-index: 500;
   width: 100%;
   min-height: 100px;
   height: auto;
   padding-left: 10%;
   background-color: #FFFFFF;
-  position: absolute;
-  position: fixed;
+  /* position: absolute; */
   top: 0px;
   position: fixed;
   box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
