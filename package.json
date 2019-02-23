@@ -11,6 +11,7 @@
     "react-csv": "^1.1.1",
     "react-csv-reader": "^1.2.2",
     "react-dom": "^16.7.0",
+    "react-facebook-pixel": "^0.1.2",
     "react-google-auth": "^0.4.1",
     "react-notifications": "^1.4.3",
     "react-notifications-component": "^1.0.1",

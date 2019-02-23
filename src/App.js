@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, View, Text } from 'react';
+import ReactPixel from 'react-facebook-pixel';
 import {BrowserRouter , Route} from "react-router-dom";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
@@ -14,11 +15,30 @@ import { BulkSearch } from "./components/BulkSearch";
 
 import './App.css';
 
+ 
+ 
+const advancedMatching = { em: 'some@email.com' }; 
+const options = {
+    autoConfig: true, 	// set pixel's autoConfig
+    debug: false, 		// enable logs
+};
+// ReactPixel.init('672417766469134', advancedMatching, options);
+ 
+// ReactPixel.pageView(); 					// For tracking page view
+//ReactPixel.track( event, data ) 		// For tracking default events, more info about events and data https://developers.facebook.com/docs/ads-for-websites/pixel-events/v2.9
+//ReactPixel.trackCustom( event, data ) 	// For tracking custom events
+
+
 class App extends Component {
+  
+  componentDidMount() {
+   
+  }
 
   render() {
+    ReactPixel.init('672417766469134', advancedMatching, options);
+    ReactPixel.pageView()
     return (
-      
       <div className="App">
 
         <Provider store={Store}>

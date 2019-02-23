@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { NavBar } from "./NavBar";
 import CSVReader from "react-csv-reader";
 
+
+let domains;
 const afterLoading = data => {
-  console.log(data);
+  data = data.toString().split(",");
+  domains = data;
+  console.log(domains);
 };
 
+const getListEmail = () => {
+    console.log('toto');
+}
 const reader = (
   <div className="csvContainer">
     <CSVReader
@@ -17,6 +24,14 @@ const reader = (
 
 
 export class BulkSearch extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = { 
+            domainList: domains
+         }
+    }
+
     render() {
         return (
             <div className="bulkSearchContainer">
@@ -24,6 +39,7 @@ export class BulkSearch extends Component {
                 <div class="fileReader"> 
                     <h3>Drag and Drop or Click to Import your CSV File</h3>
                     {reader}
+                    {getListEmail()}
                 </div>
 
             </div>
