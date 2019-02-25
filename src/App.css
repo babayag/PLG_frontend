@@ -21,12 +21,12 @@ html {
 html,
 body {
   height: 100%;
-  
+
 }
 
 
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## links
  * ------------------------------------------------------------------- */
 a {
@@ -48,7 +48,7 @@ a:active {
 
 /* ===================================================================
  * # typography & general theme styles
- * 
+ *
  * ------------------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: 'Futura' !important;
@@ -232,7 +232,7 @@ hr {
   height: 0;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## responsive video container
  * ------------------------------------------------------------------- */
 .video-container {
@@ -254,7 +254,7 @@ hr {
 }
 
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## tables
  * ------------------------------------------------------------------- */
 table {
@@ -293,8 +293,8 @@ td:last-child {
   -webkit-overflow-scrolling: touch;
 }
 
-/* ------------------------------------------------------------------- 
- * ## Spacing 
+/* -------------------------------------------------------------------
+ * ## Spacing
  * ------------------------------------------------------------------- */
 fieldset,
 button,
@@ -319,8 +319,8 @@ form,
   margin-bottom: 3.2rem;
 }
 
-/* ------------------------------------------------------------------- 
- * ## pace.js styles - minimal 
+/* -------------------------------------------------------------------
+ * ## pace.js styles - minimal
  * ------------------------------------------------------------------- */
 .pace {
   -webkit-pointer-events: none;
@@ -413,7 +413,7 @@ form,
 
 
 /* ===================================================================
- * # forms 
+ * # forms
  *
  * ------------------------------------------------------------------- */
 fieldset {
@@ -548,7 +548,7 @@ label > input[type="radio"] {
   top: .2rem;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## Style Placeholder Text
  * ------------------------------------------------------------------- */
 ::-webkit-input-placeholder {
@@ -593,7 +593,7 @@ label > input[type="radio"] {
   color: rgba(0, 0, 0, 0.4) !important;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## Change Autocomplete styles in Chrome
  * ------------------------------------------------------------------- */
 input:-webkit-autofill,
@@ -728,13 +728,13 @@ input::-moz-focus-inner {
 }
 
 
-/* =================================================================== 
+/* ===================================================================
  * # additional components
  *
  * ------------------------------------------------------------------- */
 
-/* ------------------------------------------------------------------- 
- * ## alert box 
+/* -------------------------------------------------------------------
+ * ## alert box
  * ------------------------------------------------------------------- */
 .alert-box {
   padding: 2.4rem 4rem 2.4rem 3.2rem;
@@ -778,11 +778,11 @@ input::-moz-focus-inner {
   color: #bba31b;
 }
 
-/* ------------------------------------------------------------------- 
- * ## additional typo styles 
+/* -------------------------------------------------------------------
+ * ## additional typo styles
  * ------------------------------------------------------------------- */
 
-/* drop cap 
+/* drop cap
  * ----------------------------------------------- */
 .drop-cap:first-letter {
   float: left;
@@ -797,7 +797,7 @@ input::-moz-focus-inner {
   color: #121619;
 }
 
-/* line definition style 
+/* line definition style
  * ----------------------------------------------- */
 .lining dt,
 .lining dd {
@@ -824,7 +824,7 @@ input::-moz-focus-inner {
   margin-left: -0.2em;
 }
 
-/* dictionary definition style 
+/* dictionary definition style
  * ----------------------------------------------- */
 .dictionary-style dt {
   display: inline;
@@ -845,7 +845,7 @@ input::-moz-focus-inner {
   content: counter(definitions, decimal) ". ";
 }
 
-/** 
+/**
  * Pull Quotes
  * -----------
  * markup:
@@ -903,7 +903,7 @@ input::-moz-focus-inner {
   content: none;
 }
 
-/** 
+/**
  * Stats Tab
  * ---------
  * markup:
@@ -958,8 +958,8 @@ input::-moz-focus-inner {
   color: rgba(0, 0, 0, 0.5);
 }
 
-/* ------------------------------------------------------------------- 
- * ## skillbars 
+/* -------------------------------------------------------------------
+ * ## skillbars
  * ------------------------------------------------------------------- */
 .skill-bars {
   list-style: none;
@@ -1100,7 +1100,7 @@ input::-moz-focus-inner {
 }
 
 /* -------------------------------------------------------------------
- * ## pagination 
+ * ## pagination
  * ------------------------------------------------------------------- */
 .pgn {
   margin: 3.2rem auto;
@@ -1195,7 +1195,7 @@ input::-moz-focus-inner {
   background-color: transparent;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * responsive:
  * pagination
  * ------------------------------------------------------------------- */
@@ -1227,7 +1227,7 @@ input::-moz-focus-inner {
   max-width: 1120px;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## display headings
  * ------------------------------------------------------------------- */
 .display-1 {
@@ -1265,7 +1265,7 @@ input::-moz-focus-inner {
   margin-bottom: 2rem;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## section header
  * ------------------------------------------------------------------- */
 .section-header.has-bottom-sep {
@@ -1288,7 +1288,7 @@ input::-moz-focus-inner {
   transform: translate3d(-50%, 0, 0);
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## slick slider
  * ------------------------------------------------------------------- */
 .slick-slider {
@@ -1346,7 +1346,7 @@ input::-moz-focus-inner {
   background: #3C3C3C;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * responsive:
  * reusable and common theme styles
  * ------------------------------------------------------------------- */
@@ -1484,8 +1484,8 @@ input::-moz-focus-inner {
 
 }
 
-/* ------------------------------------------------------------------- 
- * ## navigation 
+/* -------------------------------------------------------------------
+ * ## navigation
  * ------------------------------------------------------------------- */
 .header-nav-wrap {
   font-family: 'Futura' !important;
@@ -1574,7 +1574,7 @@ input::-moz-focus-inner {
   width: 44px;
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * ## menu trigger
  * ------------------------------------------------------------------- */
 .header-menu-toggle {
@@ -1662,7 +1662,7 @@ input::-moz-focus-inner {
   transform: rotate(225deg);
 }
 
-/* ------------------------------------------------------------------- 
+/* -------------------------------------------------------------------
  * responsive:
  * header
  * ------------------------------------------------------------------- */
@@ -1723,7 +1723,7 @@ input::-moz-focus-inner {
     margin-top: 140px !important;
   }
 
-  
+
 }
 
 @media only screen and (max-width:800px) {
@@ -1812,7 +1812,7 @@ input::-moz-focus-inner {
   .header-nav-wrap {
     padding: 120px 40px 64px;
   }
-  
+
   .topnav .search-container button {
     margin-top: -90.5px !important;
     height: 61px;
@@ -1821,7 +1821,7 @@ input::-moz-focus-inner {
   .email p{
     width: 60%;
     overflow-wrap: break-word !important;
-    
+
   }
 
 }
@@ -1897,7 +1897,7 @@ body{
   .centerDiv{
     width: 60%;
   }
-  
+
   .topnav{
     width: 54% !important;
   }
@@ -1919,12 +1919,12 @@ body{
   .email p{
     font-weight: 100;
     font-size: 1.8em !important;
-    
+
   }
-  
+
   .url p{
     font-size: 1.5em !important;
-    color: #635959 
+    color: #635959
   }
 
 }
@@ -1938,7 +1938,7 @@ body{
   .centerDiv{
     width: 70%;
   }
-  
+
   .topnav{
     width: 64% !important;
     padding-top: 15px !important;
@@ -1969,7 +1969,7 @@ body{
   .centerDiv{
     width: 80%;
   }
-  
+
   .topnav{
     width: 70% !important;
   }
@@ -2007,7 +2007,7 @@ body{
   .centerDiv{
     width: 90%;
   }
-  
+
   .topnav{
     width: 80% !important;
   }
@@ -2043,10 +2043,10 @@ body{
     font-weight: 100;
     font-size: 1.5em !important;
   }
-  
+
   .url p{
     font-size: 1.5em !important;
-    color: #635959 
+    color: #635959
   }
 
 }
@@ -2059,13 +2059,13 @@ body{
   .centerDiv{
     width: 96%;
   }
-  
+
   .topnav{
     width: 90% !important;
   }
 
   .topnav button{
-    padding-left: 4% !important; 
+    padding-left: 4% !important;
   }
 
   .emailResult{
@@ -2078,7 +2078,7 @@ body{
     font-size: 0.8em;
   }
 
-  
+
 
   .resultBlock{
     padding-left: 2.9% !important;
@@ -2094,13 +2094,13 @@ body{
   .centerDiv{
     width: 96%;
   }
-  
+
   .topnav{
     width: 90% !important;
   }
 
   .topnav button{
-    padding-left: 2% !important; 
+    padding-left: 2% !important;
     height: 60.2px;
     margin-top: -92.5px !important;
   }
@@ -2133,12 +2133,12 @@ body{
   border-bottom-right-radius: 0 !important;
   height: 60px;
   padding-left: 15px !important;
-  border: 1px solid #5E06D2/* #D62469;  */ !important; 
+  border: 1px solid #5E06D2/* #D62469;  */ !important;
   background-color: rgba(95, 6, 210, 0.048);
   vertical-align: middle;
   font-family: 'Futura' !important;
   /* box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19); */
-  
+
 }
 
 
@@ -2148,7 +2148,7 @@ body{
   width: 47%;
   height: 102px !important ;
   padding: 1.2%;
-  border-radius: 5px;  
+  border-radius: 5px;
   background-color: #ffffff;
   box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 }
@@ -2220,14 +2220,14 @@ button:disabled{
 .emailResult p{
   font-size: 2.3em;
   line-height: 25px;
-   
+
 }
 
 .exportBtn{
   height: 30px !important;
-  line-height: 1 !important; 
+  line-height: 1 !important;
   background-color: #D25F06;
-  color: #fff !important; 
+  color: #fff !important;
   padding-left: 12px;
   padding-right: 12px;
   margin-bottom: 0;
@@ -2248,20 +2248,20 @@ button:disabled{
   height: auto;
   padding-left: 1.9%;
   border-radius: 10px;
-  margin-top: -8px; 
-  
+  margin-top: -8px;
+
 }
 
 .source, .email, .url{
   display: inline-block;
-  
+
 }
 
 .url{
   width: 75%;
 }
 
-.fa-2x{ 
+.fa-2x{
   margin-bottom: -4px !important;
 }
 
@@ -2277,21 +2277,21 @@ button:disabled{
 
 .source i{
   cursor: pointer;
-} 
+}
 
 .email{
   width: 75%;
 }
 .email p{
   font-size: 1.8em !important;
-  text-overflow: ellipsis !important; 
+  text-overflow: ellipsis !important;
   width: 90%;
 }
 
 .url p{
   font-size: 2em;
   color: #635959;
-  text-overflow: ellipsis !important; 
+  text-overflow: ellipsis !important;
 
 }
 
@@ -2398,7 +2398,7 @@ button:disabled{
 .inputsBlock{
   padding-top: 3rem;
   background-color: #FFFFFF;
-  border: 1px solid #ccc6c6; 
+  border: 1px solid #ccc6c6;
   border-radius: 10px;
   box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.19);
 }
@@ -2408,7 +2408,7 @@ button:disabled{
 }
 
 .inputsBlock p{
-  font-size: 1.4em; 
+  font-size: 1.4em;
   margin-top: 5px;
 }
 
@@ -2461,7 +2461,7 @@ button:disabled{
     padding-right: 15px;
   }
 
-  .header-logo, .authenticationDiv{  
+  .header-logo, .authenticationDiv{
     padding-left: 0% !important;
     width: 100% !important;
     text-align: center !important;
@@ -2532,9 +2532,9 @@ button:disabled{
 
 .notification-awesome {
   background-color: rgba(0, 0, 0, 0.849) ;
-  border-left: 10px solid #ff0000 !important;  
+  border-left: 10px solid #ff0000 !important;
   width: 140% !important;
-  font-size: 1.2em !important;  
+  font-size: 1.2em !important;
 }
 
 
@@ -2551,7 +2551,7 @@ button:disabled{
 
 .exportButton{
   background-color:#D25F06 !important;
-  color: #fff;  
+  color: #fff;
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 10px;
@@ -2559,11 +2559,11 @@ button:disabled{
   font-size: 2em !important;
   margin-bottom: -200px !important;
   border-radius: 10px;
-  margin-left: 5%;  
+  margin-left: 5%;
 }
 
 .exportButton:focus{
-  color: #fff;  
+  color: #fff;
 }
 
 .exportBtnParent{
@@ -2596,13 +2596,13 @@ button:disabled{
 .exportButton:hover{
   text-decoration: none;
   color: #fff;
-  
+
 }
 
 #container{
   text-align: center;
   margin-top: 100px;
-  /* margin-right: 7% ; 
+  /* margin-right: 7% ;
   margin-left: 7% ; */
   height: 600px;
   background-size: 100% 100%;
@@ -2614,19 +2614,19 @@ button:disabled{
 @media only screen and (max-width:850px){
   .downloadBtnParent{
     margin-top: 220px;
-    margin-left: 20%; 
+    margin-left: 20%;
   }
-  
+
   .exportBtnParent{
     margin-top: 185px;
-  
+
   }
 }
 
 @media only screen and (min-width:850px){
   #container{
-    height: 890px !important; 
-    /* margin-right: 7% !important; 
+    height: 890px !important;
+    /* margin-right: 7% !important;
     margin-left: 7% !important; */
     background-image: url(exportPage.PNG) !important;
   }
@@ -2693,7 +2693,7 @@ button:disabled{
     transition: all 0.3s ease-in-out;
     -webkit-transform: translate3d(0, 10%, 0);
     -ms-transform: translate3d(0, 10%, 0);
-    transform: translate3d(0, 10%, 0); 
+    transform: translate3d(0, 10%, 0);
   }
   .Navbar__Items {
     display:none;
@@ -2713,7 +2713,7 @@ button:disabled{
     position: absolute;
     cursor: pointer;
   }
-  
+
   .s-header{
     min-height: 120px;
   }
@@ -2722,16 +2722,39 @@ button:disabled{
 
 /* ------------------- BULK SEARCH PAGE --------------------- */
 .bulkSearchContainer{
-  margin-top: 100px;
+  padding-top: 100px;
 }
 
 .fileReader{
   text-align: center;
-  padding-top: 30px;
+  padding: 20px 100px;
+  display: flex;
+}
+@media only screen and (max-width: 780px){
+  .fileReader{
+      padding: 0px;
+  }
+}
+
+.fileReader .inner{
+  text-align: center;
+  padding: 50px 100px;
+  border: solid 1px #dddddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem auto;
+  box-shadow: 0px 3px 15px #dddddd;
+}
+@media only screen and (max-width:780px){
+  .fileReader .inner{
+      padding: 20px 40px;
+  }
 }
 
 .fileReader h3{
-  font-size: 2em !important;
+  font-size: 2.7em !important;
 }
 
 .csvContainer{
@@ -2744,6 +2767,16 @@ button:disabled{
   padding: 10px;
   display: block;
   margin: 15px auto;
-  border: 1px solid #ccc;
   border-radius: 5px;
+  margin-top: 4rem;
+}
+
+.csv-input::-webkit-file-upload-button {
+  border: none;
+  border: solid 1px #cccccc;
+  font-size: 1.6rem;
+  padding: 0.5rem 1.5rem;
+  background-color: white;
+  border-radius: .4rem;
+  cursor: pointer;
 }
