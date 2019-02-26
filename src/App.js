@@ -11,28 +11,29 @@ import { LoginPage } from "./components/LoginPage";
 import { WholeLandingPage } from "./components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
+import { Finder } from "./components/Finder";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
 
- 
- 
-const advancedMatching = { em: 'some@email.com' }; 
+
+
+const advancedMatching = { em: 'some@email.com' };
 const options = {
     autoConfig: true, 	// set pixel's autoConfig
     debug: false, 		// enable logs
 };
 // ReactPixel.init('672417766469134', advancedMatching, options);
- 
+
 // ReactPixel.pageView(); 					// For tracking page view
 //ReactPixel.track( event, data ) 		// For tracking default events, more info about events and data https://developers.facebook.com/docs/ads-for-websites/pixel-events/v2.9
 //ReactPixel.trackCustom( event, data ) 	// For tracking custom events
 
 
 class App extends Component {
-  
+
   componentDidMount() {
-   
+
   }
 
   render() {
@@ -45,11 +46,11 @@ class App extends Component {
           <BrowserRouter>
             <Route exact path="/" component={WholeLandingPage} />
           </BrowserRouter>
-          
+
           <BrowserRouter>
             <Route path="/signup" component={SignupPage} />
           </BrowserRouter>
-          
+
           <BrowserRouter>
             <Route exact path="/login" component={LoginPage} />
           </BrowserRouter>
@@ -62,11 +63,15 @@ class App extends Component {
             <Route exact path={"/bulksearch"} component={BulkSearch}  />
           </BrowserRouter>
 
+          <BrowserRouter>
+            <Route exact path={"/finder"} component={Finder}  />
+          </BrowserRouter>
+
         </Provider>
 
-        
+
       </div>
-      
+
     );
   }
 }
