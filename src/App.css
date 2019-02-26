@@ -2812,7 +2812,7 @@ button:disabled{
 }
 
 .finder .inner{
-  padding: 50px 100px;
+  padding: 40px 100px;
   border: solid 1px #dddddd;
   display: flex;
   flex-direction: column;
@@ -2882,7 +2882,34 @@ button:disabled{
   background-color: #ededed !important;
 }
 
-.finder p{
+.finder .description{
   font-size: 1.5rem;
   margin-top: 2.5rem;
+  margin-bottom: 0.5em;
+}
+
+.foundEmail{
+  padding: 15px 0px; 
+  font-size: 2em;
+  font-weight: 500;
+  border-bottom: 0.8px solid rgba(197, 185, 185, 0.692); 
+  margin: 0 !important;
+}
+
+.foundEmailContainer{
+  border-top: 0.8px solid rgba(197, 185, 185, 0.692);
+  margin-top: 20px;  
+}
+
+.foundEmailContainer .validIcon svg{
+  margin-left: 10px !important;
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.foundEmail span{
+  display: inline-block !important;
+  height: 20px !important;
+  font-size: 15px !important;
+  line-height: 5px !important;
 }

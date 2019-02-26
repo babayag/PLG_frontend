@@ -29,6 +29,7 @@ export class SearchBar extends Component {
             the SeeMoreButton so that it will continue the search based on these results  */
 
         }
+        /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
     }
@@ -62,7 +63,6 @@ export class SearchBar extends Component {
             this.setState({
                 valueOfp: 0
             });
-
 
             await this.showAndHide();
             this.state.isload = false;
