@@ -40,6 +40,7 @@ export class BulkSearch extends Component {
                   <div class="inner">
                     <h3 class="fileReader__text">Drag and Drop or Click to Import your CSV File</h3>
                     {reader}
+                    <button>Bulk Search</button>
                     {getListEmail()}
                   </div>
                 </div>
