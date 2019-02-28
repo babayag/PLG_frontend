@@ -70,9 +70,9 @@ export class SeeMoreButton extends Component {
                         ))
                     */  
                 }  
-                <div className="theResults seeMoreBtnParent"> 
+                <div className="theResults seeMoreBtnParent the moreresult"> 
                     <div className="quaterWidthDiv"> </div>
-                    <div className="emailResult seeMoreBtnParentFirstChild">
+                    <div className="emailResult seeMoreBtnParentFirstChild seemorebtn">
                         
                         <p>
                         {/* <div className="theResults">  */}
