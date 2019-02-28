@@ -93,6 +93,7 @@ export class SearchBar extends Component {
             //const ProductionURL = 'api/lead/testSharing';
             try {
                 const res = await axios.post(devUrl, { url : this.state.message, p:this.state.valueOfp}) //await fetch(devUrl);
+
                 const emails = await res.data.data[0];
                 const valueOfp = await res.data.data[1];
                 console.log(valueOfp);
@@ -115,7 +116,7 @@ export class SearchBar extends Component {
         }
     }
 
-      showAndHide(){
+    showAndHide(){
         this.setState({
             isload : true,
             isAboutVisible : false
