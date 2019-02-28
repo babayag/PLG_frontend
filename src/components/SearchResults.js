@@ -28,10 +28,10 @@ export class SearchResults extends Component {
 
     countSources(){ console.log(this.state.emails)
         if(this.state.emails.length === 0){
-           return <span> No Email Address Found.</span>
+           return <span><span id="training__post_id">LEARN HOW TO <b><a href="#">SEND COLD EMAIL THAT WORK.</a></b></span> <span class="text-right">No Email Address Found.</span></span>
 
         } else if(this.state.emails.length === 1){
-            return <span>1 Email Address Found.
+            return <span> <span id="training__post_id">LEARN HOW TO <b><a href="#">SEND COLD EMAIL THAT WORK.</a></b></span> <span class="text-right">1 Email Address Found.</span>
                         <a href="/export">
                             <button className="exportBtn"
                                 onClick={() => { this.props.router.push({
