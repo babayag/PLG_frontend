@@ -13,11 +13,12 @@ export class EmailResult extends Component {
             showResult: false,
             showUpIcon: true
         }
+
     }
 
     showAndHide(){
         this.setState({
-            showResult:!this.state.showResult,
+            showResult: !this.state.showResult,
             showUpIcon: !this.state.showUpIcon
         })
     }
@@ -25,36 +26,37 @@ export class EmailResult extends Component {
     render() {
 
         return (
-            <div class="resultBlock"> 
-                <div class="quaterWidthDiv"> </div>
-                <div class="emailResult">
+            <div class="resultBlock my_resultBlock">
+            {console.log(this.props.result.url)}
+                <div class="quaterWidthDiv my_quaterWidthDiv"> </div>
+                <div class="emailResult my_email_result">
                     <div class="email">
-                        <p class=""> {this.props.result.email}  </p>       
-                    </div> 
+                        <p class=""> {this.props.result.email}  </p>
+                    </div>
                     <div class="source">
-                        <p class=""> 
-                         {this.props.result.url.length === 1 ? 
-                            <p>{this.props.result.url.length} source {this.state.showUpIcon ? 
+                        <p>
+                         {this.props.result.url.length === 1 ?
+                            <p>{this.props.result.url.length} source {this.state.showUpIcon ?
                                 <i onClick={()=>this.showAndHide()}>{angleDown}</i>
                                 : <i onClick={()=>this.showAndHide()}>{angleUp}</i> }
                             </p>
-                            : <p>{this.props.result.url.length} sources {this.state.showUpIcon ? 
+                            : <p>{this.props.result.url.length} sources {this.state.showUpIcon ?
                                 <i onClick={()=>this.showAndHide()}>{angleDown}</i>
                                 : <i onClick={()=>this.showAndHide()}>{angleUp}</i> }
                             </p>
                          }
-                        </p>  
+                        </p>
                     </div>
-                    {     
+                    {
                         this.state.showResult?
                             <div class="url">
                                 { this.props.result.url.map((url) =>
                                 <p >
                                    <a href={url}> {url} </a>
                                 </p>
-                                )}            
+                                )}
                             </div>
-                        :null                  
+                        :null
                     }
                 </div>
                 <div class="quaterWidthDiv"> </div>
