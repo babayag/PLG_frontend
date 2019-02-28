@@ -67,7 +67,7 @@ export class Finder extends Component {
                 var lastName = "";   /*get the second element of the splitted array */
                 try {
                     /*Send an email with the three parameters */
-                    const res = await axios.post(devUrlLocal, { firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
+                    const res = await axios.post(devUrl, { firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
                     console.log(res.data);
 
                     var emailsThatWhereFound = res.data;
@@ -88,7 +88,7 @@ export class Finder extends Component {
                 var firstName = splitedName[0];
                 var lastName = splitedName[1];
                 try {
-                    const res = await axios.post(devUrlLocal, {firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
+                    const res = await axios.post(devUrl, {firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
                     console.log(res.data);
 
                     var emailsThatWhereFound = res.data;
