@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Provider } from 'react-redux';
+import Cookies from 'universal-cookie';
 import ReactNotification from "react-notifications-component";
 import {BrowserRouter , Route, Link} from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
@@ -11,6 +12,10 @@ import { SeeMoreButton } from "./SeeMoreButton";
 import {ExportPage} from './ExportPage';
 
 
+const cookies = new Cookies();
+
+//cookies.set('numberOfSearches', 0, { path: '/' });
+// console.log(cookies.get('numberOfSearches')); // Pacman
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin/>
 
@@ -25,8 +30,9 @@ export class SearchBar extends Component {
             latestSearch: "",
             valueOfp: 0,
             redirect: false,
-            firstResults: []   /*this is used to send the value of the first results to
+            firstResults: [],   /*this is used to send the value of the first results to
             the SeeMoreButton so that it will continue the search based on these results  */
+            numberOfSearches: cookies.get('numberOfSearches')
 
         }
         /*unless these, notification won't work */
@@ -34,10 +40,10 @@ export class SearchBar extends Component {
         this.notificationDOMRef = React.createRef();
     }
 
-    addNotification() {
+    addNotification(message, duration) {
         this.notificationDOMRef.current.addNotification({
             title: "Error",
-            message: "Please enter a domain name like 'medievaltimes.com' ",
+            message: message,
             type: "awesome",
             insert: "top",
             container: "bottom-left",
@@ -57,8 +63,12 @@ export class SearchBar extends Component {
     async findEmails() {
         var regEx = /\w+\.\w+/;
         if(!regEx.test(this.state.message)) {
-            this.addNotification();
-        }else{
+            this.addNotification("Please enter a domain name like 'medievaltimes.com'");
+        }
+        else if(this.state.numberOfSearches == 1){
+            this.addNotification("You need to Login to do more researches")
+        }
+        else{
             /*this resets the value of p so that it is 0 for each new research */
             this.setState({
                 valueOfp: 0
@@ -74,17 +84,21 @@ export class SearchBar extends Component {
                 const res = await axios.post(devUrlLocal, { url : this.state.message, p:this.state.valueOfp}) 
                 const emails = await res.data.data[0];
                 const valueOfp = await res.data.data[1];
+                cookies.set('numberOfSearches', 1, { path: '/' });
+                const newNumberOfSearches = cookies.get('numberOfSearches');
                 console.log(valueOfp);
                 this.setState({
                     emails: emails,
                     valueOfp : valueOfp,
-                    firstResults: res.data.data /*set the value of the state*/
+                    firstResults: res.data.data, /*set the value of the state*/
+                    numberOfSearches: newNumberOfSearches
                 });
-
-                localStorage.setItem('domain',this.state.message);
+                alert(this.state.numberOfSearches);
+                localStorage.setItem('domain', this.state.message);
+                
 
             } catch (e) {
-            console.log(e);
+                console.log(e);
             }
 
             /*Sets the value of the lastest search to whar the user has entered */

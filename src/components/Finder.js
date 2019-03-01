@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { NavBar } from "./NavBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faCheck, faSpinner, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
-import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 
 const search = <FontAwesomeIcon icon={faSearch} color="#333333" size="1x"/>
 const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/>   //this is the green checked icon to testify that an email is valid
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#333333" size="2x" spin/>
-
+const questionCirle = <FontAwesomeIcon icon={faQuestionCircle} color="#33313165" size="1x"/>
 
 export class Finder extends Component {
     constructor(props){
@@ -138,7 +137,7 @@ export class Finder extends Component {
                 <div class="finder">
                   <div class="inner">
                     <div>
-                      <h3>Emails Finder</h3>
+                      <h3>Emails Finder <span>{questionCirle}</span></h3>
                     </div>
                     <div class="inputs">
                       <input 

@@ -1466,7 +1466,7 @@ input::-moz-focus-inner {
   -ms-transform: translate3d(0, 0%, 0);
   transform: translate3d(0, 0%, 0);
   position: absolute;
-  left: 15%;
+  left: 7%;
   margin-top: 14px;
   /* top: 50%; */
 }
@@ -2308,13 +2308,13 @@ button:disabled{
 
 .authenticationDiv{
   padding-top: 28px;
-  width: 37%;
+  width: 20%;
   float: right;
 }
 
 .menuDiv{
   padding-top: 37px;
-  width: 45%;
+  width: 65%;
   float: right;
   display: flex;
 }
@@ -2345,6 +2345,7 @@ button:disabled{
   font-size: 2.1em;
   margin-right: 20px;
   color: #5E06D2;
+  color: #534d4d;
   font-weight: 300;
   text-decoration: none;
 }
