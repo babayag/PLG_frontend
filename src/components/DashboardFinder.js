@@ -27,12 +27,12 @@ export class DashboardFinder extends Component {
                             <input 
                             type="text" 
                             name="nameToFind"
-                            placeholder="City" 
+                            placeholder="Example: Chicago" 
                             className="finder__name mr-2"
                             />
                             <input type="text" 
                             name="domainToFind"
-                            placeholder="Niche" 
+                            placeholder="Example: Dentist" 
                             className="finder__domain"
                             />
                             <button class="finder__btn dashboard_finder__btn"><span>SEARCH</span></button>
