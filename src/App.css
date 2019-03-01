@@ -2926,6 +2926,17 @@ button:disabled{
   margin-left: 22rem;
 }
 
+.header__profile-section .finder__link{
+  font-size: 2rem;
+  padding-right: 2rem;
+  margin-right: 3rem;
+  border-right: solid 1px #bbbbbb;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.header__profile-section .finder__link:hover{
+  color: #5e06d2;
+}
 .header__profile-section{
   margin-left: auto;
   display: flex;
@@ -2997,11 +3008,18 @@ button:disabled{
 }
 
 @media only screen and (max-width:587px){
-  #site-logo{
+  #site-logo .logo{
     margin-left: 0 !important;
     float: left !important;
     margin-top: 1rem;
-    width: 16rem;
+    width: 10rem !important;
+    height: 4rem !important;
+    margin-bottom: -5rem;
+  }
+  .header__profile-section .finder__link{
+    font-size: 1.5rem;
+    padding-right: 1rem;
+    margin-right: 2rem;
   }
   .dashboard__content{
     padding: 5rem 2rem 0 1rem !important;
@@ -3191,4 +3209,92 @@ button:disabled{
 .numberOfEmails1{
   margin-bottom: 1rem;
   padding-top: 1rem;
+}
+
+/* -------------------FINDER DASHBOARD --------------------- */
+
+.finder__dashboard{
+  margin-top: 13.5rem;
+}
+.finder__dashboard .sub__banner{
+  justify-content: flex-end;
+}
+
+.finder__dashboard .inputs{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20rem;
+}
+
+.finder__name, .finder__domain, .finder__btn{
+  border-radius: 3px !important;
+  background-color: white !important;
+  border: solid 1px #dddddd !important;
+  margin-bottom: 0 !important;
+  height: 6rem !important;
+}
+
+.finder__name, .finder__domain{
+  flex:1
+}
+.dashboard_finder__btn{
+  width: auto !important;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  color: white;
+  background-color: #5e06d2 !important;
+  transition: all 0.3s;
+}
+.dashboard_finder__btn:hover{
+  color: white;
+  background-color: rgba(94, 6, 210, 0.9) !important;
+}
+.dashboard__finder__content{
+  margin: 5rem 19rem;
+  margin-top: 3.5rem !important;
+}
+
+@media only screen and (max-width:1200px){
+  .finder__dashboard .inputs{
+    margin-right: 2rem;
+    margin-left: 2rem;
+  }
+  .dashboard__finder__content{
+    margin: 5rem 2rem;
+  }
+}
+@media only screen and (max-width:600px){
+  .finder__dashboard{
+    margin-top: 14rem;
+  }
+}
+@media only screen and (max-width:600px){
+  .dashboard__finder__content{
+    margin: 5rem 1rem;
+  }
+}
+.dashboard__finder__results{
+  padding: 2rem;
+  border-radius: 4px;
+}
+th:first-child, td:first-child{
+  padding-left: 1rem !important;
+}
+.table td{
+  font-size: 1.6rem;
+}
+.table th{
+  font-size: 1.8rem;
+}
+.dashboard__finder__results tbody{
+  background-color: white;
+}
+
+.recent__searchs h3:not(:first-child){
+  margin-top: 1.5rem;
+}
+.recent__searchs h3{
+  cursor: pointer;
 }
