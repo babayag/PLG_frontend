@@ -29,8 +29,8 @@ export class LoginPage extends Component {
                           <button type="submit" class="signUpBtn loginBtn col-md-9">Sign In</button>
                       </form>
                       <div class="col-md-12">
-                          <p className="invisibleWord"> a
-                          {/* By Applying you agree to our <a href=""> Terms of Service and Privacy</a> */}
+                          <p className=""> 
+                                Not yet a member? <a href="/signup">Register</a>
                           </p>
                       </div>
   

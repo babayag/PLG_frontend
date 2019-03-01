@@ -2320,7 +2320,7 @@ button:disabled{
 }
 
 .menuDiv a{
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
   margin-right: 35px;
 
@@ -2339,15 +2339,6 @@ button:disabled{
 .menuDiv a:hover{
   text-decoration: none !important;
   color: #5e06d2;
-}
-
-.authenticationDiv .login{
-  font-size: 2.1em;
-  margin-right: 20px;
-  color: #5E06D2;
-  color: #534d4d;
-  font-weight: 300;
-  text-decoration: none;
 }
 
 .authenticationDiv .register{
@@ -2451,6 +2442,12 @@ button:disabled{
   margin-bottom: 10px !important;
 }
 
+.invalidField{
+  color: #cc2525;
+  font-size: 15px;
+  font-weight: bold;
+}
+
 .inputsBlock a{
   color: #3EA2EE;
 }
@@ -2478,8 +2475,8 @@ button:disabled{
   }
 
 
-  .authenticationDiv{
-    /* margin-top: 75px; */
+ .login{
+    margin-left: 50px !important;
   }
 
   .authenticationDiv .register{
@@ -3299,3 +3296,4 @@ th:first-child, td:first-child{
 .recent__searchs h3{
   cursor: pointer;
 }
+

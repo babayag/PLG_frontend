@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import { NavBar } from "./NavBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCheck, faSpinner, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +11,12 @@ const search = <FontAwesomeIcon icon={faSearch} color="#333333" size="1x"/>
 const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/>   //this is the green checked icon to testify that an email is valid
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#333333" size="2x" spin/>
 const questionCirle = <FontAwesomeIcon icon={faQuestionCircle} color="#33313165" size="1x"/>
+const cookies = new Cookies();
+
+/*We set the value of this cookie so that it will be incremented
+ everytime somebody does a research, thus it will escape 
+ the notificaton validation */
+cookies.set('numberOfEmailsRequests', 0, { path: '/' }); 
 
 export class Finder extends Component {
     constructor(props){
@@ -18,7 +25,8 @@ export class Finder extends Component {
             nameToFind: "",
             domainToFind: "",
             isLoading: false, //has the search already stopped ??
-            foundEmails: []
+            foundEmails: [],
+            numberOfEmailsRequests: cookies.get('numberOfEmailsRequests')
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
@@ -52,6 +60,11 @@ export class Finder extends Component {
             this.addNotification("Please enter one or two names")
         }
 
+        /*When the user has done one research already and needs to login */
+        else if(this.state.numberOfEmailsRequests == 1){
+            this.addNotification("You need to Login to do more researches")
+        }
+
         /*When one or two names to find are entered and a correct domain too */
         else{
             const devUrl = 'http://leadmehome.io/api/lead/findervalidEmail';
@@ -67,12 +80,15 @@ export class Finder extends Component {
                 try {
                     /*Send an email with the three parameters */
                     const res = await axios.post(devUrl, { firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
-                    console.log(res.data);
+                    
 
                     var emailsThatWhereFound = res.data;
-                
+                    cookies.set('numberOfEmailsRequests', parseInt(cookies.get('numberOfEmailsRequests'))+ 1, { path: '/' }); /*increments the value of the cookie to 1 so that user will need to login to do more researches */
+                    const newNumberOfSearches = cookies.get('numberOfEmailsRequests');
+                    
                     this.setState({
                         foundEmails: emailsThatWhereFound,
+                        numberOfEmailsRequests: newNumberOfSearches
                     });
     
                 } catch (e) {
@@ -88,12 +104,14 @@ export class Finder extends Component {
                 var lastName = splitedName[1];
                 try {
                     const res = await axios.post(devUrl, {firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
-                    console.log(res.data);
-
+                   
                     var emailsThatWhereFound = res.data;
-                
+                    cookies.set('numberOfEmailsRequests', parseInt(cookies.get('numberOfEmailsRequests'))+1, { path: '/' }); /*increments the value of the cookie to 1 so that user will need to login to do more researches */
+                    const newNumberOfSearches = cookies.get('numberOfEmailsRequests');
+
                     this.setState({
                         foundEmails: emailsThatWhereFound,
+                        numberOfEmailsRequests: newNumberOfSearches
                     });
     
                 } catch (e) {

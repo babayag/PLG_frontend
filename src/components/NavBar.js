@@ -44,8 +44,8 @@ export class NavBar extends Component {
                         <div class="Navbar__Link">
                             <a className="menuLink" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">I Suck at Cold Email Course</a>
                         </div>
-                        <div class="Navbar__Link">
-                            <a href="/login" className="login">Log In <span>{signInIcon}</span></a>
+                        <div className="Navbar__Link login">
+                            <a href="/login" >Log In <span>{signInIcon}</span></a>
                         </div>
                     </div>
                     
