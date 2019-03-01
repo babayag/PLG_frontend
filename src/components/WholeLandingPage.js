@@ -18,7 +18,7 @@ export class WholeLandingPage extends Component {
                     
                 <LandingPage/>
 
-                <SearchBar/>
+                <div id="search__bar"><SearchBar/></div>
                 
             </div>
         );
