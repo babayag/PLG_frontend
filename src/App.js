@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, View, Text } from 'react';
 import ReactPixel from 'react-facebook-pixel';
+import ReactQuoraPixel from 'react-quora-pixel';
 import {BrowserRouter , Route} from "react-router-dom";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
@@ -25,11 +26,8 @@ const options = {
     autoConfig: true, 	// set pixel's autoConfig
     debug: false, 		// enable logs
 };
-// ReactPixel.init('672417766469134', advancedMatching, options);
 
-// ReactPixel.pageView(); 					// For tracking page view
-//ReactPixel.track( event, data ) 		// For tracking default events, more info about events and data https://developers.facebook.com/docs/ads-for-websites/pixel-events/v2.9
-//ReactPixel.trackCustom( event, data ) 	// For tracking custom events
+
 
 
 class App extends Component {
@@ -41,6 +39,8 @@ class App extends Component {
   render() {
     ReactPixel.init('672417766469134', advancedMatching, options);
     ReactPixel.pageView()
+    ReactQuoraPixel.init('af384036318349ffb92d15b813190967', advancedMatching, options);
+    ReactQuoraPixel.track();
     return (
       <div className="App">
 
