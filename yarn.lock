@@ -8306,6 +8306,11 @@ react@^16.4.2, react@^16.7.0:
     prop-types "^15.6.2"
     scheduler "^0.12.0"
 
+reactjs-mappletooltip@^1.4.63:
+  version "1.4.63"
+  resolved "https://registry.yarnpkg.com/reactjs-mappletooltip/-/reactjs-mappletooltip-1.4.63.tgz#71ec049763aa5eb1725fafdd98d6dcb63bf2c936"
+  integrity sha1-cewEl2OqXrFyX6/dmNbctjvyyTY=
+
 read-pkg-up@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"

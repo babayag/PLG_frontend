@@ -50,6 +50,7 @@ export class SearchBar extends Component {
             the SeeMoreButton so that it will continue the search based on these results  */
 
         }
+        /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
     }
@@ -84,7 +85,6 @@ export class SearchBar extends Component {
                 valueOfp: 0
             });
 
-
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
@@ -92,7 +92,8 @@ export class SearchBar extends Component {
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
             //const ProductionURL = 'api/lead/testSharing';
             try {
-                const res = await axios.post(devUrlLocal, { url : this.state.message, p:this.state.valueOfp}) //await fetch(devUrl);
+                const res = await axios.post(devUrl, { url : this.state.message, p:this.state.valueOfp}) //await fetch(devUrl);
+
                 const emails = await res.data.data[0];
                 const valueOfp = await res.data.data[1];
                 console.log(valueOfp);
@@ -115,7 +116,7 @@ export class SearchBar extends Component {
         }
     }
 
-      showAndHide(){
+    showAndHide(){
         this.setState({
             isload : true,
             isAboutVisible : false

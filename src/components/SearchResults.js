@@ -101,7 +101,8 @@ export class SearchResults extends Component {
                                 <p> <EmailResult result= {item}/></p>
                                 {/* <span>{item.description}</span> */}
                             </div>
-                        ))
+                            )
+                        )
                     }
 
                   {this.state.emails.length === 0 ?
