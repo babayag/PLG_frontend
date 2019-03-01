@@ -13,6 +13,7 @@ import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
 import { Finder } from "./components/Finder";
 import { Dashboard } from "./components/Dashboard";
+import { DashboardFinder } from "./components/DashboardFinder";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -70,6 +71,10 @@ class App extends Component {
 
           <BrowserRouter>
             <Route exact path={"/dashboard"} component={Dashboard}  />
+          </BrowserRouter>
+
+          <BrowserRouter>
+            <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
           </BrowserRouter>
 
         </Provider>

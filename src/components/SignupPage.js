@@ -24,9 +24,11 @@ export class SignupPage extends Component {
                         <div class="form-group">
                             <label for="email">Your best Email Address:</label>
                             <input type="email" class="col-md-9 emailInput" id="email" placeholder="Enter email" name="email" required/>
+                            <input type="password" class="col-md-9 emailInput mt-3" id="password" placeholder="Enter password" name="password" required/>
+                            <input type="password" class="col-md-9 emailInput mt-3" id="password2" placeholder="Confirm your password" name="password2" required/>
                         </div>
                         
-                        <button type="submit" class="signUpBtn col-md-9">Apply Now</button>
+                        <button type="submit" class="signUpBtn col-md-9 mt-3">Apply Now</button>
                     </form>
                     <div class="col-md-12">
                         <p>By Applying you agree to our <a href=""> Terms of Service and Privacy</a></p>
