@@ -27,8 +27,24 @@ const options = {
     debug: false, 		// enable logs
 };
 
+const data = {
+  
+}
 
-
+// const quorapixel = () => {
+//   !function(q,e,v,n,t,s){if(q.qp) return; n=q.qp=function(){n.qp?n.qp.apply(n,arguments):n.queue.push(arguments);}; n.queue=[];t=document.createElement(e);t.async=!0;t.src=v; s=document.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);}(window, 'script', 'https://a.quora.com/qevents.js');
+// qp('init', 'af384036318349ffb92d15b813190967');
+// qp('track', 'ViewContent');
+// qp('track', 'Generic');
+// }
+const events = {
+  "type": "track",
+  "event": "Registered",
+  "properties": {
+    "plan": "Pro Annual",
+    "accountType" : "Facebook"
+  }
+}
 
 class App extends Component {
 
@@ -37,10 +53,9 @@ class App extends Component {
   }
 
   render() {
-    ReactPixel.init('672417766469134', advancedMatching, options);
+    ReactPixel.init('672417766469134');
     ReactPixel.pageView()
-    ReactQuoraPixel.init('af384036318349ffb92d15b813190967', advancedMatching, options);
-    ReactQuoraPixel.track();
+    ReactQuoraPixel.init('af384036318349ffb92d15b813190967');
     return (
       <div className="App">
 
