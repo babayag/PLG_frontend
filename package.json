@@ -16,6 +16,7 @@
     "react-google-auth": "^0.4.1",
     "react-notifications": "^1.4.3",
     "react-notifications-component": "^1.0.1",
+    "react-quora-pixel": "^0.0.5",
     "react-redux": "^6.0.0",
     "react-responsive-navbar": "^1.0.11",
     "react-router": "^4.3.1",

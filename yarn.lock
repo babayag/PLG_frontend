@@ -8186,6 +8186,11 @@ react-notifications@^1.4.3:
     prop-types "^15.5.10"
     react-transition-group "^1.2.0"
 
+react-quora-pixel@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-quora-pixel/-/react-quora-pixel-0.0.5.tgz#e73cf624cb9d27221e187663594e5c6ea0a11025"
+  integrity sha512-NuX35ZcKVAuv2Y+3TH3TUPdv6JmxK3AhvGKDIVnEx0A4Wk0U1Qv2tB8SGsLXbnh4BsXJrdtlvjriMF2NzhPMIA==
+
 react-redux@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-6.0.0.tgz#09e86eeed5febb98e9442458ad2970c8f1a173ef"
