@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, View, Text } from 'react';
 import ReactPixel from 'react-facebook-pixel';
 import {BrowserRouter , Route} from "react-router-dom";
-import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { Provider } from 'react-redux';
 import Store from "./reducers/index";
@@ -11,8 +10,8 @@ import { LoginPage } from "./components/LoginPage";
 import { WholeLandingPage } from "./components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
-import { Finder } from "./components/Finder";
 import { Dashboard } from "./components/Dashboard";
+import { DashboardLead } from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
 // import  TestIt  from "./components/TestIt";
 
@@ -66,15 +65,15 @@ class App extends Component {
           </BrowserRouter>
 
           <BrowserRouter>
-            <Route exact path={"/finder"} component={Finder}  />
-          </BrowserRouter>
-
-          <BrowserRouter>
             <Route exact path={"/dashboard"} component={Dashboard}  />
           </BrowserRouter>
 
           <BrowserRouter>
-            <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
+            <Route exact path={"/lead"} component={DashboardLead}  />
+          </BrowserRouter>
+
+          <BrowserRouter>
+            <Route exact path={"/finder"} component={DashboardFinder}  />
           </BrowserRouter>
 
         </Provider>
