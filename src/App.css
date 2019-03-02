@@ -2799,7 +2799,7 @@ button:disabled{
 }
 
 
-/* ------------------- EMAIL FINDER PAGE --------------------- */
+/* ------------------- EMAIL FINDER PAGE ON HOME PAGE --------------------- */
 
 .finderContainer .dashboard__content{
   display: grid;
@@ -2813,7 +2813,12 @@ button:disabled{
 @media only screen and (max-width: 780px){
   .finder{
       padding: 0px .5rem;
+      margin-left: .05rem;
   }
+}
+.finder_home_page{
+  border: 1px solid #dddddd;
+  box-shadow: 0px 5px 20px #dddddd;
 }
 
 .finder .inner{
@@ -2821,7 +2826,7 @@ button:disabled{
   flex-direction: column;
   justify-content: center;
   background-color: white;
-  width: 100%;
+  width: 95%;
 }
 
 .finder .inputs{
@@ -3230,10 +3235,20 @@ button:disabled{
 .lead__dashboard{
   margin-top: 16rem;
 }
+
 .lead__dashboard__content{
-  width: 77%;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 68% 32%;
+  grid-template-rows: auto;
+  grid-column-gap: 3rem;
   margin-right: auto;
   margin-left: auto
+}
+
+.lead__dashboard--right{
+  display: flex;
+  flex-direction: column;
 }
 
 .lead__dashboard .inputs{
@@ -3272,19 +3287,22 @@ button:disabled{
 }
 
 @media only screen and (max-width:1200px){
-  .dashboard__lead__content{
-    margin: 5rem 2rem;
-  }
   .lead__dashboard__content{
-    width: 100%;
+    margin: 5rem 2rem;
+    padding: 2rem !important;
+    width: 95%;
   }
 }
+@media only screen and (max-width:980px){
+  .lead__dashboard__content{
+    grid-template-columns: 100% !important;
+  }
+}
+
 @media only screen and (max-width:600px){
   .lead__dashboard{
     margin-top: 14rem;
   }
-}
-@media only screen and (max-width:600px){
   .dashboard__lead__content{
     margin: 5rem 1rem;
   }

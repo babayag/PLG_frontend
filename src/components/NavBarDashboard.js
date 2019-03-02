@@ -26,8 +26,8 @@ export class NavBarDashboard extends Component {
                 </div>
 
                 <div className="header__profile-section">
-                    <a className="finder__link" href="/finder">Finder</a>
-                    <a className="finder__link" href="/lead">Lead</a>
+                    <a className="finder__link" href="/dashboard/finder">Finder</a>
+                    <a className="finder__link" href="/dashboard/lead">Lead</a>
                     <img class="header__profile-img" src={userLogo} alt="Homepage"/>
                     <h3 class="header__profile-name">John Doe</h3>
                     <h3 onClick={this.toggle} class="header__chevron-down">{chevronDown}</h3>

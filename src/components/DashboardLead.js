@@ -23,8 +23,8 @@ export class DashboardLead extends Component {
             <NavBarDashboard />
 
             <div class="lead__dashboard">
-                <div class="row lead__dashboard__content">
-                    <div class="col-md-12 col-sm-12 col-lg-9 col-sm-12">
+                <div class="lead__dashboard__content">
+                    <div class="lead__dashboard--left">
                         <div class="inputs mb-5">
                             <input 
                             type="text" 
@@ -65,7 +65,7 @@ export class DashboardLead extends Component {
                     </div>
 
                     {/* <span>Left Side</span> */}
-                    <div class="col-md-12 col-sm-12 col-lg-3 col-sm-12">
+                    <div class="lead__dashboard--right">
                         <div class="recent__search">
                             <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
                         </div>
