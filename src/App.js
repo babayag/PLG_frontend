@@ -69,11 +69,11 @@ class App extends Component {
           </BrowserRouter>
 
           <BrowserRouter>
-            <Route exact path={"/lead"} component={DashboardLead}  />
+            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
           </BrowserRouter>
 
           <BrowserRouter>
-            <Route exact path={"/finder"} component={DashboardFinder}  />
+            <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
           </BrowserRouter>
 
         </Provider>
