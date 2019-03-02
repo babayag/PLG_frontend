@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Provider } from 'react-redux';
+import Cookies from 'universal-cookie';
 import ReactNotification from "react-notifications-component";
 import {BrowserRouter , Route, Link} from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
@@ -10,30 +11,17 @@ import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { SeeMoreButton } from "./SeeMoreButton";
 import {ExportPage} from './ExportPage';
 
-const emails = [
-    {
-        "email": "Isidore@itkamer.com",
-         "url": ["https://sfe3be30db12270da.jimcontent.com/download/version/1418461265/module/10869430589/name/Wanda%20POS%20Administrator%20Guide.pdf", "https://sfe3be30db12270da.jimcontent.com/download/version/1418461265/module/10869433089/name/Wanda%20POS%20User%20Guide.pdf"]
-    },
-    {
-        "email": "isidore@itkamer.com",
-        "url": ["https://sfe3be30db12270da.jimcontent.com/download/version/1418461265/module/10869430589/name/Wanda%20POS%20Administrator%20Guide.pdf"]
-    },
-    {
-        "email": "sales@itkamer.com",
-        "url": ["https://www.milesbeckler.com/products-products-product-secret-successful-marketing-answer/"]
-    },
-    {
-        "email": "tatiotir@itkamer.com",
-        "url": ["https://sfe3be30db12270da.jimcontent.com/download/version/1418461265/module/10869433089/name/Wanda%20POS%20User%20Guide.pdf", "https://sourceforge.net/projects/tatiotir/files/iDempiere/SetupScript/"]
-    },
+const cookies = new Cookies();
 
-    {"LastpageNbr": 100}
-]
-
-
+//cookies.set('numberOfSearches', 0, { path: '/' });
+// console.log(cookies.get('numberOfSearches')); // Pacman
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin/>
+
+/*We set the value of this cookie so that it will be incremented
+ everytime somebody does a research, thus it will escape 
+ the notificaton validation */
+ cookies.set('numberOfSearches', 0, { path: '/' }); 
 
 export class SearchBar extends Component {
     constructor(props){
@@ -46,19 +34,20 @@ export class SearchBar extends Component {
             latestSearch: "",
             valueOfp: 0,
             redirect: false,
-            firstResults: []   /*this is used to send the value of the first results to
+            firstResults: [],   /*this is used to send the value of the first results to
             the SeeMoreButton so that it will continue the search based on these results  */
+            numberOfSearches: cookies.get('numberOfSearches')
 
         }
-        /*unless these, notification won't work */
+        /*without these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
     }
 
-    addNotification() {
+    addNotification(message) {
         this.notificationDOMRef.current.addNotification({
             title: "Error",
-            message: "Please enter a domain name like 'medievaltimes.com' ",
+            message: message,
             type: "awesome",
             insert: "top",
             container: "bottom-left",
@@ -78,8 +67,12 @@ export class SearchBar extends Component {
     async findEmails() {
         var regEx = /\w+\.\w+/;
         if(!regEx.test(this.state.message)) {
-            this.addNotification();
-        }else{
+            this.addNotification("Please enter a domain name like 'medievaltimes.com'");
+        }
+        else if(this.state.numberOfSearches == 1){
+            this.addNotification("You need to Login to do more researches.")
+        }
+        else{
             /*this resets the value of p so that it is 0 for each new research */
             this.setState({
                 valueOfp: 0
@@ -96,17 +89,22 @@ export class SearchBar extends Component {
 
                 const emails = await res.data.data[0];
                 const valueOfp = await res.data.data[1];
-                console.log(valueOfp);
+                //cookies.set('numberOfSearches', parseInt(cookies.get('numberOfSearches'))+1, { path: '/' }); /*sets the value of the cookie to 1 so that user will need to login to do more researches */
+                //const newNumberOfSearches = cookies.get('numberOfSearches');
+                //console.log(valueOfp);
                 this.setState({
                     emails: emails,
                     valueOfp : valueOfp,
-                    firstResults: res.data.data /*set the value of the state*/
-                });
+                    firstResults: res.data.data, /*set the value of the state*/
+                    //numberOfSearches: newNumberOfSearches
+                }); 
+                //alert(this.state.numberOfSearches)
+                localStorage.setItem('domain', this.state.message);
+                
 
-                localStorage.setItem('domain',this.state.message);
-
-            } catch (e) {
-            console.log(e);
+            } 
+            catch (e) {
+                console.log(e);
             }
 
             /*Sets the value of the lastest search to whar the user has entered */

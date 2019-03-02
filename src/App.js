@@ -12,6 +12,7 @@ import { WholeLandingPage } from "./components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
 import { Dashboard } from "./components/Dashboard";
+import { Finder } from "./components/Finder";
 import { DashboardLead } from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
 // import  TestIt  from "./components/TestIt";
@@ -89,6 +90,9 @@ class App extends Component {
 
           <BrowserRouter>
             <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
+          </BrowserRouter>
+          <BrowserRouter>
+            <Route exact path={"/finder"} component={Finder}  />
           </BrowserRouter>
 
         </Provider>

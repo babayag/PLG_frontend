@@ -1466,7 +1466,7 @@ input::-moz-focus-inner {
   -ms-transform: translate3d(0, 0%, 0);
   transform: translate3d(0, 0%, 0);
   position: absolute;
-  left: 15%;
+  left: 7%;
   margin-top: 14px;
   /* top: 50%; */
 }
@@ -2308,19 +2308,19 @@ button:disabled{
 
 .authenticationDiv{
   padding-top: 28px;
-  width: 37%;
+  width: 20%;
   float: right;
 }
 
 .menuDiv{
   padding-top: 37px;
-  width: 45%;
+  width: 65%;
   float: right;
   display: flex;
 }
 
 .menuDiv a{
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
   margin-right: 35px;
 
@@ -2339,14 +2339,6 @@ button:disabled{
 .menuDiv a:hover{
   text-decoration: none !important;
   color: #5e06d2;
-}
-
-.authenticationDiv .login{
-  font-size: 2.1em;
-  margin-right: 20px;
-  color: #5E06D2;
-  font-weight: 300;
-  text-decoration: none;
 }
 
 .authenticationDiv .register{
@@ -2418,12 +2410,16 @@ button:disabled{
   border: 1px solid #bdabab;
   margin-right: 0;
   background-color: #5E06D2;
-  color: #fff;
+  color: #fff !important;
 }
 
 .signUpBtn:hover{
   color: #ffffff;
   opacity: 0.9;
+}
+
+.signUpBtn:focus , .finder__btn:focus{
+  color: #fff;
 }
 
 .emailInput{
@@ -2450,10 +2446,23 @@ button:disabled{
   margin-bottom: 10px !important;
 }
 
+.invalidField{
+  color: #cc2525;
+  font-size: 15px;
+  font-weight: bold;
+  width: 70%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .inputsBlock a{
   color: #3EA2EE;
 }
 
+.notification-container-bottom-left {
+  text-align: left !important;
+}
 
 @media only screen and (max-width:588px) {
   .signUpDiv {
@@ -2477,8 +2486,8 @@ button:disabled{
   }
 
 
-  .authenticationDiv{
-    /* margin-top: 75px; */
+ .login{
+    margin-left: 50px !important;
   }
 
   .authenticationDiv .register{
@@ -3330,3 +3339,4 @@ th:first-child, td:first-child{
 .recent__searchs h3{
   cursor: pointer;
 }
+

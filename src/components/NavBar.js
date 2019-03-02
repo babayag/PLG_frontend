@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars} from '@fortawesome/free-solid-svg-icons'
+import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import { SignupPage } from "./SignupPage";
 import logo from '../plg_logo.png';
 
-const toogleMenu = <FontAwesomeIcon icon={faBars} />
+const toogleMenu = <FontAwesomeIcon icon={faBars}/>
+const signInIcon = <FontAwesomeIcon icon={faSignInAlt}/>
 
 export class NavBar extends Component {
 
@@ -38,7 +39,13 @@ export class NavBar extends Component {
                             <a className="menuLink" href="https://support.leadmehome.io/blog/">Top Articles</a>
                         </div>
                         <div class="Navbar__Link">
+                            <a className="menuLink" href="/finder">Emails Finder</a>
+                        </div>
+                        <div class="Navbar__Link">
                             <a className="menuLink" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">I Suck at Cold Email Course</a>
+                        </div>
+                        <div className="Navbar__Link login">
+                            <a href="/login" >Log In <span>{signInIcon}</span></a>
                         </div>
                     </div>
                     
@@ -61,10 +68,10 @@ export class NavBar extends Component {
                     }
                 /> */}
 
-                <div className="authenticationDiv">
-                    {/* <a href="/login" className="login">Log In</a>    */}
-                    {/* <a href="/signup"> <button className="register">Register </button></a> */}
-                </div>
+                {/* <div className="authenticationDiv">
+                    <a href="/login" className="login">Log In <span>{signInIcon}</span></a>   
+                    <a href="/signup"> <button className="register">Register </button></a>
+                </div> */}
             
             </header> 
         );
