@@ -2822,7 +2822,6 @@ button:disabled{
 @media only screen and (max-width: 780px){
   .finder{
       padding: 0px .5rem;
-      margin-left: .05rem;
   }
 }
 .finder_home_page{
