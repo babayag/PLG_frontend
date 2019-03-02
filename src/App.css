@@ -3129,9 +3129,12 @@ button:disabled{
 .coldemail__title a{
   text-decoration: none;
   transition: 0.3s;
+  color: #5e06d2;
+  transition: 0.3s;
+  line-height: 2.5rem;
 }
 .coldemail__title a:hover{
-  color: #5e06d2;
+  text-decoration: underline
 }
 .video__course{
   height: 20rem;
