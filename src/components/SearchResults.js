@@ -28,10 +28,10 @@ export class SearchResults extends Component {
 
     countSources(){ console.log(this.state.emails)
         if(this.state.emails.length === 0){
-           return <span><span id="training__post_id">LEARN HOW TO <b><a href="#">SEND COLD EMAIL THAT WORK.</a></b></span> <span class="text-right">No Email Address Found.</span></span>
+           return <span><span class="text-right">No Email Address Found.</span><br/><span className="mt-3 d-block" id="training__post_id">LEARN HOW TO <b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK.</a></b></span></span>
 
         } else if(this.state.emails.length === 1){
-            return <span> <span id="training__post_id">LEARN HOW TO <b><a href="#">SEND COLD EMAIL THAT WORK.</a></b></span> <span class="text-right">1 Email Address Found.</span>
+            return <span><span class="text-right">1 Email Address Found.</span>
                         <a href="/export">
                             <button className="exportBtn"
                                 onClick={() => { this.props.router.push({
@@ -46,10 +46,11 @@ export class SearchResults extends Component {
                                     {this.state.emails.length}
                                 </span>
                             </button>
-                         </a>
+                         </a><br/>
+                         <span className="mt-3 d-block" id="training__post_id">LEARN HOW TO <b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK.</a></b></span>
                    </span>
         } else{
-            return <span><span id="training__post_id">LEARN HOW TO <b><a href="#">SEND COLD EMAIL THAT WORK.</a></b></span> <span class="text-right">{this.state.emails.length} Email Addresses Found.</span>
+            return <span><span class="text-right">{this.state.emails.length} Email Addresses Found.</span>
                         <a href="/export">
                         <button className="exportBtn"
 
@@ -58,8 +59,8 @@ export class SearchResults extends Component {
                                     {this.state.emails.length}
                                 </span>
                             </button>
-                        </a>
-
+                        </a><br/>
+                        <span className="mt-3 d-block" id="training__post_id">LEARN HOW TO <b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK.</a></b></span>
                     </span>
         }
     }

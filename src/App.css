@@ -2801,37 +2801,27 @@ button:disabled{
 
 /* ------------------- EMAIL FINDER PAGE --------------------- */
 
+.finderContainer .dashboard__content{
+  display: grid;
+  justify-content: center;
+  margin-top: 0rem;
+}
+
 .finder{
-  padding: 20px 100px;
   display: flex;
 }
 @media only screen and (max-width: 780px){
   .finder{
-      padding: 0px 5px;
+      padding: 0px .5rem;
   }
 }
 
 .finder .inner{
-  padding: 40px 100px;
-  border: solid 1px #dddddd;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 5rem auto;
-  box-shadow: 0px 3px 20px #dddddd;
-  width: 100rem;
   background-color: white;
-}
-@media only screen and (max-width:920px){
-  .finder .inner{
-      width: 65rem;
-  }
-}
-@media only screen and (max-width:780px){
-  .finder .inner{
-      padding: 20px;
-      width: 96%;
-  }
+  width: 100%;
 }
 
 .finder .inputs{
@@ -2858,6 +2848,7 @@ button:disabled{
 .finder__name, .finder__domain{
   flex:1
 }
+
 @media only screen and (max-width:600px){
   .finder__name, .finder__domain{
     width: 10rem;
@@ -2874,7 +2865,9 @@ button:disabled{
 
 .finder__btn{
   margin-left: 1.5rem;
-  width: 6rem;
+  width: auto;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
   transition: background 0.3s;
 }
 
@@ -3001,6 +2994,19 @@ button:disabled{
   width: 22rem;
 }
 
+@media only screen and (max-width:980px){
+  .dashboard__content{
+    grid-template-columns: 100% !important;
+    grid-template-rows: auto auto !important;
+  }
+  .recent__search{
+    margin-top: 2rem;
+  }
+  .video__course{
+    height: auto !important;
+  }
+}
+
 @media only screen and (max-width:690px){
   .header__profile-section{
     margin-right: 1.5rem
@@ -3050,7 +3056,7 @@ button:disabled{
 .dashboard__content{
   display: grid;
   margin: 12rem auto 10rem auto;
-  padding: 5rem 8rem 0 8rem;
+  padding: 5rem 5.5rem 0 5.5rem;
   grid-template-columns: 68% 32%;
   grid-template-rows: auto;
   align-items: flex-start;
@@ -3109,14 +3115,22 @@ button:disabled{
 }
 .coldemail__title a{
   text-decoration: none;
+  transition: 0.3s;
 }
-.dashboard__content .video__course{
-  height: 22rem;
+.coldemail__title a:hover{
+  color: #5e06d2;
+}
+.video__course{
+  height: 20rem;
   padding: 0 !important;
   margin-top: 2.5rem;
 }
-.dashboard__content .video__course video{
+.video__course video{
   border-radius: 4px;
+}
+.video__course img{
+  width: 100%;
+  height: 100%;
 }
 
 .dashboard__content--left .topnav{
@@ -3211,21 +3225,22 @@ button:disabled{
   padding-top: 1rem;
 }
 
-/* -------------------FINDER DASHBOARD --------------------- */
+/* -------------------LEAD DASHBOARD --------------------- */
 
-.finder__dashboard{
-  margin-top: 13.5rem;
+.lead__dashboard{
+  margin-top: 16rem;
 }
-.finder__dashboard .sub__banner{
-  justify-content: flex-end;
+.lead__dashboard__content{
+  width: 77%;
+  margin-right: auto;
+  margin-left: auto
 }
 
-.finder__dashboard .inputs{
+.lead__dashboard .inputs{
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-right: 20rem;
 }
 
 .finder__name, .finder__domain, .finder__btn{
@@ -3251,27 +3266,26 @@ button:disabled{
   color: white;
   background-color: rgba(94, 6, 210, 0.9) !important;
 }
-.dashboard__finder__content{
+.dashboard__lead__content{
   margin: 5rem 19rem;
   margin-top: 3.5rem !important;
 }
 
 @media only screen and (max-width:1200px){
-  .finder__dashboard .inputs{
-    margin-right: 2rem;
-    margin-left: 2rem;
-  }
-  .dashboard__finder__content{
+  .dashboard__lead__content{
     margin: 5rem 2rem;
+  }
+  .lead__dashboard__content{
+    width: 100%;
   }
 }
 @media only screen and (max-width:600px){
-  .finder__dashboard{
+  .lead__dashboard{
     margin-top: 14rem;
   }
 }
 @media only screen and (max-width:600px){
-  .dashboard__finder__content{
+  .dashboard__lead__content{
     margin: 5rem 1rem;
   }
 }
