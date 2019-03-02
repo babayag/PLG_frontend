@@ -39,12 +39,12 @@ export class SearchBar extends Component {
             numberOfSearches: cookies.get('numberOfSearches')
 
         }
-        /*unless these, notification won't work */
+        /*without these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
     }
 
-    addNotification(message, duration) {
+    addNotification(message) {
         this.notificationDOMRef.current.addNotification({
             title: "Error",
             message: message,

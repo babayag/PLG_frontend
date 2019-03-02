@@ -2410,12 +2410,16 @@ button:disabled{
   border: 1px solid #bdabab;
   margin-right: 0;
   background-color: #5E06D2;
-  color: #fff;
+  color: #fff !important;
 }
 
 .signUpBtn:hover{
   color: #ffffff;
   opacity: 0.9;
+}
+
+.signUpBtn:focus , .finder__btn:focus{
+  color: #fff;
 }
 
 .emailInput{
@@ -2446,12 +2450,19 @@ button:disabled{
   color: #cc2525;
   font-size: 15px;
   font-weight: bold;
+  width: 70%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .inputsBlock a{
   color: #3EA2EE;
 }
 
+.notification-container-bottom-left {
+  text-align: left !important;
+}
 
 @media only screen and (max-width:588px) {
   .signUpDiv {
