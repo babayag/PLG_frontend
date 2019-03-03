@@ -2926,6 +2926,21 @@ button:disabled{
   padding-left: 0 !important
 }
 
+.dropdown-toggle::after{
+  display: none !important;
+}
+
+.dropdown .dropdown-item{
+  font-size: 1.7rem;
+  transition: 0.2s;
+}
+.dropdown .dropdown-item:hover{
+  color: #5e06d2;
+}
+#dropdownMenuButton{
+  cursor: pointer;
+}
+
 .dashboard__header .header-logo{
   position: relative !important;
   left: 0 !important;
@@ -2989,6 +3004,10 @@ button:disabled{
   color: #5e06d2;
 }
 
+.dropdown__mobile{
+  display: none;
+}
+
 .header__profile-img{
   width: 6.5rem;
   margin-right: 1.5rem;
@@ -3044,11 +3063,11 @@ button:disabled{
     padding: 5rem 2rem 0 1rem !important;
     grid-column-gap: 1rem !important;
   }
-  .header__profile-img{
-    width: 4.5rem;
-  }
   .header__profile-name{
     font-size: 1.3rem;
+  }
+  .header__profile-img{
+    width: 4rem;
   }
   .dropdown__content{
     top: 8rem !important;
@@ -3058,7 +3077,17 @@ button:disabled{
   .dropdown__content li a{
     font-size: 1.5rem;
   }
+  .dropdown__mobile{
+    display: inline-block;
+  }
+  .dropdown__medium{
+    display: none;
+  }
+  .finder__link{
+    display: none;
+  }
 }
+
 .header__chevron-down{
   display: flex;
   align-items: center;
@@ -3299,7 +3328,6 @@ button:disabled{
 
 @media only screen and (max-width:1200px){
   .lead__dashboard__content{
-    margin: 5rem 2rem;
     padding: 2rem !important;
     width: 95%;
   }
@@ -3341,4 +3369,12 @@ th:first-child, td:first-child{
 .recent__searchs h3{
   cursor: pointer;
 }
-
+#headingOne{
+  cursor: pointer;
+}
+.table__col--1{
+  width: 35% !important;
+}
+.table__col--2{
+  width: 60% !important;
+}
