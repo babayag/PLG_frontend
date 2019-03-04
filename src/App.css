@@ -3378,3 +3378,60 @@ th:first-child, td:first-child{
 .table__col--2{
   width: 60% !important;
 }
+
+
+/*** 404 Page*/
+.page404{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 10rem 2rem 0 2rem;
+  height: 100%;
+}
+
+.page404 .row{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page404 h1{
+  font-size: 18rem;
+  margin: 0;
+  font-weight: bold;
+  color: #5e06d2;
+  margin-bottom: 4rem;
+}
+
+.page404 h5{
+  font-size: 2rem;
+  margin: 0;
+}
+
+.page404 p{
+  font-size: 1.8rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.page404 a{
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-decoration: none;
+  background-color: #5e06d2;
+  color: white;
+  border-radius: 30px;
+  padding: 1.5rem 4rem;
+  transition: 0.3s;
+}
+
+.page404 a:hover{
+  background-color: rgba(94, 6, 210, .85);
+}
+
+@media only screen and (max-width:600px){
+  .page404 h1{
+    font-size: 10rem;
+  }
+}
