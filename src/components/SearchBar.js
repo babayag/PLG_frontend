@@ -81,7 +81,7 @@ export class SearchBar extends Component {
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
-            const devUrl = 'http://leadmehome.io/api/lead/testSharing';
+            const devUrl = '/api/lead/testSharing';
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
             //const ProductionURL = 'api/lead/testSharing';
             try {
