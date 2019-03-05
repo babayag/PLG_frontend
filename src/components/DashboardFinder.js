@@ -61,7 +61,7 @@ export class DashboardFinder extends Component {
 
         /*When one or two names to find are entered and a correct domain too */
         else{
-            const devUrl = 'http://leadmehome.io/api/lead/findervalidEmail';
+            const devUrl = '/api/lead/findervalidEmail';
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/findervalidEmail';
 
             /*When only one name to find was entered */
