@@ -15,6 +15,8 @@ import { Dashboard } from "./components/Dashboard";
 import { Finder } from "./components/Finder";
 import { DashboardLead } from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
+import { Page404 } from "./components/Page404";
+import { Error } from "./components/Error";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -91,12 +93,20 @@ class App extends Component {
           <BrowserRouter>
             <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
           </BrowserRouter>
+
           <BrowserRouter>
             <Route exact path={"/finder"} component={Finder}  />
           </BrowserRouter>
 
-        </Provider>
+          <BrowserRouter>
+            <Route exact path={"/404"} component={Page404}  />
+          </BrowserRouter>
 
+          <BrowserRouter>
+            <Route exact path={"/error"} component={Error}  />
+          </BrowserRouter>
+
+        </Provider>
 
       </div>
 
