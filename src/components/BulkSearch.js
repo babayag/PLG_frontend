@@ -49,7 +49,7 @@ export class BulkSearch extends Component {
     const devUrl = '/api/lead/getAllDomains';
     const devUrlLocal = 'http://127.0.0.1:8000/api/lead/getAllDomains';
     try{
-      const res = await axios.post(devUrlLocal, {'domains' : this.state.domainList}) //await fetch(devUrl);
+      const res = await axios.post(devUrl, {'domains' : this.state.domainList}) //await fetch(devUrl);
       const data = res.data.data;
       let finalData = [];
       // data = data[0];

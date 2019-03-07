@@ -34,7 +34,7 @@ export class SeeMoreButton extends Component {
                 isloading: true
             });
             
-            const res = await axios.post(devUrlLocal, { url : this.state.requestedUrl, p:this.state.valueOfp}) //await fetch(devUrl);
+            const res = await axios.post(devUrl, { url : this.state.requestedUrl, p:this.state.valueOfp}) //await fetch(devUrl);
             const emails = await res.data.data[0];
             const valueOfp = await res.data.data[1];
             var hideShowMore = await res.data.data[2];
