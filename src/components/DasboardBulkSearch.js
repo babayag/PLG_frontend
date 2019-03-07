@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactNotification from "react-notifications-component";
-import { NavBar } from "./NavBar";
+import { NavBarDashboard } from "./NavBarDashboard";
 import CSVReader from "react-csv-reader";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner} from '@fortawesome/free-solid-svg-icons';
+import stanley_img from '../dr_stanley.png';
+import { faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import { CSVLink } from "react-csv";
 
 
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
+const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 
-export class BulkSearch extends Component {
+export class DasboardBulkSearch extends Component {
   constructor(props){
     super(props);
 
@@ -110,59 +113,79 @@ export class BulkSearch extends Component {
   render() {
     return (
       <div className="bulkSearchContainer">
-        <NavBar/>
-        <div class="fileReader">
-          <div class="inner">
-            <h3 class="fileReader__text">Drag and Drop or Click to Import your CSV File</h3>
-            <div className="csvContainer">
-              <CSVReader
-                cssClass="react-csv-input"
-                onFileLoaded={this.afterLoading}
-              />
-              <div className="buttonsBox">
-                {
-                  this.state.canDownLoad ? 
-                  <CSVLink
-                    filename={"Bulksearch.csv"}
-                    className="exportButton bulkbtn"
-                    target="_blank"
-                    data={this.state.dataThatWillBeDownloaded}
-                    asyncOnClick={true}
-                    onClick={
-                      this.exportDatasToCsv
-                    }
-                  >    
-                    Download Result
-                  </CSVLink> :
-                  <div>
-                    {
-                      this.state.fileIsRead ? 
-                      <div>
+        <NavBarDashboard/>
+        <div> 
+            <div class="fileReader dashboard__content--left">
+                <div class="inner">
+                    <h3 class="fileReader__text">Drag and Drop or Click to Import your CSV File</h3>
+                    <div className="csvContainer">
+                    <CSVReader
+                        cssClass="react-csv-input"
+                        onFileLoaded={this.afterLoading}
+                    />
+                    <div className="buttonsBox">
                         {
-                          this.state.isBulkSearchProcessing ? 
-                          <div>
-                            <h5>{this.state.displayedTextWhileSearching}</h5>
-                            <span>{spinner}</span> 
-                          </div>:   
-                          <button onClick={this.getListEmail}>Bulk Search</button>
+                        this.state.canDownLoad ? 
+                        <CSVLink
+                            filename={"Bulksearch.csv"}
+                            className="exportButton bulkbtn"
+                            target="_blank"
+                            data={this.state.dataThatWillBeDownloaded}
+                            asyncOnClick={true}
+                            onClick={
+                            this.exportDatasToCsv
+                            }
+                        >    
+                            Download Result
+                        </CSVLink> :
+                        <div>
+                            {
+                            this.state.fileIsRead ? 
+                            <div>
+                                {
+                                this.state.isBulkSearchProcessing ? 
+                                <div>
+                                    <h5>{this.state.displayedTextWhileSearching}</h5>
+                                    <span>{spinner}</span> 
+                                </div>:   
+                                <button onClick={this.getListEmail}>Bulk Search</button>
+                                }
+                            </div> :
+                            <span></span>
+                            }
+                        </div> 
                         }
-                      </div> :
-                      <span></span>
-                    }
-                  </div> 
-                }
-              </div>
+                    </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <ReactNotification 
+            types={[{
+                htmlClasses: ["notification-awesome"],
+                name: "awesome"
+            }]} 
+            ref={this.notificationDOMRef} 
+            style="text-align:left !important"
+            /> 
+
+
+            {/* <span>Left Side</span> */}
+            <div class="lead__dashboard--right">
+                <div class="recent__search">
+                    <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
+                </div>
+
+                <div class="recent__searchs" ref="recent__search">
+                    ...
+                </div>
+                <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
+                <div class="video__course">
+                <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
+                    <img src={stanley_img} />
+                </a>
+                </div>
+            </div>
         </div>
-        <ReactNotification 
-          types={[{
-              htmlClasses: ["notification-awesome"],
-              name: "awesome"
-          }]} 
-          ref={this.notificationDOMRef} 
-          style="text-align:left !important"
-        /> 
       </div>
     );
   }

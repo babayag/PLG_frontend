@@ -22,14 +22,15 @@ export class SeeMoreButton extends Component {
         // await this.showAndHide();
         // this.state.isloading = false;
         // this.state.isAboutVisible = true;
-        const devUrl = 'api/lead/testSharing';
+        const devUrl = '/api/lead/testSharing';
+        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
         //const ProductionURL = 'api/lead/testSharing'; 
         try {
             this.setState({
                 isloading: true
             });
             
-            const res = await axios.post(devUrl, { url : this.state.requestedUrl, p:this.state.valueOfp}) //await fetch(devUrl);
+            const res = await axios.post(devUrlLocal, { url : this.state.requestedUrl, p:this.state.valueOfp}) //await fetch(devUrl);
             const emails = await res.data.data[0];
             const valueOfp = await res.data.data[1];
             var hideShowMore = await res.data.data[2];
