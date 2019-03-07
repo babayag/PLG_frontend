@@ -26,7 +26,7 @@ export class ExportPage extends Component{
             
         }else{  
             /*this resets the value of p so that it is 0 for each new research */
-            const devUrl = 'http://leadmehome.io/api/lead/downloadEmails';
+            const devUrl = '/api/lead/downloadEmails';
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/downloadEmails';
             //const ProductionURL = 'api/lead/testSharing'; 
             try {

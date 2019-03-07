@@ -81,7 +81,7 @@ export class SearchBar extends Component {
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
-            const devUrl = 'http://leadmehome.io/api/lead/testSharing';
+            const devUrl = '/api/lead/testSharing';
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
             //const ProductionURL = 'api/lead/testSharing';
             try {
@@ -89,15 +89,16 @@ export class SearchBar extends Component {
 
                 const emails = await res.data.data[0];
                 const valueOfp = await res.data.data[1];
-                cookies.set('numberOfSearches', parseInt(cookies.get('numberOfSearches'))+1, { path: '/' }); /*sets the value of the cookie to 1 so that user will need to login to do more researches */
-                const newNumberOfSearches = cookies.get('numberOfSearches');
-                console.log(valueOfp);
+                //cookies.set('numberOfSearches', parseInt(cookies.get('numberOfSearches'))+1, { path: '/' }); /*sets the value of the cookie to 1 so that user will need to login to do more researches */
+                //const newNumberOfSearches = cookies.get('numberOfSearches');
+                //console.log(valueOfp);
                 this.setState({
                     emails: emails,
                     valueOfp : valueOfp,
                     firstResults: res.data.data, /*set the value of the state*/
-                    numberOfSearches: newNumberOfSearches
+                    //numberOfSearches: newNumberOfSearches
                 }); 
+                //alert(this.state.numberOfSearches)
                 localStorage.setItem('domain', this.state.message);
                 
 

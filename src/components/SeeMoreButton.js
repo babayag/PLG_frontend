@@ -22,7 +22,7 @@ export class SeeMoreButton extends Component {
         // await this.showAndHide();
         // this.state.isloading = false;
         // this.state.isAboutVisible = true;
-        const devUrl = 'http://leadmehome.io/api/lead/testSharing';
+        const devUrl = 'api/lead/testSharing';
         //const ProductionURL = 'api/lead/testSharing'; 
         try {
             this.setState({

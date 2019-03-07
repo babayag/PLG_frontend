@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button, View, Text } from 'react';
 import ReactPixel from 'react-facebook-pixel';
+import ReactQuoraPixel from 'react-quora-pixel';
 import {BrowserRouter , Route} from "react-router-dom";
-import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { Provider } from 'react-redux';
 import Store from "./reducers/index";
@@ -11,9 +11,12 @@ import { LoginPage } from "./components/LoginPage";
 import { WholeLandingPage } from "./components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
-import { Finder } from "./components/Finder";
 import { Dashboard } from "./components/Dashboard";
+import { Finder } from "./components/Finder";
+import { DashboardLead } from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
+import { Page404 } from "./components/Page404";
+import { Error } from "./components/Error";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -25,12 +28,25 @@ const options = {
     autoConfig: true, 	// set pixel's autoConfig
     debug: false, 		// enable logs
 };
-// ReactPixel.init('672417766469134', advancedMatching, options);
 
-// ReactPixel.pageView(); 					// For tracking page view
-//ReactPixel.track( event, data ) 		// For tracking default events, more info about events and data https://developers.facebook.com/docs/ads-for-websites/pixel-events/v2.9
-//ReactPixel.trackCustom( event, data ) 	// For tracking custom events
+const data = {
+  
+}
 
+// const quorapixel = () => {
+//   !function(q,e,v,n,t,s){if(q.qp) return; n=q.qp=function(){n.qp?n.qp.apply(n,arguments):n.queue.push(arguments);}; n.queue=[];t=document.createElement(e);t.async=!0;t.src=v; s=document.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);}(window, 'script', 'https://a.quora.com/qevents.js');
+// qp('init', 'af384036318349ffb92d15b813190967');
+// qp('track', 'ViewContent');
+// qp('track', 'Generic');
+// }
+const events = {
+  "type": "track",
+  "event": "Registered",
+  "properties": {
+    "plan": "Pro Annual",
+    "accountType" : "Facebook"
+  }
+}
 
 class App extends Component {
 
@@ -39,8 +55,9 @@ class App extends Component {
   }
 
   render() {
-    ReactPixel.init('672417766469134', advancedMatching, options);
+    ReactPixel.init('672417766469134');
     ReactPixel.pageView()
+    ReactQuoraPixel.init('af384036318349ffb92d15b813190967');
     return (
       <div className="App">
 
@@ -66,19 +83,30 @@ class App extends Component {
           </BrowserRouter>
 
           <BrowserRouter>
-            <Route exact path={"/finder"} component={Finder}  />
+            <Route exact path={"/dashboard"} component={Dashboard}  />
           </BrowserRouter>
 
           <BrowserRouter>
-            <Route exact path={"/dashboard"} component={Dashboard}  />
+            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
           </BrowserRouter>
 
           <BrowserRouter>
             <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
           </BrowserRouter>
 
-        </Provider>
+          <BrowserRouter>
+            <Route exact path={"/finder"} component={Finder}  />
+          </BrowserRouter>
 
+          <BrowserRouter>
+            <Route exact path={"/404"} component={Page404}  />
+          </BrowserRouter>
+
+          <BrowserRouter>
+            <Route exact path={"/error"} component={Error}  />
+          </BrowserRouter>
+
+        </Provider>
 
       </div>
 

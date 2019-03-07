@@ -2807,40 +2807,46 @@ button:disabled{
   cursor: pointer;
 }
 
+.bulkbtn{
+  background-color: #fff !important;
+  color: #0e1113 !important;
+  font-size: 1.5em !important;
+  font-weight: bold;
+  border: 1px solid #101316 
+}
 
-/* ------------------- EMAIL FINDER PAGE --------------------- */
+.buttonsBox{
+  margin-top: 50px;
+}
+
+
+/* ------------------- EMAIL FINDER PAGE ON HOME PAGE --------------------- */
+
+.finderContainer .dashboard__content{
+  display: grid;
+  justify-content: center;
+  margin-top: 0rem;
+}
 
 .finder{
-  padding: 20px 100px;
   display: flex;
 }
 @media only screen and (max-width: 780px){
   .finder{
-      padding: 0px 5px;
+      padding: 0px .5rem;
   }
+}
+.finder_home_page{
+  border: 1px solid #dddddd;
+  box-shadow: 0px 5px 20px #dddddd;
 }
 
 .finder .inner{
-  padding: 40px 100px;
-  border: solid 1px #dddddd;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 5rem auto;
-  box-shadow: 0px 3px 20px #dddddd;
-  width: 100rem;
   background-color: white;
-}
-@media only screen and (max-width:920px){
-  .finder .inner{
-      width: 65rem;
-  }
-}
-@media only screen and (max-width:780px){
-  .finder .inner{
-      padding: 20px;
-      width: 96%;
-  }
+  width: 95%;
 }
 
 .finder .inputs{
@@ -2867,6 +2873,7 @@ button:disabled{
 .finder__name, .finder__domain{
   flex:1
 }
+
 @media only screen and (max-width:600px){
   .finder__name, .finder__domain{
     width: 10rem;
@@ -2883,7 +2890,9 @@ button:disabled{
 
 .finder__btn{
   margin-left: 1.5rem;
-  width: 6rem;
+  width: auto;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
   transition: background 0.3s;
 }
 
@@ -2927,6 +2936,21 @@ button:disabled{
 .dashboard__header{
   display: flex;
   padding-left: 0 !important
+}
+
+.dropdown-toggle::after{
+  display: none !important;
+}
+
+.dropdown .dropdown-item{
+  font-size: 1.7rem;
+  transition: 0.2s;
+}
+.dropdown .dropdown-item:hover{
+  color: #5e06d2;
+}
+#dropdownMenuButton{
+  cursor: pointer;
 }
 
 .dashboard__header .header-logo{
@@ -2992,6 +3016,10 @@ button:disabled{
   color: #5e06d2;
 }
 
+.dropdown__mobile{
+  display: none;
+}
+
 .header__profile-img{
   width: 6.5rem;
   margin-right: 1.5rem;
@@ -3008,6 +3036,19 @@ button:disabled{
 
 #site-logo .logo{
   width: 22rem;
+}
+
+@media only screen and (max-width:980px){
+  .dashboard__content{
+    grid-template-columns: 100% !important;
+    grid-template-rows: auto auto !important;
+  }
+  .recent__search{
+    margin-top: 2rem;
+  }
+  .video__course{
+    height: auto !important;
+  }
 }
 
 @media only screen and (max-width:690px){
@@ -3034,11 +3075,11 @@ button:disabled{
     padding: 5rem 2rem 0 1rem !important;
     grid-column-gap: 1rem !important;
   }
-  .header__profile-img{
-    width: 4.5rem;
-  }
   .header__profile-name{
     font-size: 1.3rem;
+  }
+  .header__profile-img{
+    width: 4rem;
   }
   .dropdown__content{
     top: 8rem !important;
@@ -3048,7 +3089,17 @@ button:disabled{
   .dropdown__content li a{
     font-size: 1.5rem;
   }
+  .dropdown__mobile{
+    display: inline-block;
+  }
+  .dropdown__medium{
+    display: none;
+  }
+  .finder__link{
+    display: none;
+  }
 }
+
 .header__chevron-down{
   display: flex;
   align-items: center;
@@ -3059,7 +3110,7 @@ button:disabled{
 .dashboard__content{
   display: grid;
   margin: 12rem auto 10rem auto;
-  padding: 5rem 8rem 0 8rem;
+  padding: 5rem 5.5rem 0 5.5rem;
   grid-template-columns: 68% 32%;
   grid-template-rows: auto;
   align-items: flex-start;
@@ -3118,14 +3169,25 @@ button:disabled{
 }
 .coldemail__title a{
   text-decoration: none;
+  transition: 0.3s;
+  color: #5e06d2;
+  transition: 0.3s;
+  line-height: 2.5rem;
 }
-.dashboard__content .video__course{
-  height: 22rem;
+.coldemail__title a:hover{
+  text-decoration: underline
+}
+.video__course{
+  height: 20rem;
   padding: 0 !important;
   margin-top: 2.5rem;
 }
-.dashboard__content .video__course video{
+.video__course video{
   border-radius: 4px;
+}
+.video__course img{
+  width: 100%;
+  height: 100%;
 }
 
 .dashboard__content--left .topnav{
@@ -3220,21 +3282,32 @@ button:disabled{
   padding-top: 1rem;
 }
 
-/* -------------------FINDER DASHBOARD --------------------- */
+/* -------------------LEAD DASHBOARD --------------------- */
 
-.finder__dashboard{
-  margin-top: 13.5rem;
-}
-.finder__dashboard .sub__banner{
-  justify-content: flex-end;
+.lead__dashboard{
+  margin-top: 16rem;
 }
 
-.finder__dashboard .inputs{
+.lead__dashboard__content{
+  width: 70%;
+  display: grid;
+  grid-template-columns: 68% 32%;
+  grid-template-rows: auto;
+  grid-column-gap: 3rem;
+  margin-right: auto;
+  margin-left: auto
+}
+
+.lead__dashboard--right{
+  display: flex;
+  flex-direction: column;
+}
+
+.lead__dashboard .inputs{
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-right: 20rem;
 }
 
 .finder__name, .finder__domain, .finder__btn{
@@ -3260,27 +3333,28 @@ button:disabled{
   color: white;
   background-color: rgba(94, 6, 210, 0.9) !important;
 }
-.dashboard__finder__content{
+.dashboard__lead__content{
   margin: 5rem 19rem;
   margin-top: 3.5rem !important;
 }
 
 @media only screen and (max-width:1200px){
-  .finder__dashboard .inputs{
-    margin-right: 2rem;
-    margin-left: 2rem;
-  }
-  .dashboard__finder__content{
-    margin: 5rem 2rem;
+  .lead__dashboard__content{
+    padding: 2rem !important;
+    width: 95%;
   }
 }
+@media only screen and (max-width:980px){
+  .lead__dashboard__content{
+    grid-template-columns: 100% !important;
+  }
+}
+
 @media only screen and (max-width:600px){
-  .finder__dashboard{
+  .lead__dashboard{
     margin-top: 14rem;
   }
-}
-@media only screen and (max-width:600px){
-  .dashboard__finder__content{
+  .dashboard__lead__content{
     margin: 5rem 1rem;
   }
 }
@@ -3306,5 +3380,71 @@ th:first-child, td:first-child{
 }
 .recent__searchs h3{
   cursor: pointer;
+}
+#headingOne{
+  cursor: pointer;
+}
+.table__col--1{
+  width: 35% !important;
+}
+.table__col--2{
+  width: 60% !important;
+}
+
+
+/*** ---------------------404 Page-------------------------------*/
+.page404{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 10rem 2rem 0 2rem;
+  height: 100%;
+}
+
+.page404 .row{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page404 h1{
+  font-size: 18rem;
+  margin: 0;
+  font-weight: bold;
+  color: #5e06d2;
+  margin-bottom: 4rem;
+}
+
+.page404 h5{
+  font-size: 2rem;
+  margin: 0;
+}
+
+.page404 p{
+  font-size: 1.8rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.page404 a{
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-decoration: none;
+  background-color: #5e06d2;
+  color: white;
+  border-radius: 30px;
+  padding: 1.5rem 4rem;
+  transition: 0.3s;
+}
+
+.page404 a:hover{
+  background-color: rgba(94, 6, 210, .85);
+}
+
+@media only screen and (max-width:600px){
+  .page404 h1{
+    font-size: 10rem;
+  }
 }
 
