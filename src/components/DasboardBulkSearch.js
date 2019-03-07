@@ -59,7 +59,7 @@ export class DasboardBulkSearch extends Component {
     const devUrl = '/api/lead/getAllDomains';
     const devUrlLocal = 'http://127.0.0.1:8000/api/lead/getAllDomains';
     try{
-      const res = await axios.post(devUrlLocal, {'domains' : this.state.domainList}) //await fetch(devUrl);
+      const res = await axios.post(devUrl, {'domains' : this.state.domainList}) //await fetch(devUrl);
       const data = res.data.data;
       let finalData = [];
       // data = data[0];
@@ -82,7 +82,7 @@ export class DasboardBulkSearch extends Component {
       canDownLoad: false,
       fileIsRead: false,
       })
-      this.addNotification("Please refresh the page and try again.")
+      this.addNotification("An error occured", "Please refresh the page and try again.")
 
     }
   }
@@ -103,9 +103,9 @@ export class DasboardBulkSearch extends Component {
     );
   }
 
-  addNotification(message) {
+  addNotification(title, message) {
     this.notificationDOMRef.current.addNotification({
-        title: "Error",
+        title: title,
         message: message,
         type: "awesome",
         insert: "top",
