@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ReactNotification from "react-notifications-component";
 import {EmailResult} from './EmailResult';
 
 
@@ -16,6 +17,9 @@ export class SeeMoreButton extends Component {
             valueOfp: this.props.firstResults[1],
             hideShowMore: false
         }
+        /*Without these, notification won't work */
+        this.addNotification = this.addNotification.bind(this);
+        this.notificationDOMRef = React.createRef();
     }
 
     async findNewEmails() {
@@ -54,8 +58,26 @@ export class SeeMoreButton extends Component {
             
         } catch (e) {
             console.log(e);
+            this.setState({
+                isloading: false
+            });
+            this.addNotification("An error occured", "Please try again.")
         }
 
+    }
+
+    addNotification(title, message) {
+        this.notificationDOMRef.current.addNotification({
+            title: title,
+            message: message,
+            type: "awesome",
+            insert: "top",
+            container: "bottom-left",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: { duration: 5000 },
+            dismissable: { click: true }
+        });
     }
 
     render() {
@@ -100,6 +122,14 @@ export class SeeMoreButton extends Component {
                     {/* </div> */}
                 </div>
                 <div className="quaterWidthDiv"> </div>
+                <ReactNotification 
+                    types={[{
+                        htmlClasses: ["notification-awesome"],
+                        name: "awesome"
+                    }]} 
+                    ref={this.notificationDOMRef} 
+                    style="text-align:left !important"
+                />
             </div>    
         );
     }

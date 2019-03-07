@@ -82,7 +82,7 @@ export class DasboardBulkSearch extends Component {
       canDownLoad: false,
       fileIsRead: false,
       })
-      this.addNotification("Please refresh the page and try again.")
+      this.addNotification("An error occured", "Please refresh the page and try again.")
 
     }
   }
@@ -103,9 +103,9 @@ export class DasboardBulkSearch extends Component {
     );
   }
 
-  addNotification(message) {
+  addNotification(title, message) {
     this.notificationDOMRef.current.addNotification({
-        title: "Error",
+        title: title,
         message: message,
         type: "awesome",
         insert: "top",
