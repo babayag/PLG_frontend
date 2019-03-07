@@ -2908,6 +2908,7 @@ button:disabled{
 .finder__btn{
   background-color: #5e06d2 !important;
   border: none !important;
+  margin-right: 0 !important;
 }
 
 .finder__btn:hover{

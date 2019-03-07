@@ -30,7 +30,7 @@ export class NavBarDashboard extends Component {
                         <button class="dropbtn">Products {chevronDown}</button>
                         <div class="dropdown-content">
                         <a href="/dashboard/finder">Email Finder</a>
-                        <a href="/dashboard/lead">Lead</a>
+                        <a href="/dashboard/lead">Lead Finder</a>
                       </div>
                     </div>
                     {/*<a className="finder__link" href="/dashboard/finder">Finder</a>
