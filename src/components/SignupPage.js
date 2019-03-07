@@ -128,8 +128,9 @@ export class SignupPage extends Component {
                 /*ERIC PLEASE CHANGE THE ROUTE */
             const devUrl = 'http://leadmehome.io/api/lead/';
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/';
+            console.log("tets")
             try {
-                const res = await axios.post(devUrl, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+                const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
             }
             catch(e){
                 console.log(e)
