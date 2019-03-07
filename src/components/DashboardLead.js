@@ -26,15 +26,15 @@ export class DashboardLead extends Component {
                 <div class="lead__dashboard__content">
                     <div class="lead__dashboard--left">
                         <div class="inputs mb-5">
-                            <input 
-                            type="text" 
+                            <input
+                            type="text"
                             name="nameToFind"
-                            placeholder="Example: Chicago" 
+                            placeholder="Location" 
                             className="finder__name mr-2"
                             />
-                            <input type="text" 
+                            <input type="text"
                             name="domainToFind"
-                            placeholder="Example: Dentist" 
+                            placeholder="Niche"
                             className="finder__domain"
                             />
                             <button class="finder__btn dashboard_finder__btn"><span>SEARCH</span></button>
