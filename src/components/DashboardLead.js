@@ -17,11 +17,6 @@ export class DashboardLead extends Component {
       $(el).slideToggle();
     }
 
-    toggleEachEmailResult = () => {
-      const emails = findDOMNode(this.refs.email__list);
-      console.log(emails)
-    }
-
     render() {
         return (
           <div class="dashboard__page">
