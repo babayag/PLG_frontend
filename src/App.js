@@ -15,6 +15,7 @@ import { Dashboard } from "./components/Dashboard";
 import { Finder } from "./components/Finder";
 import { DashboardLead } from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
+import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
 import { Page404 } from "./components/Page404";
 import { Error } from "./components/Error";
 // import  TestIt  from "./components/TestIt";
@@ -92,6 +93,10 @@ class App extends Component {
 
           <BrowserRouter>
             <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
+          </BrowserRouter>
+
+          <BrowserRouter>
+            <Route exact path={"/dashboard/bulksearch"} component={DasboardBulkSearch}  />
           </BrowserRouter>
 
           <BrowserRouter>

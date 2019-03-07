@@ -7,7 +7,7 @@ import { faSearch, faCheck, faSpinner, faQuestionCircle } from '@fortawesome/fre
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 
-const search = <FontAwesomeIcon icon={faSearch} color="#333333" size="1x"/>
+const search = <FontAwesomeIcon icon={faSearch} color="white" size="1x"/>
 const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/>   //this is the green checked icon to testify that an email is valid
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#333333" size="2x" spin/>
 const questionCirle = <FontAwesomeIcon icon={faQuestionCircle} color="#33313165" size="1x"/>
@@ -30,22 +30,22 @@ export class Finder extends Component {
     }
 
     /*When the value of an input changes, we directly set the state to the new value */
-    handleChange = e => {  
+    handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
     };
 
-    
+
     /*This is run when we hit on the search button */
-    async searchTheseData(){ 
+    async searchTheseData(){
         var name = this.state.nameToFind.trim();
         var regEx = /\w+\.\w+/;
 
         /*One filed or both are empty */
-        if(name == "" || this.state.domainToFind == "" ){  
+        if(name == "" || this.state.domainToFind == "" ){
             this.addNotification("One filed or both are empty");
-        } 
+        }
         /*Domain not matching */
         else if(!regEx.test(this.state.domainToFind)){
             this.addNotification("Please enter a domain name like 'medievaltimes.com'");
@@ -74,15 +74,15 @@ export class Finder extends Component {
                     console.log(res.data);
 
                     var emailsThatWhereFound = res.data;
-                
+
                     this.setState({
                         foundEmails: emailsThatWhereFound,
                     });
-    
+
                 } catch (e) {
                     console.log(e);
                 }
-                
+
             }
             else{
                 await this.showAndHide();
@@ -95,11 +95,11 @@ export class Finder extends Component {
                     console.log(res.data);
 
                     var emailsThatWhereFound = res.data;
-                
+
                     this.setState({
                         foundEmails: emailsThatWhereFound,
                     });
-    
+
                 } catch (e) {
                     console.log(e);
                 }
@@ -144,21 +144,21 @@ export class Finder extends Component {
                       <h3>Emails Finder <span>{questionCirle}</span></h3>
                     </div>
                     <div class="inputs">
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         name="nameToFind"
-                        onChange={this.handleChange} 
-                        value={this.state.nameToFind} 
-                        placeholder="John Doe" 
-                        class="finder__name" 
+                        onChange={this.handleChange}
+                        value={this.state.nameToFind}
+                        placeholder="John Doe"
+                        class="finder__name"
                         onKeyDown={this._handleKeyPress}
                      />
                       <h4>@</h4>
-                      <input type="text" 
-                        name="domainToFind" 
-                        value={this.state.domainToFind} 
-                        onChange={this.handleChange} 
-                        placeholder="company.com" 
+                      <input type="text"
+                        name="domainToFind"
+                        value={this.state.domainToFind}
+                        onChange={this.handleChange}
+                        placeholder="company.com"
                         class="finder__domain"
                         onKeyDown={this._handleKeyPress}
                       />
@@ -182,7 +182,7 @@ export class Finder extends Component {
                             </p>
                             )
                         )
-                    } 
+                    }
                     </div>
                   </div>
                 </div>
