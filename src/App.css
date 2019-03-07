@@ -2807,6 +2807,18 @@ button:disabled{
   cursor: pointer;
 }
 
+.bulkbtn{
+  background-color: #fff !important;
+  color: #0e1113 !important;
+  font-size: 1.5em !important;
+  font-weight: bold;
+  border: 1px solid #101316 
+}
+
+.buttonsBox{
+  margin-top: 50px;
+}
+
 
 /* ------------------- EMAIL FINDER PAGE ON HOME PAGE --------------------- */
 
@@ -3380,7 +3392,7 @@ th:first-child, td:first-child{
 }
 
 
-/*** 404 Page*/
+/*** ---------------------404 Page-------------------------------*/
 .page404{
   display: flex;
   justify-content: center;
@@ -3435,3 +3447,4 @@ th:first-child, td:first-child{
     font-size: 10rem;
   }
 }
+
