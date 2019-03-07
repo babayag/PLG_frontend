@@ -2905,6 +2905,15 @@ button:disabled{
   height: 6rem !important;
 }
 
+.finder__btn{
+  background-color: #5e06d2 !important;
+  border: none !important;
+}
+
+.finder__btn:hover{
+  background-color: rgba(94, 6, 210, 0.87) !important;
+}
+
 .finder__name, .finder__domain{
   flex:1
 }
@@ -2929,10 +2938,6 @@ button:disabled{
   padding-left: 1.8rem;
   padding-right: 1.8rem;
   transition: background 0.3s;
-}
-
-.finder__btn:hover{
-  background-color: #ededed !important;
 }
 
 .finder .description{
@@ -3397,14 +3402,6 @@ button:disabled{
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.finder__name, .finder__domain, .finder__btn{
-  border-radius: 3px !important;
-  background-color: white !important;
-  border: solid 1px #dddddd !important;
-  margin-bottom: 0 !important;
-  height: 6rem !important;
 }
 
 .finder__name, .finder__domain{
