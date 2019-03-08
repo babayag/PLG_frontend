@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faSpinner, faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import idGenerator from 'react-id-generator';
 
 const angleUp = <FontAwesomeIcon icon={faAngleUp} />
 const angleDown = <FontAwesomeIcon icon={faAngleDown} />
@@ -9,9 +10,11 @@ const spinner = <FontAwesomeIcon icon={faSpinner} />
 export class EmailResult extends Component {
     constructor(){
         super()
+        this.id = this.htmlId = idGenerator();
         this.state={
             showResult: false,
-            showUpIcon: true
+            showUpIcon: true,
+            value: ""
         }
 
     }
@@ -23,6 +26,17 @@ export class EmailResult extends Component {
         })
     }
 
+    getEmailTextOnClick(e) {
+        e.preventDefault();
+        var emailText = e.target.innerHTML;
+        navigator.clipboard.writeText(emailText);
+    }
+
+    /*writeEmailTextInClipBoard(e){
+        var clipBoardValue = getEmailTextOnClick(e)
+        navigator.clipboard.writeText(clipBoardValue);
+    }*/
+
     render() {
 
         return (
@@ -31,7 +45,7 @@ export class EmailResult extends Component {
                 <div class="quaterWidthDiv my_quaterWidthDiv"> </div>
                 <div class="emailResult my_email_result">
                     <div class="email">
-                        <p class=""> {this.props.result.email}  </p>
+                        <p class="" onClick={this.getEmailTextOnClick} data-id={this.id}> {this.props.result.email} </p>
                     </div>
                     <div class="source">
                         <p>
