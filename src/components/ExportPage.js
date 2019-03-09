@@ -31,7 +31,7 @@ export class ExportPage extends Component{
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/downloadEmails';
             //const ProductionURL = 'api/lead/testSharing';
             try {
-                const res = await axios.post(devUrlLocal, { url : this.state.domain }) //await fetch(devUrl);
+                const res = await axios.post(devUrl, { url : this.state.domain }) //await fetch(devUrl);
                 const emails = await res.data.data
                 this.setState({
                     emails: emails,

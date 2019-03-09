@@ -28,25 +28,24 @@ export class SeeMoreButton extends Component {
         // this.state.isAboutVisible = true;
         const devUrl = '/api/lead/testSharing';
         const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
-        //const ProductionURL = 'api/lead/testSharing'; 
+        //const ProductionURL = 'api/lead/testSharing';
         try {
             this.setState({
                 isloading: true
             });
-            
             const res = await axios.post(devUrl, { url : this.state.requestedUrl, p:this.state.valueOfp}) //await fetch(devUrl);
             const emails = await res.data.data[0];
             const valueOfp = await res.data.data[1];
             var hideShowMore = await res.data.data[2];
 
             /*this will update the value of emails in the parent of this component */
-            this.props.updateEmails(emails) 
+            this.props.updateEmails(emails)
             console.log(res.data);
             this.setState({
                 newResults: this.state.newResults.concat(emails),
-                valueOfp : valueOfp 
+                valueOfp : valueOfp
             });
-            
+
             this.setState({
                 isloading: false
             });
@@ -55,7 +54,7 @@ export class SeeMoreButton extends Component {
                     hideShowMore: true
                 });
             }
-            
+
         } catch (e) {
             console.log(e);
             this.setState({
@@ -84,44 +83,45 @@ export class SeeMoreButton extends Component {
 
         return (
             <div className="newResults">
-                
+
                 {/* This displays all the new results */
                     /*    (this.state.newResults).map(item => (
-                            <div className="theResults"> 
+                            <div className="theResults">
                                 <p> <EmailResult result= {item}/></p>
-                            </div> 
+                            </div>
                         ))
-                    */  
-                }  
-                <div className="theResults seeMoreBtnParent the moreresult"> 
+                    */
+                }
+                <div className="theResults seeMoreBtnParent the moreresult">
                     <div className="quaterWidthDiv"> </div>
                     <div className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                        
+
                         <p>
                         {/* <div className="theResults">  */}
-                            {this.state.hideShowMore ? 
+                            {this.state.hideShowMore ?
 
                                 <h4>All emails have been found </h4>
-                                : 
+                                :
                                 <div>
-                                    
+
                                     <button onClick={() => this.findNewEmails()} disabled={this.state.isloading}>
-                                        {this.state.isloading? 
+                                        {this.state.isloading?
                                             <span>Searching...</span>
                                             :<span>Show more</span>
                                         }
-                                        
-                                    </button> 
-                                </div>    
-                                
+
+                                    </button>
+                                </div>
+
                             }
-                        </p> 
-       
-                    </div>         
-                        
+                        </p>
+
+                    </div>
+
                     {/* </div> */}
                 </div>
                 <div className="quaterWidthDiv"> </div>
+
                 <ReactNotification 
                     types={[{
                         htmlClasses: ["notification-awesome"],
