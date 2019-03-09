@@ -9,7 +9,7 @@ import NavBarDashboard from './NavBarDashboard';
 import { SearchBar } from './SearchBar';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
 
-const search = <FontAwesomeIcon icon={faSearch} color="#333333" size="2x"/>
+const search = <FontAwesomeIcon icon={faSearch} color="white" size="2x"/>
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 
 export class Dashboard extends Component {

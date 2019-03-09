@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { SignupPage } from "./SignupPage";
 import logo from '../plg_logo.png';
 
 const toogleMenu = <FontAwesomeIcon icon={faBars}/>
 const signInIcon = <FontAwesomeIcon icon={faSignInAlt}/>
+const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 
 export class NavBar extends Component {
 
-    classToggle() { 
+    classToggle() {
         const navs = document.querySelectorAll('.Navbar__Items')
         navs.forEach(nav => nav.classList.toggle('Navbar__ToggleShow'));
     }
@@ -35,11 +37,17 @@ export class NavBar extends Component {
                     <i >{toogleMenu}</i>
                     </div>
                     <div class="Navbar__Items">
-                        <div class="Navbar__Link">
-                            <a className="menuLink" href="https://support.leadmehome.io/blog/">Top Articles</a>
+                        <div class="Navbar__Link dropdown">
+                          <div>
+                              <a class="dropbtn" className="menuLink" href="#">Products {chevronDown}</a>
+                              <div class="dropdown-content">
+                              <a id="dropbtn" href="/finder">Email Finder</a>
+                              <a id="dropbtn" href="/bulksearch">Bulk Search</a>
+                            </div>
+                          </div>
                         </div>
                         <div class="Navbar__Link">
-                            <a className="menuLink" href="/finder">Emails Finder</a>
+                            <a className="menuLink" href="https://support.leadmehome.io/blog/">Top Articles</a>
                         </div>
                         <div class="Navbar__Link">
                             <a className="menuLink" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">I Suck at Cold Email Course</a>
@@ -48,10 +56,10 @@ export class NavBar extends Component {
                             <a href="/login" >Log In <span>{signInIcon}</span></a>
                         </div>
                     </div>
-                    
+
                 </div>
 
-                
+
 
                 {/* <ResponsiveMenu
                     menuOpenButton={<div />}
@@ -69,11 +77,11 @@ export class NavBar extends Component {
                 /> */}
 
                 {/* <div className="authenticationDiv">
-                    <a href="/login" className="login">Log In <span>{signInIcon}</span></a>   
+                    <a href="/login" className="login">Log In <span>{signInIcon}</span></a>
                     <a href="/signup"> <button className="register">Register </button></a>
                 </div> */}
-            
-            </header> 
+
+            </header>
         );
     }
 }

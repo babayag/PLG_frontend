@@ -1,3 +1,4 @@
+let DevUrlPRoduction = "/api/lead/auth/users/me/";
 export const loadUser = () => {
     return (dispatch, getState) => {
       dispatch({type: "USER_LOADING"});
@@ -10,7 +11,8 @@ export const loadUser = () => {
       if (token) {
         headers["Authorization"] = `JWT ${token}`;
       }
-      return fetch("http://127.0.0.1:8000/api/lead/auth/users/me/", {headers, })
+      let Devurl = "http://127.0.0.1:8000/api/lead/auth/users/me/";
+      return fetch(Devurl, {headers, })
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
@@ -38,7 +40,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({email, password});
   
-      return fetch("http://127.0.0.1:8000/api/lead/auth/jwt/create/", {headers, body, method: "POST"})
+      return fetch(DevUrlPRoduction, {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {

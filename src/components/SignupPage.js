@@ -22,7 +22,7 @@ class SignupPage extends Component {
             emailValidationMessage:"",
             passwordValidationMessage: "",
             password2ValidationMessage: "",
-            allowOnchange: false,   //this is to display the error messages when the user tries to register but with incorrect inputs 
+            allowOnchange: false,   //this is to display the error messages when the user tries to register but with incorrect inputs
             formCanBeSent: false //becomes true when all the conditions are verified
         }
          /*Without these, notification won't work */
@@ -30,13 +30,13 @@ class SignupPage extends Component {
          this.notificationDOMRef = React.createRef();
     }
 
-    handleEmailInputChange = e => { 
+    handleEmailInputChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
 
         /*focus on the keyboard changes only when the user has tried to register at least once*/
-        if(this.state.allowOnchange){  
+        if(this.state.allowOnchange){
             if(!emailRegex.test(this.state.email)){
                 this.setState({
                     emailValidationMessage: "Invalid Email"
@@ -50,14 +50,14 @@ class SignupPage extends Component {
         }
     };
 
-    handlePasswordInputChange = e => { 
+    handlePasswordInputChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
 
         /*focus on the keyboard changes only when the user has tried to register at least once*/
-        if(this.state.allowOnchange){  
-            if(!passwordRegex.test(this.state.password)){ 
+        if(this.state.allowOnchange){
+            if(!passwordRegex.test(this.state.password)){
                 this.setState({
                     passwordValidationMessage: "Your password should be at least 8 characters long, have at least one capital letter, one lowercase letter and one digit"
                 })
@@ -70,14 +70,14 @@ class SignupPage extends Component {
         }
     };
 
-    handlePassword2InputChange = e => { 
+    handlePassword2InputChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
 
         /*focus on the keyboard changes only when the user has tried to register at least once*/
-        if(this.state.allowOnchange){  
-            if(!passwordRegex.test(this.state.password2)){ 
+        if(this.state.allowOnchange){
+            if(!passwordRegex.test(this.state.password2)){
                 this.setState({
                     password2ValidationMessage: "Your password should be at least 8 characters long, have at least one capital letter, one lowercase letter and one digit"
                 })
@@ -91,24 +91,18 @@ class SignupPage extends Component {
     };
 
     _handleKeyPress = e => { // When user presses on a keyboardtouch
-        if(e.keyCode === 13){ 
+        if(e.keyCode === 13){
             this.register();
         }
 
     }
-
-    // registerInit = e => {
-    //     //e.preventDefault();
-    //     this.props.register(this.state.email, this.state.password);
-    //     //this.props.history.push('/login')
-    //   }
 
     async registerUser(){
         
         let devUrlLocal = "http://127.0.0.1:8000/api/lead/auth/users/create/";
         let devUrl = "/api/lead/auth/users/create/";
         try {
-                    const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+                    const res = await axios.post(devUrl, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
                     if(res.status === 200 || res.status === 201)
                     {
                         this.setState({
@@ -208,12 +202,12 @@ class SignupPage extends Component {
                     {/* <form class="signupForm"> */}
                     <div class="form-group" onKeyDown={this._handleKeyPress}>
                         <label for="email">Your best Email Address:</label>
-                        <input 
-                            type="email" 
-                            class="col-md-9 emailInput" 
-                            id="email" 
-                            placeholder="Enter email*" 
-                            name="email" 
+                        <input
+                            type="email"
+                            class="col-md-9 emailInput"
+                            id="email"
+                            placeholder="Enter email*"
+                            name="email"
                             required
                             onChange={this.handleEmailInputChange}
                             value={this.state.email}
@@ -223,12 +217,12 @@ class SignupPage extends Component {
                         </div>
 
 
-                        <input 
-                            type="password" 
-                            class="col-md-9 emailInput mt-3" 
-                            id="password" 
-                            placeholder="Enter password*" 
-                            name="password" 
+                        <input
+                            type="password"
+                            class="col-md-9 emailInput mt-3"
+                            id="password"
+                            placeholder="Enter password*"
+                            name="password"
                             required
                             onChange={this.handlePasswordInputChange}
                             value={this.state.password}
@@ -238,12 +232,12 @@ class SignupPage extends Component {
                         </div>
 
 
-                        <input 
-                            type="password" 
-                            class="col-md-9 emailInput mt-3" 
-                            id="password2" 
-                            placeholder="Confirm your password*" 
-                            name="password2" 
+                        <input
+                            type="password"
+                            class="col-md-9 emailInput mt-3"
+                            id="password2"
+                            placeholder="Confirm your password*"
+                            name="password2"
                             required
                             onChange={this.handlePassword2InputChange}
                             value={this.state.password2}
@@ -261,14 +255,14 @@ class SignupPage extends Component {
                     </div>
 
 
-                    <ReactNotification 
+                    <ReactNotification
                         types={[{
                             htmlClasses: ["notification-awesome"],
                             name: "awesome"
-                        }]} 
-                        ref={this.notificationDOMRef} 
+                        }]}
+                        ref={this.notificationDOMRef}
                         style="text-align:left !important"
-                    />            
+                    />
 
                 </div>
             </div>

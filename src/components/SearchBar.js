@@ -19,9 +19,9 @@ const cookies = new Cookies();
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin/>
 
 /*We set the value of this cookie so that it will be incremented
- everytime somebody does a research, thus it will escape 
+ everytime somebody does a research, thus it will escape
  the notificaton validation */
- cookies.set('numberOfSearches', 0, { path: '/' }); 
+ cookies.set('numberOfSearches', 0, { path: '/' });
 
 export class SearchBar extends Component {
     constructor(props){
@@ -44,9 +44,9 @@ export class SearchBar extends Component {
         this.notificationDOMRef = React.createRef();
     }
 
-    addNotification(message) {
+    addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
-            title: "Error",
+            title: title,
             message: message,
             type: "awesome",
             insert: "top",
@@ -67,11 +67,11 @@ export class SearchBar extends Component {
     async findEmails() {
         var regEx = /\w+\.\w+/;
         if(!regEx.test(this.state.message)) {
-            this.addNotification("Please enter a domain name like 'medievaltimes.com'");
+            this.addNotification("Error", "Please enter a domain name like 'medievaltimes.com'");
         }
-        else if(this.state.numberOfSearches == 1){
-            this.addNotification("You need to Login to do more researches.")
-        }
+        // else if(this.state.numberOfSearches == 1){
+        //     this.addNotification("Error", "You need to Login to do more researches.")
+        // }
         else{
             /*this resets the value of p so that it is 0 for each new research */
             this.setState({
@@ -81,7 +81,7 @@ export class SearchBar extends Component {
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
-            const devUrl = 'http://leadmehome.io/api/lead/testSharing';
+            const devUrl = '/api/lead/testSharing';
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
             //const ProductionURL = 'api/lead/testSharing';
             try {
@@ -97,14 +97,19 @@ export class SearchBar extends Component {
                     valueOfp : valueOfp,
                     firstResults: res.data.data, /*set the value of the state*/
                     //numberOfSearches: newNumberOfSearches
-                }); 
+                });
                 //alert(this.state.numberOfSearches)
                 localStorage.setItem('domain', this.state.message);
-                
 
-            } 
+
+            }
             catch (e) {
                 console.log(e);
+                this.setState({
+                    isload : false,
+                });
+
+                this.addNotification("An error occured", "Please refresh the page and try again.");
             }
 
             /*Sets the value of the lastest search to whar the user has entered */

@@ -45,8 +45,16 @@ class NavBarDashboard extends Component {
                 </div>
 
                 <div className="header__profile-section">
-                    <a className="finder__link" href="/dashboard/finder">Finder</a>
-                    <a className="finder__link" href="/dashboard/lead">Lead</a>
+                    <div class="dropdown dashboard__dropdown">
+                        <button class="dropbtn">Products {chevronDown}</button>
+                        <div class="dropdown-content">
+                        <a href="/dashboard/finder">Email Finder</a>
+                        <a href="/dashboard/lead">Lead Finder</a>
+                        <a href="/dashboard/bulksearch">Bulk Search</a>
+                      </div>
+                    </div>
+                    {/*<a className="finder__link" href="/dashboard/finder">Finder</a>
+                    <a className="finder__link" href="/dashboard/lead">Lead</a>*/}
                     <img class="header__profile-img" src={userLogo} alt="Homepage"/>
                     <h3 class="header__profile-name">{this.props.user ? this.props.user.email : this.state.email }</h3>
                     <h3 onClick={this.toggle} class="header__chevron-down">{chevronDown}</h3>

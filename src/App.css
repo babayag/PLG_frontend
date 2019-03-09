@@ -2566,9 +2566,7 @@ button:disabled{
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 2em !important;
-  margin-bottom: -200px !important;
   border-radius: 10px;
-  margin-left: 5%;
 }
 
 .exportButton:focus{
@@ -2576,7 +2574,7 @@ button:disabled{
 }
 
 .exportBtnParent{
-  margin-top: 170px;
+  margin-top: 4rem;
 
 }
 
@@ -2608,45 +2606,94 @@ button:disabled{
 
 }
 
-#container{
+.export__page{
   text-align: center;
-  margin-top: 100px;
-  /* margin-right: 7% ;
-  margin-left: 7% ; */
-  height: 600px;
+  margin-top: 10rem;
+  padding-top: 10rem;
+  height: 50rem;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-image: url(backgroundPhone.PNG);
+  background-image:linear-gradient(to bottom, rgba(94, 6, 210, 0.95), rgba(94, 6, 210, 0.75)), url(bg_export.jpg);
+}
+
+.export__page h2{
+  color: white;
+  font-size: 5rem;
+}
+
+.export__lesson h2{
+  font-size: 3rem;
+  margin-top: .7rem;
+}
+.export__lesson .box{
+  border: 1px solid #dedede;
+  background-color: white;
+  box-shadow: 0px 5px 20px #cccccc;
+  padding: 6rem 4rem;
+  margin-top: -13rem;
+  justify-content: center;
+}
+.export__lesson a{
+  font-size: 2rem;
+  color: white;
+  padding: 1rem 3rem;
+  background-color: rgb(94, 6, 210);
+  border-radius: 5px;
+  margin-top: 3rem !important;
+  text-align: center;
+  text-decoration: none;
+}
+.export__lesson a:hover{
+  background-color: rgba(94, 6, 210, .85);
+}
+.export__lesson .lesson{
+  display: flex;
+  flex-direction: column;
+}
+
+#screen{
+  width: 40rem !important;
+  margin: 0;
+  margin-right: 3rem;
 }
 
 
-@media only screen and (max-width:850px){
-  .downloadBtnParent{
-    margin-top: 220px;
-    margin-left: 20%;
+@media only screen and (max-width:1200px){
+  .export__page h2{
+    font-size: 4rem;
   }
 
-  .exportBtnParent{
-    margin-top: 185px;
+  .export__lesson h2{
+    font-size: 2rem;
+  }
 
+  #screen{
+    width: 35rem !important;
+    margin-right: 1.5rem;
   }
 }
 
-@media only screen and (min-width:850px){
-  #container{
-    height: 890px !important;
-    /* margin-right: 7% !important;
-    margin-left: 7% !important; */
-    background-image: url(exportPage.PNG) !important;
+@media only screen and (max-width:700px){
+  .export__lesson .box{
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
-
 }
 
-.ctaColdEmails{
-  font-size: 3em;
-  font-weight: bolder;
-  width: 50%;
-  margin-left: 20%;
+@media only screen and (max-width:600px){
+  .export__page h2{
+    font-size: 3rem;
+  }
+
+  .export__lesson h2{
+    font-size: 2rem;
+  }
+
+  #screen{
+    width: 25rem !important;
+    margin-right: 1.5rem;
+  }
 }
 
 /*---------------------SEE MORE BUTTON COMPONENT------------------------- */
@@ -2731,7 +2778,7 @@ button:disabled{
 
 /* ------------------- BULK SEARCH PAGE --------------------- */
 .finderContainer,.bulkSearchContainer{
-  padding-top: 100px;
+    padding-top: 10rem;
 }
 
 .fileReader{
@@ -2739,26 +2786,27 @@ button:disabled{
   padding: 20px 100px;
   display: flex;
 }
-@media only screen and (max-width: 780px){
-  .fileReader{
-      padding: 0px 5px;
-  }
+
+.bulkSearchContainer .lead__dashboard{
+  margin-top: 6rem !important;
 }
 
 .fileReader .inner{
   text-align: center;
-  padding: 50px 100px;
-  border: solid 1px #dddddd;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 5rem auto;
-  box-shadow: 0px 3px 15px #dddddd;
 }
-@media only screen and (max-width:780px){
-  .fileReader .inner{
-      padding: 20px 40px;
+@media only screen and (max-width:900px){
+  .fileReader .fileReader__text{
+    font-size: 1.9rem !important;
+  }
+}
+@media only screen and (max-width: 780px){
+  .fileReader{
+      padding: 0px 5px;
   }
 }
 
@@ -2805,6 +2853,18 @@ button:disabled{
   background-color: white;
   border-radius: .4rem;
   cursor: pointer;
+}
+
+.bulkbtn{
+  background-color: #fff !important;
+  color: #0e1113 !important;
+  font-size: 1.5em !important;
+  font-weight: bold;
+  border: 1px solid #101316
+}
+
+.buttonsBox{
+  margin-top: 50px;
 }
 
 
@@ -2858,6 +2918,16 @@ button:disabled{
   height: 6rem !important;
 }
 
+.finder__btn{
+  background-color: #5e06d2 !important;
+  border: none !important;
+  margin-right: 0 !important;
+}
+
+.finder__btn:hover{
+  background-color: rgba(94, 6, 210, 0.87) !important;
+}
+
 .finder__name, .finder__domain{
   flex:1
 }
@@ -2884,10 +2954,6 @@ button:disabled{
   transition: background 0.3s;
 }
 
-.finder__btn:hover{
-  background-color: #ededed !important;
-}
-
 .finder .description{
   font-size: 1.5rem;
   margin-top: 2.5rem;
@@ -2895,16 +2961,16 @@ button:disabled{
 }
 
 .foundEmail{
-  padding: 15px 0px; 
+  padding: 15px 0px;
   font-size: 2em;
   font-weight: 500;
-  border-bottom: 0.8px solid rgba(197, 185, 185, 0.692); 
+  border-bottom: 0.8px solid rgba(197, 185, 185, 0.692);
   margin: 0 !important;
 }
 
 .foundEmailContainer{
   border-top: 0.8px solid rgba(197, 185, 185, 0.692);
-  margin-top: 20px;  
+  margin-top: 20px;
 }
 
 .foundEmailContainer .validIcon svg{
@@ -2924,6 +2990,77 @@ button:disabled{
 .dashboard__header{
   display: flex;
   padding-left: 0 !important
+}
+
+/** Dropdown Menu**/
+
+.dropbtn {
+  background-color: white;
+  font-size: 1.7rem;
+  border: none;
+  margin: 0 !important;
+}
+
+#dropbtn {
+  margin-right: 0 !important;
+}
+
+.dropbtn svg{
+    margin-left: .5rem;
+    font-weight: 400;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dashboard__dropdown {
+  margin-right: 5rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  min-width: 160px;
+  border: solid 1px #eeeeee;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  font-size: 1.6rem;
+  padding: 1.2rem 1.6rem;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #eeeeee;
+  color: #5e06d2;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+/**End Droopdown menu**/
+
+.dropdown-toggle::after{
+  display: none !important;
+}
+
+.dropdown .dropdown-item{
+  font-size: 1.7rem;
+  transition: 0.2s;
+}
+.dropdown .dropdown-item:hover{
+  color: #5e06d2;
+}
+#dropdownMenuButton{
+  cursor: pointer;
 }
 
 .dashboard__header .header-logo{
@@ -2989,6 +3126,10 @@ button:disabled{
   color: #5e06d2;
 }
 
+.dropdown__mobile{
+  display: none;
+}
+
 .header__profile-img{
   width: 6.5rem;
   margin-right: 1.5rem;
@@ -3018,6 +3159,9 @@ button:disabled{
   .video__course{
     height: auto !important;
   }
+  .dropdown {
+    margin-right: 2rem !important;
+  }
 }
 
 @media only screen and (max-width:690px){
@@ -3044,11 +3188,11 @@ button:disabled{
     padding: 5rem 2rem 0 1rem !important;
     grid-column-gap: 1rem !important;
   }
-  .header__profile-img{
-    width: 4.5rem;
-  }
   .header__profile-name{
     font-size: 1.3rem;
+  }
+  .header__profile-img{
+    width: 4rem;
   }
   .dropdown__content{
     top: 8rem !important;
@@ -3058,7 +3202,11 @@ button:disabled{
   .dropdown__content li a{
     font-size: 1.5rem;
   }
+  .finder__link{
+    display: none;
+  }
 }
+
 .header__chevron-down{
   display: flex;
   align-items: center;
@@ -3147,6 +3295,7 @@ button:disabled{
 .video__course img{
   width: 100%;
   height: 100%;
+  object-fit: fill;
 }
 
 .dashboard__content--left .topnav{
@@ -3269,14 +3418,6 @@ button:disabled{
   align-items: center;
 }
 
-.finder__name, .finder__domain, .finder__btn{
-  border-radius: 3px !important;
-  background-color: white !important;
-  border: solid 1px #dddddd !important;
-  margin-bottom: 0 !important;
-  height: 6rem !important;
-}
-
 .finder__name, .finder__domain{
   flex:1
 }
@@ -3294,12 +3435,11 @@ button:disabled{
 }
 .dashboard__lead__content{
   margin: 5rem 19rem;
-  margin-top: 3.5rem !important;
+  margin-top: 1.5rem !important;
 }
 
 @media only screen and (max-width:1200px){
   .lead__dashboard__content{
-    margin: 5rem 2rem;
     padding: 2rem !important;
     width: 95%;
   }
@@ -3341,4 +3481,76 @@ th:first-child, td:first-child{
 .recent__searchs h3{
   cursor: pointer;
 }
+#headingOne{
+  cursor: pointer;
+}
+.table__col--1{
+  width: 35% !important;
+}
+.table__col--2{
+  width: 60% !important;
+}
 
+.titleOfTheInfo{
+  font-size: 1.8em;
+  margin-bottom: 0px; 
+  text-align: center !important;
+  font-weight: bold !important;
+}
+
+
+/*** ---------------------404 Page-------------------------------*/
+.page404{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 10rem 2rem 0 2rem;
+  height: 100%;
+}
+
+.page404 .row{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page404 h1{
+  font-size: 18rem;
+  margin: 0;
+  font-weight: bold;
+  color: #5e06d2;
+  margin-bottom: 4rem;
+}
+
+.page404 h5{
+  font-size: 2rem;
+  margin: 0;
+}
+
+.page404 p{
+  font-size: 1.8rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.page404 a{
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-decoration: none;
+  background-color: #5e06d2;
+  color: white;
+  border-radius: 30px;
+  padding: 1.5rem 4rem;
+  transition: 0.3s;
+}
+
+.page404 a:hover{
+  background-color: rgba(94, 6, 210, .85);
+}
+
+@media only screen and (max-width:600px){
+  .page404 h1{
+    font-size: 10rem;
+  }
+}
