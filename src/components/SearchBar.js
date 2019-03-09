@@ -44,9 +44,9 @@ export class SearchBar extends Component {
         this.notificationDOMRef = React.createRef();
     }
 
-    addNotification(message) {
+    addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
-            title: "Error",
+            title: title,
             message: message,
             type: "awesome",
             insert: "top",
@@ -67,10 +67,10 @@ export class SearchBar extends Component {
     async findEmails() {
         var regEx = /\w+\.\w+/;
         if(!regEx.test(this.state.message)) {
-            this.addNotification("Please enter a domain name like 'medievaltimes.com'");
+            this.addNotification("Error", "Please enter a domain name like 'medievaltimes.com'");
         }
         // else if(this.state.numberOfSearches == 1){
-        //     this.addNotification("You need to Login to do more researches.")
+        //     this.addNotification("Error", "You need to Login to do more researches.")
         // }
         else{
             /*this resets the value of p so that it is 0 for each new research */
@@ -105,6 +105,11 @@ export class SearchBar extends Component {
             }
             catch (e) {
                 console.log(e);
+                this.setState({
+                    isload : false,
+                });
+
+                this.addNotification("An error occured", "Please refresh the page and try again.");
             }
 
             /*Sets the value of the lastest search to whar the user has entered */

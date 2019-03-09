@@ -44,7 +44,7 @@ export class Finder extends Component {
 
         /*One filed or both are empty */
         if(name == "" || this.state.domainToFind == "" ){
-            this.addNotification("One filed or both are empty");
+            this.addNotification("One field or both are empty");
         }
         /*Domain not matching */
         else if(!regEx.test(this.state.domainToFind)){
@@ -101,7 +101,11 @@ export class Finder extends Component {
                     });
 
                 } catch (e) {
-                    console.log(e);
+                    this.setState({
+                        isLoading : false,
+                    });
+        
+                    this.addNotification("Please refresh the page and try again.");
                 }
             }
         }
@@ -152,7 +156,7 @@ export class Finder extends Component {
                         placeholder="John Doe"
                         class="finder__name"
                         onKeyDown={this._handleKeyPress}
-                     />
+                      />
                       <h4>@</h4>
                       <input type="text"
                         name="domainToFind"
@@ -186,10 +190,7 @@ export class Finder extends Component {
                     </div>
                   </div>
                 </div>
-                <ReactNotification types={[{
-                    htmlClasses: ["notification-awesome"],
-                    name: "awesome"
-                }]} ref={this.notificationDOMRef} />
+                x
             </div>
         );
     }
