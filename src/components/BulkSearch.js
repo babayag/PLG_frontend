@@ -32,7 +32,7 @@ export class BulkSearch extends Component {
     let domains;
     data = data.toString().split(",");
     domains = data;
-    
+
     console.log(domains);
 
     this.setState({
@@ -41,7 +41,7 @@ export class BulkSearch extends Component {
     })
   };
 
-  getListEmail = async () => { 
+  getListEmail = async () => {
     await this.showAndHide();
     this.state.isBulkSearchProcessing = false;
     this.state.canDownLoad = true;
@@ -49,7 +49,7 @@ export class BulkSearch extends Component {
     const devUrl = '/api/lead/getAllDomains';
     const devUrlLocal = 'http://127.0.0.1:8000/api/lead/getAllDomains';
     try{
-      const res = await axios.post(devUrlLocal, {'domains' : this.state.domainList}) //await fetch(devUrl);
+      const res = await axios.post(devUrl, {'domains' : this.state.domainList}) //await fetch(devUrl);
       const data = res.data.data;
       let finalData = [];
       // data = data[0];
@@ -77,7 +77,7 @@ export class BulkSearch extends Component {
     }
   }
 
-  showAndHide(){ 
+  showAndHide(){
     this.setState({
       isBulkSearchProcessing : true,
     })
@@ -121,7 +121,7 @@ export class BulkSearch extends Component {
               />
               <div className="buttonsBox">
                 {
-                  this.state.canDownLoad ? 
+                  this.state.canDownLoad ?
                   <CSVLink
                     filename={"Bulksearch.csv"}
                     className="exportButton bulkbtn"
@@ -131,38 +131,38 @@ export class BulkSearch extends Component {
                     onClick={
                       this.exportDatasToCsv
                     }
-                  >    
+                  >
                     Download Result
                   </CSVLink> :
                   <div>
                     {
-                      this.state.fileIsRead ? 
+                      this.state.fileIsRead ?
                       <div>
                         {
-                          this.state.isBulkSearchProcessing ? 
+                          this.state.isBulkSearchProcessing ?
                           <div>
                             <h5>{this.state.displayedTextWhileSearching}</h5>
-                            <span>{spinner}</span> 
-                          </div>:   
+                            <span>{spinner}</span>
+                          </div>:
                           <button onClick={this.getListEmail}>Bulk Search</button>
                         }
                       </div> :
                       <span></span>
                     }
-                  </div> 
+                  </div>
                 }
               </div>
             </div>
           </div>
         </div>
-        <ReactNotification 
+        <ReactNotification
           types={[{
               htmlClasses: ["notification-awesome"],
               name: "awesome"
-          }]} 
-          ref={this.notificationDOMRef} 
+          }]}
+          ref={this.notificationDOMRef}
           style="text-align:left !important"
-        /> 
+        />
       </div>
     );
   }
