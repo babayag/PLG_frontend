@@ -25,6 +25,7 @@
     "react-validation": "^3.0.7",
     "reactjs-mappletooltip": "^1.4.63",
     "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "universal-cookie": "^3.0.7"
   },
   "scripts": {

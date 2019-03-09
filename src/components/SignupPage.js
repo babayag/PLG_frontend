@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
+import {connect} from "react-redux";
 // import { GoogleAuth } from "./googleAuth";
 import axios from 'axios';
+import {auth} from "../actions";
+import {Link, Redirect} from "react-router-dom";
 import ReactNotification from "react-notifications-component";
+
 import logo from '../plg_logo.png';
 
 let emailRegex = /^[\w-]+@([\w-]+\.)+[\w-]+/;
 let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{7,}$/;
-export class SignupPage extends Component {
+class SignupPage extends Component {
     constructor(props)
     {
         super(props);
         this.state = {
+            isRegister : false,
             email: "",
             password: "",
             password2: "",
@@ -92,50 +97,78 @@ export class SignupPage extends Component {
 
     }
 
-    async register(){
-        this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
-            allowOnchange: true  
-        })
-        if(!emailRegex.test(this.state.email) && this.state.email != ""){
-            this.setState({
-                emailValidationMessage: "Please enter a correct email address"
-            })
-        }
-        if(this.state.email == ""){
-            this.setState({
-                emailValidationMessage: "This field must not be empty"
-            })
-        }
-        if(this.state.password == ""){
-            this.setState({
-                passwordValidationMessage: "This field must not be empty"
-            })
-        }
-        if(this.state.password2 == ""){
-            this.setState({
-                password2ValidationMessage: "This field must not be empty"
-            })
-        }
-        if(this.state.password != this.state.password2){
-            this.addNotification("Passwords do not match")
-        }
-        if(this.state.password == this.state.password2 && //if passwords match
-            passwordRegex.test(this.state.password) &&   // and if passwords are corect
-            emailRegex.test(this.state.email)            // and if email is correct
-            ){
-                /*We can freely send the request */
+    // registerInit = e => {
+    //     //e.preventDefault();
+    //     this.props.register(this.state.email, this.state.password);
+    //     //this.props.history.push('/login')
+    //   }
 
-                /*ERIC PLEASE CHANGE THE ROUTE */
-            const devUrl = 'http://leadmehome.io/api/lead/';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/';
-            try {
-                const res = await axios.post(devUrl, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+    async registerUser(){
+        
+        let devUrlLocal = "http://127.0.0.1:8000/api/lead/auth/users/create/";
+        let devUrl = "/api/lead/auth/users/create/";
+        try {
+                    const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+                    if(res.status === 200 || res.status === 201)
+                    {
+                        this.setState({
+                            isRegister : true,
+                        })
+                    }else
+                    {
+                        console.log('error of notification ');
+                    }
             }
-            catch(e){
-                console.log(e)
-            }
-
+        catch(e){
+                    console.log(e)
         }
+
+        // this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
+        //     allowOnchange: true  
+        // })
+        // if(!emailRegex.test(this.state.email) && this.state.email != ""){
+        //     this.setState({
+        //         emailValidationMessage: "Please enter a correct email address"
+        //     })
+        // }
+        // if(this.state.email == ""){
+        //     this.setState({
+        //         emailValidationMessage: "This field must not be empty"
+        //     })
+        // }
+        // if(this.state.password == ""){
+        //     this.setState({
+        //         passwordValidationMessage: "This field must not be empty"
+        //     })
+        // }
+        // if(this.state.password2 == ""){
+        //     this.setState({
+        //         password2ValidationMessage: "This field must not be empty"
+        //     })
+        // }
+        // if(this.state.password != this.state.password2){
+        //     this.addNotification("Passwords do not match")
+        // }
+        // if(this.state.password == this.state.password2 && //if passwords match
+        //     passwordRegex.test(this.state.password) &&   // and if passwords are corect
+        //     emailRegex.test(this.state.email)            // and if email is correct
+        //     ){
+
+        //         console.log('laelazrzf');
+        //         /*We can freely send the request */
+
+        //         /*ERIC PLEASE CHANGE THE ROUTE */
+        //     // const devUrl = 'http://leadmehome.io/api/lead/';
+        //     // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/';
+        //     // console.log("tets")
+        //     // try {
+        //     //     const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+        //     // }
+        //     // catch(e){
+        //     //     console.log(e)
+        //     // }
+
+        // }
         
     }
 
@@ -155,6 +188,9 @@ export class SignupPage extends Component {
 
 
     render() {
+        if (this.state.isRegister) {
+            return <Redirect to="/login" />
+        }
       return (
          <div class="signUpDiv text-center">
             <div class="navbar-brand">
@@ -218,7 +254,7 @@ export class SignupPage extends Component {
 
                     </div>
                         
-                        <button class="signUpBtn col-md-9 mt-3" onClick={()=>this.register()}>Apply Now</button>
+                        <button class="signUpBtn col-md-9 mt-3" onClick={()=>this.registerUser()}>Apply Now</button>
                     {/* </form> */}
                     <div class="col-md-12">
                         <p>By Applying you agree to our <a href=""> Terms of Service and Privacy</a></p>
@@ -240,3 +276,24 @@ export class SignupPage extends Component {
       )
    }
 }
+
+const mapStateToProps = state => {
+    let errors = [];
+    if (state.auth.errors) {
+      errors = Object.keys(state.auth.errors).map(field => {
+        return {field, message: state.auth.errors[field]};
+      });
+    }
+    return {
+      errors,
+      isAuthenticated: state.auth.isAuthenticated
+    };
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      register: (username, password) => dispatch(auth.login(username, password)),
+    };
+  }  
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

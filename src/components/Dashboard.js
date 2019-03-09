@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
-import { NavBarDashboard } from './NavBarDashboard';
+import NavBarDashboard from './NavBarDashboard';
 import { SearchBar } from './SearchBar';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { NavBarDashboard } from "./NavBarDashboard";
+import  NavBarDashboard from "./NavBarDashboard";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCheck } from '@fortawesome/free-solid-svg-icons';
 import MappleToolTip from 'reactjs-mappletooltip';

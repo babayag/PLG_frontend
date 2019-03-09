@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Button, View, Text } from 'react';
+// import { Button, View, Text } from 'react';
 import ReactPixel from 'react-facebook-pixel';
 import ReactQuoraPixel from 'react-quora-pixel';
-import {BrowserRouter , Route} from "react-router-dom";
+import {BrowserRouter, Switch , Redirect , Route} from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
-import { Provider } from 'react-redux';
+import { Provider, connect } from "react-redux";
+
+
+import {auth} from "./actions";
 import Store from "./reducers/index";
-import { SignupPage } from "./components/SignupPage";
-import { LoginPage } from "./components/LoginPage";
+import  SignupPage  from "./components/SignupPage";
+import  LoginPage  from "./components/LoginPage";
 import { WholeLandingPage } from "./components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
@@ -19,7 +22,63 @@ import { DashboardFinder } from "./components/DashboardFinder";
 
 import './App.css';
 
+class RootContainerComponent extends Component {
+  constructor(props)
+  {
+    super(props);
+    
+  }
+  componentDidMount() {
+    this.props.loadUser();
+  }
+  PrivateRoute = ({component: ChildComponent, ...rest}) => {
+    return <Route {...rest} render={props => {
+      if (this.props.auth.isLoading) {
+        return <em>Loading...</em>;
+      } else if (!this.props.auth.isAuthenticated) {
+        return <Redirect to="/login" />;
+      } else {
+        return <ChildComponent {...props} />
+      }
+    }} />
+  }
 
+
+  render() {
+    let {PrivateRoute} = this;
+    return (
+      <BrowserRouter>
+        <Switch>
+            <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
+            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
+            <Route exact path="/" component={WholeLandingPage} />
+            <Route exact path={"/finder"} component={Finder}  />
+            <Route exact path="/signup" component={SignupPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path={"/export"} component={ExportPage}  />
+            <Route exact path={"/bulksearch"} component={BulkSearch}  />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadUser: () => {
+      return dispatch(auth.loadUser());
+    }
+  }
+}
+
+let RootContainer = connect(mapStateToProps,mapDispatchToProps)(RootContainerComponent);
 
 const advancedMatching = { em: 'some@email.com' };
 const options = {
@@ -48,60 +107,19 @@ const events = {
 
 class App extends Component {
 
-  componentDidMount() {
-
-  }
-
   render() {
     ReactPixel.init('672417766469134');
     ReactPixel.pageView()
     ReactQuoraPixel.init('af384036318349ffb92d15b813190967');
+
     return (
       <div className="App">
-
         <Provider store={Store}>
-          <BrowserRouter>
-            <Route exact path="/" component={WholeLandingPage} />
-          </BrowserRouter>
-
-          <BrowserRouter>
-            <Route path="/signup" component={SignupPage} />
-          </BrowserRouter>
-
-          <BrowserRouter>
-            <Route exact path="/login" component={LoginPage} />
-          </BrowserRouter>
-
-          <BrowserRouter>
-            <Route exact path={"/export"} component={ExportPage}  />
-          </BrowserRouter>
-
-          <BrowserRouter>
-            <Route exact path={"/bulksearch"} component={BulkSearch}  />
-          </BrowserRouter>
-
-          <BrowserRouter>
-            <Route exact path={"/dashboard"} component={Dashboard}  />
-          </BrowserRouter>
-
-          <BrowserRouter>
-            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
-          </BrowserRouter>
-
-          <BrowserRouter>
-            <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
-          </BrowserRouter>
-          <BrowserRouter>
-            <Route exact path={"/finder"} component={Finder}  />
-          </BrowserRouter>
-
+          <RootContainer />
         </Provider>
-
-
       </div>
 
     );
   }
 }
-
-export default App;
+export default (App);

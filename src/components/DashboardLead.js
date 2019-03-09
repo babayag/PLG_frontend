@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
-import { NavBarDashboard } from './NavBarDashboard';
+import NavBarDashboard from './NavBarDashboard';
 import stanley_img from '../dr_stanley.png';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
