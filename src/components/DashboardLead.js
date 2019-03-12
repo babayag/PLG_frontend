@@ -87,7 +87,7 @@ export class DashboardLead extends Component {
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/findLeads';
 
             try {
-                const res = await axios.post(devUrl, {niche:this.state.niche, city:this.state.location})
+                const res = await axios.post(devUrlLocal, {niche:this.state.niche, city:this.state.location})
                 // console.log(res.data);
 
                 var emailsThatWhereFound = res.data.data;
