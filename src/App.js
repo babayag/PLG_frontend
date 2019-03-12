@@ -21,6 +21,8 @@ import { DashboardFinder } from "./components/DashboardFinder";
 import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
 import { Page404 } from "./components/Page404";
 import { Error } from "./components/Error";
+import { DashboardChrome } from "./components/DashboardChrome";
+import { Chrome } from "./components/Chrome";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -29,7 +31,7 @@ class RootContainerComponent extends Component {
   constructor(props)
   {
     super(props);
-    
+
   }
   componentDidMount() {
     this.props.loadUser();
@@ -56,12 +58,14 @@ class RootContainerComponent extends Component {
             <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
             <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
             <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
+            <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
             <Route exact path="/" component={WholeLandingPage} />
             <Route exact path={"/finder"} component={Finder}  />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path={"/export"} component={ExportPage}  />
             <Route exact path={"/bulksearch"} component={BulkSearch}  />
+            <Route exact path={"/chrome"} component={Chrome}  />
             <Route component={Page404} />
         </Switch>
       </BrowserRouter>
@@ -92,7 +96,7 @@ const options = {
 };
 
 const data = {
-  
+
 }
 
 // const quorapixel = () => {

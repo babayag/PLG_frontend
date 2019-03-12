@@ -3024,7 +3024,7 @@ button:disabled{
   background-color: white;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  min-width: 160px;
+  min-width: 180px;
   border: solid 1px #eeeeee;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
   border-radius: 3px;
@@ -3554,3 +3554,99 @@ th:first-child, td:first-child{
     font-size: 10rem;
   }
 }
+
+/***CHROME EXTENSION**/
+
+.plugin__page{
+  margin-top: 17rem;
+}
+
+.plugin__page .content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plugin__page h1{
+  font-size: 4rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.plugin__page p{
+  font-size: 2.15rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #666666;
+}
+
+.plugin__page .download__plugin{
+  background-color: #5e06d2;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font-size: 2rem;
+  padding: 1.2rem 4rem;
+  color: white;
+  text-decoration: none;
+  transition: .3s;
+  text-align: center;
+}
+
+.plugin__page .download__plugin:hover{
+  background-color: rgba(94, 6, 210, .85);
+}
+
+.plugin__page .download__plugin span{
+  font-size: 1.1rem;
+}
+
+@media only screen and (max-width: 600px){
+  .plugin__page .download__plugin{
+    font-size: 1.8rem;
+  }
+  .plugin__page .download__plugin span{
+    font-size: 1rem;
+  }
+  .plugin__page h1 {
+    font-size: 2.5rem;
+  }
+
+.plugin__page p {
+    font-size: 1.8rem;
+  }
+}
+
+
+/**CAROUSSEL**/
+.slide{
+  display: flex !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+}
+
+.slide img{
+  
+}
+
+.slider__desc {
+  margin-top: 4rem;
+}
+
+.slider__desc h4{
+  font-size: 2.4rem;
+  text-align: center;
+  font-weight: 500;
+}
+.slider__desc p{
+  font-size: 1.7rem;
+  text-align: center;
+  color: #666666;
+  margin-top: 1rem;
+}
+
+.slick-slider .slick-dots{
+  margin-bottom: 15rem !important;
+}
+
+
