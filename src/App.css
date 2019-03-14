@@ -2968,6 +2968,39 @@ button:disabled{
   margin: 0 !important;
 }
 
+.copyMsg{
+  font-size: 0.8em;
+  font-style: italic;
+  margin-left: 3px;
+}
+
+.copiedElt{
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 0.4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 0.4s;
+  cursor: pointer;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  0%   {color:#5e06d2;}
+  50%  {color:#5e06d2; font-weight: bold}
+  100% {color:#5e06d2; }
+}
+
+/* Standard syntax */
+@keyframes example {
+  0%   {color:#5e06d2; }
+  50%  {color:#5e06d2; font-weight: bold}
+  100% {color:#5e06d2; }
+}
+
+
+.foundEmailValue{
+  cursor: pointer;
+}
+
 .foundEmailContainer{
   border-top: 0.8px solid rgba(197, 185, 185, 0.692);
   margin-top: 20px;

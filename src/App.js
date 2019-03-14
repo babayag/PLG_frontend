@@ -5,6 +5,8 @@ import ReactQuoraPixel from 'react-quora-pixel';
 import {BrowserRouter, Switch , Redirect , Route} from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
 import { Provider, connect } from "react-redux";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 
 
 import {auth} from "./actions";
@@ -27,6 +29,9 @@ import { Chrome } from "./components/Chrome";
 
 import './App.css';
 
+
+const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="5x" spin/>
+
 class RootContainerComponent extends Component {
   constructor(props)
   {
@@ -39,7 +44,11 @@ class RootContainerComponent extends Component {
   PrivateRoute = ({component: ChildComponent, ...rest}) => {
     return <Route {...rest} render={props => {
       if (this.props.auth.isLoading) {
-        return <em>Loading...</em>;
+        return <div style={{marginTop: 150+'px', textAlign:'center'}}> 
+                  <em>{spinner}</em>; 
+                  <br></br> <br></br>
+                  <em>Loading...</em>
+                </div>
       } else if (!this.props.auth.isAuthenticated) {
         return <Redirect to="/login" />;
       } else {
@@ -54,11 +63,11 @@ class RootContainerComponent extends Component {
     return (
       <BrowserRouter>
         <Switch>
-            <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
-            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
-            <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
-            <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
-            <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
+            <Route exact path={"/dashboard"} component={Dashboard}  />
+            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
+            <Route exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
+            <Route exact path={'/dashboard/chrome'} component={DashboardChrome} />
             <Route exact path="/" component={WholeLandingPage} />
             <Route exact path={"/finder"} component={Finder}  />
             <Route exact path="/signup" component={SignupPage} />

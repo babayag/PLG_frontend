@@ -5,6 +5,7 @@ import { NavBar } from "./NavBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCheck, faSpinner, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import MappleToolTip from 'reactjs-mappletooltip';
+import idGenerator from 'react-id-generator';
 import ReactNotification from "react-notifications-component";
 
 const search = <FontAwesomeIcon icon={faSearch} color="white" size="1x"/>
@@ -13,10 +14,12 @@ const spinner = <FontAwesomeIcon icon={faSpinner} color="#333333" size="2x" spin
 const questionCirle = <FontAwesomeIcon icon={faQuestionCircle} color="#33313165" size="1x"/>
 const cookies = new Cookies();
 
+// const board = [ "uuu@.com", "url@iii.com"]
 
 export class Finder extends Component {
     constructor(props){
         super(props);
+        this.id = this.htmlId = idGenerator();
         this.state = {
             nameToFind: "",
             domainToFind: "",
@@ -138,6 +141,32 @@ export class Finder extends Component {
         }
     }
 
+    getEmailTextOnClick(e) { 
+        e.preventDefault();
+        var emailText = e.target.innerHTML;
+        navigator.clipboard.writeText(emailText);
+
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "Copied!";
+        document.getElementById(e.currentTarget.id).className = "copiedElt";
+    }
+
+    displayCopyText(e){
+        var idOfElt = "copy" + e.currentTarget.id;
+        
+        document.getElementById(idOfElt).className = "copyMsg";
+        document.getElementById(idOfElt).textContent = "Copy?";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+        
+    }
+
+    eraseCopyText(e){
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+        
+    }
+
     render() {
         return (
             <div className="finderContainer">
@@ -174,15 +203,18 @@ export class Finder extends Component {
                     {/* This displays all the emails */
                         (this.state.foundEmails).map(email => (
                             <p className="foundEmail">
-                                {email}
+                                <span className="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={this.state.foundEmails.indexOf(email)+this.id}>{email}</span>
+                                        
                                 <MappleToolTip className="mttipValidEmail" padding={'18px 12px 0px 12px'} shadow={true} float={true} direction={'right'} mappleType={'success'}>
-                                <div>
-                                    <span className="validIcon">{valid}</span>
-                                </div>
-                                <div>
-                                    This Email is valid
-                                </div>
-                            </MappleToolTip>
+                                    <div>
+                                        <span className="validIcon">{valid}</span>
+                                    </div>
+                                    <div>
+                                        This Email is valid
+                                    </div>
+                                </MappleToolTip>
+                            <span className="copyMsg" id={"copy"+this.state.foundEmails.indexOf(email)+this.id} refs={"copy" + this.id}></span>
+
                             </p>
                             )
                         )

@@ -11,7 +11,7 @@ export const loadUser = () => {
       if (token) {
         headers["Authorization"] = `JWT ${token}`;
       }
-      let Devurl = "/api/lead/auth/users/me/";
+      let Devurl = "https://leadmehome.io/api/lead/auth/users/me/";
       return fetch(Devurl, {headers, })
         .then(res => {
           if (res.status < 500) {
