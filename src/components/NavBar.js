@@ -43,6 +43,7 @@ export class NavBar extends Component {
                               <div class="dropdown-content">
                               <a id="dropbtn" href="/finder">Email Finder</a>
                               <a id="dropbtn" href="/bulksearch">Bulk Search</a>
+                              <a id="dropbtn" href="/chrome">Chrome Extension</a>
                             </div>
                           </div>
                         </div>

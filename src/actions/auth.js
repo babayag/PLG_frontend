@@ -2,16 +2,16 @@ let DevUrlPRoduction = "/api/lead/auth/users/me/";
 export const loadUser = () => {
     return (dispatch, getState) => {
       dispatch({type: "USER_LOADING"});
-  
+
       const token = getState().auth.token;
       let headers = {
         "Content-Type": "application/json",
       };
-  
+
       if (token) {
         headers["Authorization"] = `JWT ${token}`;
       }
-      let Devurl = "http://127.0.0.1:8000/api/lead/auth/users/me/";
+      let Devurl = "https://leadmehome.io/api/lead/auth/users/me/";
       return fetch(Devurl, {headers, })
         .then(res => {
           if (res.status < 500) {
@@ -39,8 +39,8 @@ export const loadUser = () => {
     return (dispatch, getState) => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({email, password});
-  
-      return fetch("http://127.0.0.1:8000/api/lead/auth/jwt/create/", {headers, body, method: "POST"})
+
+      return fetch("/api/lead/auth/jwt/create/", {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
@@ -55,7 +55,7 @@ export const loadUser = () => {
           if (res.status === 200) {
             let Idata = res.data;
             Idata.user = { "email" : email };
-            console.log(Idata);  
+            console.log(Idata);
             dispatch({type: 'LOGIN_SUCCESSFUL', data: Idata });
             return Idata;
           } else if (res.status === 403 || res.status === 401) {
@@ -73,7 +73,7 @@ export const loadUser = () => {
     return (dispatch, getState) => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({email, password});
-  
+
       return fetch("http://127.0.0.1:8000/api/lead/auth/users/create/", {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {

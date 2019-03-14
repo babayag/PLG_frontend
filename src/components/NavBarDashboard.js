@@ -51,6 +51,7 @@ class NavBarDashboard extends Component {
                         <a href="/dashboard/finder">Email Finder</a>
                         <a href="/dashboard/lead">Lead Finder</a>
                         <a href="/dashboard/bulksearch">Bulk Search</a>
+                        <a href="/dashboard/chrome">Chrome Extension</a>
                       </div>
                     </div>
                     {/*<a className="finder__link" href="/dashboard/finder">Finder</a>
