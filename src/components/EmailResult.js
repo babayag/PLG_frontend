@@ -30,7 +30,28 @@ export class EmailResult extends Component {
         e.preventDefault();
         var emailText = e.target.innerHTML;
         navigator.clipboard.writeText(emailText);
+
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "Copied!";
+        document.getElementById(e.currentTarget.id).className = "copiedElt";
     }
+
+    displayCopyText(e){
+        var idOfElt = "copy" + e.currentTarget.id;
+        
+        document.getElementById(idOfElt).className = "copyMsg";
+        document.getElementById(idOfElt).textContent = "Copy?";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+        
+    }
+
+    eraseCopyText(e){
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+        
+    }
+    
 
     /*writeEmailTextInClipBoard(e){
         var clipBoardValue = getEmailTextOnClick(e)
@@ -45,7 +66,7 @@ export class EmailResult extends Component {
                 <div class="quaterWidthDiv my_quaterWidthDiv"> </div>
                 <div class="emailResult my_email_result">
                     <div class="email">
-                        <p class="" onClick={this.getEmailTextOnClick} data-id={this.id}> {this.props.result.email} </p>
+                        <p> <span class="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={this.id}> {this.props.result.email}</span> <span className="copyMsg" id={"copy" + this.id} refs={"copy" + this.id}></span> </p>
                     </div>
                     <div class="source">
                         <p>
@@ -73,7 +94,7 @@ export class EmailResult extends Component {
                         :null
                     }
                 </div>
-                <div class="quaterWidthDiv"> </div>
+                <div class="quaterWidthDiv"></div>
             </div>
         );
     }
