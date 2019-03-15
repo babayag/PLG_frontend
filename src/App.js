@@ -63,11 +63,11 @@ class RootContainerComponent extends Component {
     return (
       <BrowserRouter>
         <Switch>
-            <Route exact path={"/dashboard"} component={Dashboard}  />
-            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
-            <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
-            <Route exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
-            <Route exact path={'/dashboard/chrome'} component={DashboardChrome} />
+            <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
+            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
+            <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
+            <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
             <Route exact path="/" component={WholeLandingPage} />
             <Route exact path={"/finder"} component={Finder}  />
             <Route exact path="/signup" component={SignupPage} />
