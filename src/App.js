@@ -5,6 +5,8 @@ import ReactQuoraPixel from 'react-quora-pixel';
 import {BrowserRouter, Switch , Redirect , Route} from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
 import { Provider, connect } from "react-redux";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 
 
 import {auth} from "./actions";
@@ -30,6 +32,9 @@ import { Lead } from "./components/Lead";
 
 import './App.css';
 
+
+const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="5x" spin/>
+
 class RootContainerComponent extends Component {
   constructor(props)
   {
@@ -42,7 +47,11 @@ class RootContainerComponent extends Component {
   PrivateRoute = ({component: ChildComponent, ...rest}) => {
     return <Route {...rest} render={props => {
       if (this.props.auth.isLoading) {
-        return <em>Loading...</em>;
+        return <div style={{marginTop: 150+'px', textAlign:'center'}}> 
+                  <em>{spinner}</em>; 
+                  <br></br> <br></br>
+                  <em>Loading...</em>
+                </div>
       } else if (!this.props.auth.isAuthenticated) {
         return <Redirect to="/login" />;
       } else {

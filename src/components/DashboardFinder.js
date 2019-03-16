@@ -9,6 +9,7 @@ import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import stanley_img from '../dr_stanley.png';
 import { findDOMNode } from 'react-dom';
+import idGenerator from 'react-id-generator';
 import $ from 'jquery';
 
 const search = <FontAwesomeIcon icon={faSearch} color="white" size="1x"/>
@@ -17,15 +18,17 @@ const spinner = <FontAwesomeIcon icon={faSpinner} color="#333333" size="2x" spin
 const questionCirle = <FontAwesomeIcon icon={faQuestionCircle} color="#33313165" size="1x"/>
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 
-
+// const board = [ "uuu@.com", "url@iii.com"]
 export class DashboardFinder extends Component {
     constructor(props){
         super(props);
+        this.id = this.htmlId = idGenerator();
         this.state = {
             nameToFind: "",
             domainToFind: "",
             isLoading: false, //has the search already stopped ??
-            foundEmails: []
+            foundEmails: [],
+            copied: ""
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
@@ -131,6 +134,13 @@ export class DashboardFinder extends Component {
         })
     }
 
+    // copyEmail(){
+    //     this.setState({
+    //         copied: "Copied!"
+    //     })
+
+    // }
+
     _handleKeyPress = e => { // When user presses on a keyboardtouch
         if(e.keyCode === 13){
             this.searchTheseData()
@@ -142,6 +152,31 @@ export class DashboardFinder extends Component {
         $(el).slideToggle();
     }
 
+    getEmailTextOnClick(e) { 
+        e.preventDefault();
+        var emailText = e.target.innerHTML;
+        navigator.clipboard.writeText(emailText);
+
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "Copied!";
+        document.getElementById(e.currentTarget.id).className = "copiedElt";
+    }
+
+    displayCopyText(e){
+        var idOfElt = "copy" + e.currentTarget.id;
+        
+        document.getElementById(idOfElt).className = "copyMsg";
+        document.getElementById(idOfElt).textContent = "Copy?";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+        
+    }
+
+    eraseCopyText(e){
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+        
+    }
 
     render() {
         return (
@@ -179,17 +214,21 @@ export class DashboardFinder extends Component {
                                 {/* <p className="mt-3" id="training__post_id">LEARN HOW TO <b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK.</a></b></p> */}
                                 <div className="foundEmailContainer">
                                 {/* This displays all the emails */
-                                    (this.state.foundEmails).map(email => (
+                                    (this.state.foundEmails).map(email => ( 
                                         <p className="foundEmail">
-                                            {email}
+                                            
+                                            <span className="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={this.state.foundEmails.indexOf(email)+this.id}>{email}</span>
+                                        
                                             <MappleToolTip className="mttipValidEmail" padding={'18px 12px 0px 12px'} shadow={true} float={true} direction={'right'} mappleType={'success'}>
-                                            <div>
-                                                <span className="validIcon">{valid}</span>
-                                            </div>
-                                            <div>
-                                                This Email is valid
-                                            </div>
-                                        </MappleToolTip>
+                                                <div>
+                                                    <span className="validIcon">{valid}</span>
+                                                </div>
+                                                <div>
+                                                    This Email is valid
+                                                </div>
+                                            </MappleToolTip>
+                                            <span className="copyMsg" id={"copy"+this.state.foundEmails.indexOf(email)+this.id} refs={"copy" + this.id}></span>
+
                                         </p>
                                         )
                                     )
