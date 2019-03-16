@@ -74,7 +74,8 @@ export class DashboardLead extends Component {
     /*This is run when we hit on the search button */
     async searchTheseData(){
         this.setState({
-            shouldWeDisplayTable: false
+            shouldWeDisplayTable: false,
+            foundEmails: []
         });
         /*One filed or both are empty */
         if(this.state.niche == "" || this.state.location == ""){
@@ -83,31 +84,45 @@ export class DashboardLead extends Component {
         else{
             await this.showAndHide(); /*To show the spinner */
             this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
-            const devUrl = '/api/lead/findLeads';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/findLeads';
+            const devUrl = '/api/lead/betterfindlead';
+            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
 
             try {
                 const res = await axios.post(devUrl, {niche:this.state.niche, city:this.state.location})
-                // console.log(res.data);
-
-                var emailsThatWhereFound = res.data.data;
-                var finalFoundEmails = [];
-
-                for(var i=0; i<emailsThatWhereFound.length; i++){
-                    console.log(emailsThatWhereFound[i].Domain);
-                    if(!this.isEmpty(emailsThatWhereFound[i])){
-                        finalFoundEmails.push(emailsThatWhereFound[i]);
+               
+                if(res.data.data.length !== 0){
+                    console.log(res)
+                    console.log(res.data.data)
+                    var emailsThatWhereFound = res.data.data[0].Results;
+    
+                    var finalFoundEmails = [];
+                    if (emailsThatWhereFound.length != 0){
+                        for(var i=0; i<emailsThatWhereFound.length; i++){
+                            // console.log(emailsThatWhereFound[i].Domain);
+                            if (emailsThatWhereFound[i].Emails.length !== 0){
+                                finalFoundEmails.push(emailsThatWhereFound[i]);
+                            }
+                        }
+                    }else {
+                        finalFoundEmails = []
                     }
+    
+                    console.log(finalFoundEmails);
+    
+                    this.setState({
+                        foundEmails: finalFoundEmails,
+                        shouldWeDisplayTable: true
+                    });
+
+                }else{
+                    this.setState({
+                        // foundEmails: [],
+                        shouldWeDisplayTable: true
+                    });
                 }
 
-                console.log(finalFoundEmails);
 
-                this.setState({
-                    foundEmails: finalFoundEmails,
-                    shouldWeDisplayTable: true
-                });
-
-                console.log(this.state.foundEmails);
+                // console.log(this.state.foundEmails);
 
             } catch (e) {
                 console.log(e);
@@ -197,8 +212,8 @@ export class DashboardLead extends Component {
 
                                                             <div id={"collapseOne"+this.state.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion"+this.state.foundEmails.indexOf(item)}>
                                                                 <div class="card-body">
-                                                                    {item.concern.map((email) => 
-                                                                        <h4>{email.email}</h4>
+                                                                    {item.Emails.map((email) => 
+                                                                        <h4>{email}</h4>
                                                                     )}
                                                                 </div>
                                                             </div>

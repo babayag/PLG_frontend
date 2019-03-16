@@ -27,6 +27,7 @@ import { DashboardChrome } from "./components/DashboardChrome";
 import { DashboardFirefox } from "./components/DashboardFirefox";
 import { Chrome } from "./components/Chrome";
 import { Firefox } from "./components/Firefox";
+import { Lead } from "./components/Lead";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -73,6 +74,7 @@ class RootContainerComponent extends Component {
             <PrivateRoute exact path={'/dashboard/firefox'} component={DashboardFirefox} />
             <Route exact path="/" component={WholeLandingPage} />
             <Route exact path={"/finder"} component={Finder}  />
+            <Route exact path={"/lead"} component={Lead}  />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path={"/export"} component={ExportPage}  />
