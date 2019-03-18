@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { NavBar } from "./NavBar";
 import { SliderContent } from "./Slider";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import file from '../leadmehome_chrome_extension.rar'
-
-const downloadIcon = <FontAwesomeIcon icon={faDownload} size="1x" />
 
 export class Chrome extends Component {
     render() {
@@ -17,7 +12,7 @@ export class Chrome extends Component {
                         <div className="content col-sm-11 col-md-9 col-lg-7">
                             <h1>Leadmehome for Chrome</h1>
                             <p>Leadmehome Chrome extension lets you immediately find the email addresses behind the websites you're browsing.</p>
-                            <a href={file} className="download__plugin">{downloadIcon} Download Extension <span>(It's free)</span></a>
+                            <a href="https://chrome.google.com/webstore/detail/leadmehome/kjfgnlanbaeoljhmiommbmjgjcacfghc/related?h1=fr" className="download__plugin"> Add to Chrome <span>(It's free)</span></a>
                         </div>
                     </div>
                 </div>

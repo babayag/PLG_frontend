@@ -92,17 +92,50 @@ class SignupPage extends Component {
 
     _handleKeyPress = e => { // When user presses on a keyboardtouch
         if(e.keyCode === 13){
-            this.register();
+            this.registerUser();
         }
 
     }
 
     async registerUser(){
-        
-        let devUrlLocal = "http://127.0.0.1:8000/api/lead/auth/users/create/";
-        let devUrl = "/api/lead/auth/users/create/";
-        try {
-                    const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+
+        this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
+            allowOnchange: true  
+        })
+        if(!emailRegex.test(this.state.email) && this.state.email != ""){
+            this.setState({
+                emailValidationMessage: "Please enter a correct email address"
+            })
+        }
+        if(this.state.email == ""){
+            this.setState({
+                emailValidationMessage: "This field must not be empty"
+            })
+        }
+        if(this.state.password == ""){
+            this.setState({
+                passwordValidationMessage: "This field must not be empty"
+            })
+        }
+        if(this.state.password2 == ""){
+            this.setState({
+                password2ValidationMessage: "This field must not be empty"
+            })
+        }
+        if(this.state.password != this.state.password2){
+            this.addNotification("Passwords do not match")
+        }
+        if(this.state.password == this.state.password2 && //if passwords match
+            passwordRegex.test(this.state.password) &&   // and if passwords are corect
+            emailRegex.test(this.state.email)            // and if email is correct
+            ){
+
+                console.log('laelazrzf');
+
+                let devUrlLocal = "http://127.0.0.1:8000/api/lead/auth/users/create/";
+                let devUrl = "/api/lead/auth/users/create/";
+                try {
+                    const res = await axios.post(devUrl, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
                     if(res.status === 200 || res.status === 201)
                     {
                         this.setState({
@@ -111,58 +144,27 @@ class SignupPage extends Component {
                     }else
                     {
                         console.log('error of notification ');
+                        this.addNotification("Please refresh the page and retry again")
                     }
-            }
-        catch(e){
+                }
+                catch(e){
                     console.log(e)
+                }
+
+                /*We can freely send the request */
+
+                /*ERIC PLEASE CHANGE THE ROUTE */
+            // const devUrl = 'http://leadmehome.io/api/lead/';
+            // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/';
+            // console.log("tets")
+            // try {
+            //     const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+            // }
+            // catch(e){
+            //     console.log(e)
+            // }
+
         }
-
-        // this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
-        //     allowOnchange: true  
-        // })
-        // if(!emailRegex.test(this.state.email) && this.state.email != ""){
-        //     this.setState({
-        //         emailValidationMessage: "Please enter a correct email address"
-        //     })
-        // }
-        // if(this.state.email == ""){
-        //     this.setState({
-        //         emailValidationMessage: "This field must not be empty"
-        //     })
-        // }
-        // if(this.state.password == ""){
-        //     this.setState({
-        //         passwordValidationMessage: "This field must not be empty"
-        //     })
-        // }
-        // if(this.state.password2 == ""){
-        //     this.setState({
-        //         password2ValidationMessage: "This field must not be empty"
-        //     })
-        // }
-        // if(this.state.password != this.state.password2){
-        //     this.addNotification("Passwords do not match")
-        // }
-        // if(this.state.password == this.state.password2 && //if passwords match
-        //     passwordRegex.test(this.state.password) &&   // and if passwords are corect
-        //     emailRegex.test(this.state.email)            // and if email is correct
-        //     ){
-
-        //         console.log('laelazrzf');
-        //         /*We can freely send the request */
-
-        //         /*ERIC PLEASE CHANGE THE ROUTE */
-        //     // const devUrl = 'http://leadmehome.io/api/lead/';
-        //     // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/';
-        //     // console.log("tets")
-        //     // try {
-        //     //     const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
-        //     // }
-        //     // catch(e){
-        //     //     console.log(e)
-        //     // }
-
-        // }
         
     }
 

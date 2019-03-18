@@ -24,7 +24,9 @@ import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
 import { Page404 } from "./components/Page404";
 import { Error } from "./components/Error";
 import { DashboardChrome } from "./components/DashboardChrome";
+import { DashboardFirefox } from "./components/DashboardFirefox";
 import { Chrome } from "./components/Chrome";
+import { Firefox } from "./components/Firefox";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -63,11 +65,12 @@ class RootContainerComponent extends Component {
     return (
       <BrowserRouter>
         <Switch>
-            <Route exact path={"/dashboard"} component={Dashboard}  />
-            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
-            <Route exact path={"/dashboard/finder"} component={DashboardFinder}  />
-            <Route exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
-            <Route exact path={'/dashboard/chrome'} component={DashboardChrome} />
+            <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
+            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
+            <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
+            <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
+            <PrivateRoute exact path={'/dashboard/firefox'} component={DashboardFirefox} />
             <Route exact path="/" component={WholeLandingPage} />
             <Route exact path={"/finder"} component={Finder}  />
             <Route exact path="/signup" component={SignupPage} />
@@ -75,6 +78,7 @@ class RootContainerComponent extends Component {
             <Route exact path={"/export"} component={ExportPage}  />
             <Route exact path={"/bulksearch"} component={BulkSearch}  />
             <Route exact path={"/chrome"} component={Chrome}  />
+            <Route exact path={"/firefox"} component={Firefox}  />
             <Route component={Page404} />
         </Switch>
       </BrowserRouter>
