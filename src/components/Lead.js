@@ -91,8 +91,6 @@ export class Lead extends Component {
                 const res = await axios.post(devUrl, { niche: this.state.niche, city: this.state.location })
 
                 if (res.data.data.length !== 0) {
-                    console.log(res)
-                    console.log(res.data.data)
                     var emailsThatWhereFound = res.data.data[0].Results;
 
                     var finalFoundEmails = [];
@@ -168,13 +166,32 @@ export class Lead extends Component {
 
     }
 
+    // This function take email and sources list, generate the csv file to download
+    generateCSV = (data) => {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        // Format our csv file content
+        csvContent += "domain : emails" + "\r\n";
+        data.forEach(function (rowArray) {
+            let row = rowArray.Domain + " : " + rowArray.Emails.join(",");
+            csvContent += row + "\r\n";
+        });
+
+        // Creating the file
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        let fileName = this.state.niche + "_" + this.state.location;
+        link.setAttribute("download", fileName+".csv");
+        link.click();
+    }
+
 
     render() {
         return (
             <div class="dashboard__page">
                 <NavBar />
-                <div class="lead__dashboard">
-                    <div class="lead__dashboard__content">
+                <div class="lead__dashboard mb-5">
+                    <div class="lead__dashboard__content pb-5">
                         <div class="lead__dashboard--left">
                             <div class="inputs mb-5">
                                 <input
@@ -202,12 +219,13 @@ export class Lead extends Component {
                                 <div>
                                     <div className="titleOfTheInfo">
                                         {this.state.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
-                                            <span>
+                                            <span className="d-flex -flex-row justify-content-center">
                                                 {this.state.foundEmails.length == 1 ?
-                                                    <p>We found {this.state.foundEmails.length} Bussiness</p> :
-                                                    <p>We found {this.state.foundEmails.length} Bussinesses</p>
+                                                    <p>We found {this.state.foundEmails.length} Bussiness.</p> :
+                                                    <p>We found {this.state.foundEmails.length} Bussinesses.</p>
                                                 }
-                                            </span> :
+                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, this.state.foundEmails)}>Export <span className="numberInExportBtn">{this.state.foundEmails.length}</span></button>
+                                            </span>:
                                             <p>We found nothing.</p>
                                         }
                                     </div>
@@ -240,9 +258,9 @@ export class Lead extends Component {
                                                                             <div class="card-body">
                                                                                 {item.Emails.map((email, id) =>
                                                                                     <div>
-                                                                                        <span class="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={(i+""+id)}>
+                                                                                        <span class="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={(i+"_"+id)}>
                                                                                         {email}</span>
-                                                                                        <span className="copyMsg" id={"copy" + (i + "" + id)} refs={"copy" + (i + "" +id)}></span>
+                                                                                        <span className="copyMsg" id={"copy" + (i + "_" + id)} refs={"copy" + (i + "_" +id)}></span>
                                                                                     </div>
                                                                                 )}
                                                                             </div>
