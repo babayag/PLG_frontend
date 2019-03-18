@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
-import NavBarDashboard from './NavBarDashboard';
+import { NavBar } from './NavBar';
 import stanley_img from '../dr_stanley.png';
 import ReactNotification from "react-notifications-component";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -96,12 +96,10 @@ export class Lead extends Component {
                     var emailsThatWhereFound = res.data.data[0].Results;
 
                     var finalFoundEmails = [];
-                    if (emailsThatWhereFound.length != 0) {
+                    if (emailsThatWhereFound.length !== 0) {
                         for (var i = 0; i < emailsThatWhereFound.length; i++) {
                             // console.log(emailsThatWhereFound[i].Domain);
-                            if (emailsThatWhereFound[i].Emails.length !== 0) {
-                                finalFoundEmails.push(emailsThatWhereFound[i]);
-                            }
+                            finalFoundEmails.push(emailsThatWhereFound[i]);
                         }
                     } else {
                         finalFoundEmails = []
@@ -144,11 +142,37 @@ export class Lead extends Component {
         return true;
     }
 
+    getEmailTextOnClick(e) {
+        e.preventDefault();
+        var emailText = e.target.innerHTML;
+        navigator.clipboard.writeText(emailText);
+
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "Copied!";
+        document.getElementById(e.currentTarget.id).className = "copiedElt";
+    }
+
+    displayCopyText(e) {
+        var idOfElt = "copy" + e.currentTarget.id;
+
+        document.getElementById(idOfElt).className = "copyMsg";
+        document.getElementById(idOfElt).textContent = "Copy?";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+
+    }
+
+    eraseCopyText(e) {
+        var idOfElt = "copy" + e.currentTarget.id;
+        document.getElementById(idOfElt).textContent = "";
+        document.getElementById(e.currentTarget.id).className = "foundEmailValue";
+
+    }
+
 
     render() {
         return (
             <div class="dashboard__page">
-                <NavBarDashboard />
+                <NavBar />
                 <div class="lead__dashboard">
                     <div class="lead__dashboard__content">
                         <div class="lead__dashboard--left">
@@ -189,7 +213,7 @@ export class Lead extends Component {
                                     </div>
 
                                     {/* <span>Table of results</span> */}
-                                    {this.state.foundEmails.length != 0 ? //do we display the table? better, are there results? 
+                                    {this.state.foundEmails.length !== 0 ? //do we display the table? better, are there results? 
                                         <table class="table dashboard__finder__results mt-5">
                                             <thead class="thead-dark">
                                                 <tr>
@@ -199,25 +223,33 @@ export class Lead extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {this.state.foundEmails.map((item) =>
+                                                {this.state.foundEmails.map((item, i) =>
                                                     <tr>
                                                         <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                         <td>{item.Domain}</td>
                                                         <td>
                                                             <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
-                                                                <div class="card">
-                                                                    <div class="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.state.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
-                                                                        <h4 class="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
-                                                                    </div>
-
-                                                                    <div id={"collapseOne" + this.state.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.state.foundEmails.indexOf(item)}>
-                                                                        <div class="card-body">
-                                                                            {item.Emails.map((email) =>
-                                                                                <h4>{email}</h4>
-                                                                            )}
+                                                                {
+                                                                    item.Emails.length !== 0 ?
+                                                                    <div class="card">
+                                                                        <div class="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.state.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
+                                                                            <h4 class="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
+
+                                                                        <div id={"collapseOne" + this.state.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.state.foundEmails.indexOf(item)}>
+                                                                            <div class="card-body">
+                                                                                {item.Emails.map((email, id) =>
+                                                                                    <div>
+                                                                                        <span class="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={(i+""+id)}>
+                                                                                        {email}</span>
+                                                                                        <span className="copyMsg" id={"copy" + (i + "" + id)} refs={"copy" + (i + "" +id)}></span>
+                                                                                    </div>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>:
+                                                                    <span>No Emails Found.</span>
+                                                                }
                                                             </div>
                                                         </td>
                                                     </tr>
