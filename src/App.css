@@ -3470,6 +3470,14 @@ button:disabled{
   margin: 5rem 19rem;
   margin-top: 1.5rem !important;
 }
+#shomorelead{
+  box-shadow: none !important;
+  margin-top: -1.1rem !important;
+  border-color: #eee !important;
+}
+tr{
+  border: #eee !important;
+}
 
 @media only screen and (max-width:1200px){
   .lead__dashboard__content{

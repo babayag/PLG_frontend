@@ -24,12 +24,15 @@ export class Lead extends Component {
             location: "",
             isLoading: false, //has the search already stopped ??
             foundEmails: [],
-            shouldWeDisplayTable: false
+            shouldWeDisplayTable: false,
+            remainingEmails: [],
+            isShowmore: false
 
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
+        this.displayResults = this.displayResults.bind(this);
     }
 
     toggle = () => {
@@ -91,8 +94,6 @@ export class Lead extends Component {
                 const res = await axios.post(devUrl, { niche: this.state.niche, city: this.state.location })
 
                 if (res.data.data.length !== 0) {
-                    console.log(res)
-                    console.log(res.data.data)
                     var emailsThatWhereFound = res.data.data[0].Results;
 
                     var finalFoundEmails = [];
@@ -105,12 +106,14 @@ export class Lead extends Component {
                         finalFoundEmails = []
                     }
 
-                    console.log(finalFoundEmails);
+                    // Sort Email list by number of emails
+                    var readyToState = this.sortEmails(finalFoundEmails);
 
                     this.setState({
-                        foundEmails: finalFoundEmails,
-                        shouldWeDisplayTable: true
+                        remainingEmails: readyToState
                     });
+
+                    this.displayResults();
 
                 } else {
                     this.setState({
@@ -168,13 +171,90 @@ export class Lead extends Component {
 
     }
 
+    // This function take email and sources list, generate the csv file to download
+    generateCSV = (data) => {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        // Format our csv file content
+        csvContent += "domain , emails" + "\r\n";
+        data.forEach(function (rowArray) {
+            let row = rowArray.Domain + " , " + rowArray.Emails.join(",");
+            csvContent += row + "\r\n";
+        });
+
+        // Creating the file
+        let encodedUri = encodeURI(csvContent);
+        let link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        let fileName = this.state.niche + "_" + this.state.location;
+        link.setAttribute("download", fileName+".csv");
+        link.click();
+    }
+
+    // This function sort it basing on numbers of email per domains
+    sortEmails = (emailList) => {
+        let sortedEmailList = [...emailList];
+        for (var i = 0; i < sortedEmailList.length; i++) {
+            var len1 = sortedEmailList[i].Emails.length; // Length of each email domain table
+            for (var j = 0; j < sortedEmailList.length; j++) {
+                var len2 = sortedEmailList[j].Emails.length; // Length of each email domain table
+                if (len1 <len2) {
+                    let cache = sortedEmailList[i];
+                    sortedEmailList[i] = sortedEmailList[j];
+                    sortedEmailList[j] = cache;
+                }
+            }
+            
+        }
+        sortedEmailList.reverse();
+        return sortedEmailList;
+    }
+
+    displayResults = () => {
+        let prevRemainingEmails = [...this.state.remainingEmails];
+        let nPrev = prevRemainingEmails.length;
+
+        let emailsToDisplay = [...this.state.foundEmails];
+
+        if (nPrev > 10){
+            // If there are more than ten emails
+            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails.slice(0, 10));
+            let newRemainingEmails = prevRemainingEmails.slice(10);
+
+            this.setState({ 
+                foundEmails: emailsToDisplay,
+                shouldWeDisplayTable: true, 
+                remainingEmails: newRemainingEmails, 
+                isShowmore: true 
+            });
+        }else{
+            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
+            this.setState({
+                foundEmails: emailsToDisplay,
+                shouldWeDisplayTable: true,  
+                remainingEmails: [],
+                isShowmore: false 
+            });
+        }
+    }
+
 
     render() {
+        var showmore;
+        if(this.state.isShowmore){
+            showmore = (
+                <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
+                    <button onClick={this.displayResults}>Show more</button>
+                </div>
+            )
+        }else{
+            showmore = null;
+        }
+
         return (
             <div class="dashboard__page">
                 <NavBar />
-                <div class="lead__dashboard">
-                    <div class="lead__dashboard__content">
+                <div class="lead__dashboard mb-5">
+                    <div class="lead__dashboard__content pb-5">
                         <div class="lead__dashboard--left">
                             <div class="inputs mb-5">
                                 <input
@@ -202,60 +282,64 @@ export class Lead extends Component {
                                 <div>
                                     <div className="titleOfTheInfo">
                                         {this.state.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
-                                            <span>
+                                            <span className="d-flex -flex-row justify-content-center">
                                                 {this.state.foundEmails.length == 1 ?
-                                                    <p>We found {this.state.foundEmails.length} Bussiness</p> :
-                                                    <p>We found {this.state.foundEmails.length} Bussinesses</p>
+                                                    <p>We found {this.state.foundEmails.length} Bussiness.</p> :
+                                                    <p>We found {this.state.foundEmails.length} Bussinesses.</p>
                                                 }
-                                            </span> :
+                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, this.state.foundEmails)}>Export <span className="numberInExportBtn">{this.state.foundEmails.length}</span></button>
+                                            </span>:
                                             <p>We found nothing.</p>
                                         }
                                     </div>
 
                                     {/* <span>Table of results</span> */}
-                                    {this.state.foundEmails.length !== 0 ? //do we display the table? better, are there results? 
-                                        <table class="table dashboard__finder__results mt-5">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col" className="table__col--1">Business</th>
-                                                    <th scope="col" className="table__col--2">Email</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.state.foundEmails.map((item, i) =>
+                                    {this.state.foundEmails.length !== 0 ? //do we display the table? better, are there results?
+                                        <div>
+                                            <table class="table dashboard__finder__results mt-5">
+                                                <thead class="thead-dark">
                                                     <tr>
-                                                        <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
-                                                        <td>{item.Domain}</td>
-                                                        <td>
-                                                            <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
-                                                                {
-                                                                    item.Emails.length !== 0 ?
-                                                                    <div class="card">
-                                                                        <div class="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.state.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
-                                                                            <h4 class="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
-                                                                        </div>
-
-                                                                        <div id={"collapseOne" + this.state.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.state.foundEmails.indexOf(item)}>
-                                                                            <div class="card-body">
-                                                                                {item.Emails.map((email, id) =>
-                                                                                    <div>
-                                                                                        <span class="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={(i+""+id)}>
-                                                                                        {email}</span>
-                                                                                        <span className="copyMsg" id={"copy" + (i + "" + id)} refs={"copy" + (i + "" +id)}></span>
-                                                                                    </div>
-                                                                                )}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>:
-                                                                    <span>No Emails Found.</span>
-                                                                }
-                                                            </div>
-                                                        </td>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col" className="table__col--1">Business</th>
+                                                        <th scope="col" className="table__col--2">Email</th>
                                                     </tr>
-                                                )}
-                                            </tbody>
-                                        </table> :
+                                                </thead>
+                                                <tbody>
+                                                    {this.state.foundEmails.map((item, i) =>
+                                                        <tr>
+                                                            <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
+                                                            <td>{item.Domain}</td>
+                                                            <td>
+                                                                <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
+                                                                    {
+                                                                        item.Emails.length !== 0 ?
+                                                                        <div class="card">
+                                                                            <div class="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.state.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
+                                                                                <h4 class="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
+                                                                            </div>
+
+                                                                            <div id={"collapseOne" + this.state.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.state.foundEmails.indexOf(item)}>
+                                                                                <div class="card-body">
+                                                                                    {item.Emails.map((email, id) =>
+                                                                                        <div>
+                                                                                            <span class="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={(i+"_"+id)}>
+                                                                                            {email}</span>
+                                                                                            <span className="copyMsg" id={"copy" + (i + "_" + id)} refs={"copy" + (i + "_" +id)}></span>
+                                                                                        </div>
+                                                                                    )}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>:
+                                                                        <span>No Emails Found.</span>
+                                                                    }
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                            {showmore} 
+                                        </div>:
                                         null
                                     }
                                 </div> :
