@@ -98,7 +98,7 @@ class SignupPage extends Component {
     }
 
     async registerUser(){
-
+/*
         this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
             allowOnchange: true  
         })
@@ -149,8 +149,9 @@ class SignupPage extends Component {
                 }
                 catch(e){
                     console.log(e)
-                }
-
+                }*/
+            
+                
                 /*We can freely send the request */
 
                 /*ERIC PLEASE CHANGE THE ROUTE */
@@ -164,9 +165,27 @@ class SignupPage extends Component {
             //     console.log(e)
             // }
 
+            let devUrlLocal = "http://127.0.0.1:8000/api/lead/auth/users/create/";
+            let devUrl = "/api/lead/auth/users/create/";
+            try {
+                const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+                if(res.status === 200 || res.status === 201)
+                {
+                    this.setState({
+                        isRegister : true,
+                    })
+                }else
+                {
+                    console.log('error of notification ');
+                    this.addNotification("Please refresh the page and retry again")
+                }
+            }
+            catch(e){
+                console.log(e)
+            }
+
         }
-        
-    }
+    
 
     addNotification(message) {
         this.notificationDOMRef.current.addNotification({
