@@ -45,6 +45,7 @@ export class NavBar extends Component {
                               <a id="dropbtn" href="/bulksearch">Bulk Search</a>
                               <a id="dropbtn" href="/chrome">Chrome Extension</a>
                               <a id="dropbtn" href="/firefox">Firefox Extension</a>
+                              <a id="dropbtn" href="/lead">Lead</a>
                             </div>
                           </div>
                         </div>
