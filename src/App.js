@@ -67,7 +67,7 @@ class RootContainerComponent extends Component {
       <BrowserRouter>
         <Switch>
             <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
-            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
             <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
             <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
             <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />

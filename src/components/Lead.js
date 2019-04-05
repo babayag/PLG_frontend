@@ -93,7 +93,7 @@ export class Lead extends Component {
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrlLocal, { niche: niche, city: location })
+                const res = await axios.post(devUrl, { niche: niche, city: location })
 
                 if (res.data.data.length !== 0) {
                     var emailsThatWhereFound = res.data.data[0].Results;
