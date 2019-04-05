@@ -269,7 +269,7 @@ th,
 td {
   padding: 1.6rem 3.2rem 1.5rem;
   text-align: left;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
 }
 
 th {
@@ -2936,7 +2936,14 @@ button:disabled{
   .finder__name, .finder__domain{
     width: 10rem;
   }
+  .finder__name::placeholder, .finder__domain::placeholder{
+    font-size: 1.2rem;
+  }
+  #lead__export{
+    flex-direction: column !important;
+  }
 }
+
 
 .inputs h4{
   text-align: center;
@@ -2999,6 +3006,7 @@ button:disabled{
 
 .foundEmailValue{
   cursor: pointer;
+  word-break: break-all;
 }
 
 .foundEmailContainer{
@@ -3476,7 +3484,15 @@ button:disabled{
   border-color: #eee !important;
 }
 tr{
-  border: #eee !important;
+  border: #eee 1px solid !important;
+}
+
+.lead__results_num{
+  margin-bottom: 0 !important;
+}
+
+.table td, .table th{
+  border-top: none !important;
 }
 
 @media only screen and (max-width:1200px){
@@ -3498,7 +3514,55 @@ tr{
   .dashboard__lead__content{
     margin: 5rem 1rem;
   }
+  .lead__dashboard .inputs{
+    flex-direction: column !important;
+  }
+  .lead__dashboard .inputs > *{
+    flex: 1 !important;
+    width: 100% !important;
+    margin: .5rem 0 !important;
+  }
+  .foundEmailValue{
+    font-size: 1.3rem !important;
+  }
+  .table td{
+    font-size: 1.4rem !important;
+  }
+  .table .email{
+    font-weight: bold !important;
+  }
+  .table th{
+    font-size: 1.5rem !important;
+  }
+  .card-header h4 {
+    font-size: 1.35rem !important
+  }
+
+  .dashboard__finder__results tbody tr{
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .dashboard__finder__results tbody{
+    display: table-caption !important;
+  }
+  .dashboard__finder__results tbody tr th{
+    display: none;
+  }
+  .dashboard__finder__results thead{
+    display: none;
+  }
+  .exportBtn{
+    margin-top: 1.2rem !important;
+  }
+  .card-header  h4 {
+    font-size: 1.4rem !important;
+    font-weight: 400;
+  }
 }
+
+
 .dashboard__finder__results{
   padding: 2rem;
   border-radius: 4px;

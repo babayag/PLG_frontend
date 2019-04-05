@@ -88,11 +88,11 @@ export class DashboardLead extends Component {
             const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
 
             try {
-                const res = await axios.post(devUrl, {niche:this.state.niche, city:this.state.location})
+                let niche = this.state.niche.toLowerCase()
+                let location = this.state.location.toLowerCase()
+                const res = await axios.post(devUrl, { niche: niche, city: location })
                
                 if(res.data.data.length !== 0){
-                    console.log(res)
-                    console.log(res.data.data)
                     var emailsThatWhereFound = res.data.data[0].Results;
     
                     var finalFoundEmails = [];
@@ -281,10 +281,10 @@ export class DashboardLead extends Component {
                                 <div>
                                     <div className="titleOfTheInfo">
                                         {this.state.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
-                                            <span className="d-flex -flex-row justify-content-center">
+                                            <span className="d-flex -flex-row justify-content-center align-items-center" id="lead__export">
                                                 {this.state.foundEmails.length == 1 ?
-                                                    <p>We found {this.state.foundEmails.length} Bussiness.</p> :
-                                                    <p>We found {this.state.foundEmails.length} Bussinesses.</p>
+                                                    <p className="lead__results_num">We found {this.state.foundEmails.length} Bussiness.</p> :
+                                                    <p className="lead__results_num">We found {this.state.foundEmails.length} Bussinesses.</p>
                                                 }
                                                 <button className="exportBtn" onClick={this.generateCSV.bind(this, this.state.foundEmails)}>Export <span className="numberInExportBtn">{this.state.foundEmails.length}</span></button>
                                             </span>:
@@ -307,7 +307,7 @@ export class DashboardLead extends Component {
                                                     {this.state.foundEmails.map((item, i) =>
                                                         <tr>
                                                             <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
-                                                            <td>{item.Domain}</td>
+                                                            <td className="email">{item.Domain}</td>
                                                             <td>
                                                                 <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {
