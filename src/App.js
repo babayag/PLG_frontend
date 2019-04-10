@@ -18,7 +18,7 @@ import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
 import { Dashboard } from "./components/Dashboard";
 import { Finder } from "./components/Finder";
-import { DashboardLead } from "./components/DashboardLead";
+import DashboardLead from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
 import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
 import { Page404 } from "./components/Page404";
@@ -68,7 +68,7 @@ class RootContainerComponent extends Component {
       <BrowserRouter>
         <Switch>
             <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
-            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <Route exact path={"/dashboard/lead"} component={DashboardLead}  />
             <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
             <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
             <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
