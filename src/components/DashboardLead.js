@@ -1,21 +1,21 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import $ from 'jquery';
-import { findDOMNode } from 'react-dom';
 import NavBarDashboard from './NavBarDashboard';
 import stanley_img from '../dr_stanley.png';
 import ReactNotification from "react-notifications-component";
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import Forfait from './Forfait'
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
 const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin/>
 
-export class DashboardLead extends Component {
+class DashboardLead extends Component {
 
     constructor(props){
         super(props);
@@ -24,17 +24,13 @@ export class DashboardLead extends Component {
             location: "",
             isLoading: false, //has the search already stopped ??
             foundEmails: [],
-            shouldWeDisplayTable: false
+            shouldWeDisplayTable: false,
+            isPaymentLoading: false
             
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
-    }
-
-    toggle = () => {
-      const el = findDOMNode(this.refs.recent__search);
-      $(el).slideToggle();
     }
 
     /*When the value of an input changes, we directly set the state to the new value */
@@ -236,6 +232,37 @@ export class DashboardLead extends Component {
             }
         }
 
+        makePayment = async (forfait) => {
+
+            localStorage.setItem("idForfait", forfait.id)
+            
+            this.setState({
+                isPaymentLoading: true,
+                chosenForfait: { ...forfait }
+            })
+            let devUrlLocal = "http://127.0.0.1:8000/api/lead/createPayment";
+            try {
+                const res = await axios.post(devUrlLocal, {
+                    price: forfait.price,
+                    email: this.props.user.email,
+                    idForfait: forfait.id
+                })
+                
+                if (res.status === 200 || res.status === 201) {
+                    this.setState({
+                        isPaymentLoading: false,
+                    })
+                    window.location.href = res.data.redirect_url;
+                } else {
+                    console.log('error of notification ');
+                    this.addNotification("Please refresh the page and retry again")
+                }
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+
 
     render() {
         var showmore;
@@ -352,20 +379,12 @@ export class DashboardLead extends Component {
                                     }
 
                                 </span>
-
-
                             }
                         </div>
 
                         {/* <span>Left Side</span> */}
                         <div class="lead__dashboard--right">
-                            <div class="recent__search">
-                                <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
-                            </div>
-
-                            <div class="recent__searchs" ref="recent__search">
-                                ...
-                        </div>
+                            <Forfait pay={this.makePayment} isPayLoading={this.state.isPaymentLoading}/>
                             <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
                             <div class="video__course">
                                 <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
@@ -383,4 +402,11 @@ export class DashboardLead extends Component {
         );
     }
 }
-    
+
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user,
+    }
+}
+
+export default connect(mapStateToProps)(DashboardLead);

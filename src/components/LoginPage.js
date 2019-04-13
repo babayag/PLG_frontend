@@ -19,7 +19,7 @@ class LoginPage extends Component {
 
     login = e => { 
         //e.preventDefault();
-      this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
+      /*this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
         allowOnchange: true  
       })
 
@@ -34,14 +34,18 @@ class LoginPage extends Component {
           emailValidationMessage: "This field should not be empty"
         })
       }
-
+      /*
       if(1==1){
         this.setState({
           userNotFoundMsg: "User not found."
         })
-      }
+      }*/
 
       // console.log(this.props.login(this.state.email, this.state.password)); 
+      
+      this.props.login(this.state.email,this.state.password)                                  
+
+
     }
 
       handleChange = e => {

@@ -18,7 +18,7 @@ import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
 import { Dashboard } from "./components/Dashboard";
 import { Finder } from "./components/Finder";
-import { DashboardLead } from "./components/DashboardLead";
+import DashboardLead from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
 import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
 import { Page404 } from "./components/Page404";
@@ -28,6 +28,7 @@ import { DashboardFirefox } from "./components/DashboardFirefox";
 import { Chrome } from "./components/Chrome";
 import { Firefox } from "./components/Firefox";
 import { Lead } from "./components/Lead";
+import  DashboardPayment  from "./components/DashboardPayment";
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
@@ -72,6 +73,7 @@ class RootContainerComponent extends Component {
             <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
             <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
             <PrivateRoute exact path={'/dashboard/firefox'} component={DashboardFirefox} />
+            <PrivateRoute exact path={'/dashboard/payment'} component={DashboardPayment} />
             <Route exact path="/" component={WholeLandingPage} />
             <Route exact path={"/finder"} component={Finder}  />
             <Route exact path={"/lead"} component={Lead}  />
