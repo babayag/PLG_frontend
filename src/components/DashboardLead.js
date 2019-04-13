@@ -233,7 +233,9 @@ class DashboardLead extends Component {
         }
 
         makePayment = async (forfait) => {
-            console.log(forfait)
+
+            localStorage.setItem("idForfait", forfait.id)
+            
             this.setState({
                 isPaymentLoading: true,
                 chosenForfait: { ...forfait }
@@ -242,10 +244,10 @@ class DashboardLead extends Component {
             try {
                 const res = await axios.post(devUrlLocal, {
                     price: forfait.price,
-                    description: forfait.price + " dollars | " + forfait.niche + " niches | " + forfait.email + " emails",
                     email: this.props.user.email,
                     idForfait: forfait.id
                 })
+                
                 if (res.status === 200 || res.status === 201) {
                     this.setState({
                         isPaymentLoading: false,
