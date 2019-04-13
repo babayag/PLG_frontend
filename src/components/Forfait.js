@@ -19,36 +19,22 @@ class Forfait extends Component {
     }
 
     componentDidMount() {
-        /* setTimeout(() => {
-            const forfaits = [
-                {
-                    "id": 1,
-                    "price": 10,
-                    "niche": 10,
-                    "email": 100
-                },
-                {
-                    "id": 2,
-                    "price": 25,
-                    "niche": 20,
-                    "email": 100
-                }
-            ]
-            this.setState({ forfaits: forfaits, isForfaits: true})
-        }, 1000) */
+        
 
         let devUrlLocal = "http://127.0.0.1:8000/api/lead/getAllforfait";
         try {
-            const res = axios.post(devUrlLocal)
-            if (res.status === 200 || res.status === 201) {
+            axios.post(devUrlLocal)
+            .then(res => {
+                console.log(res.data)
                 this.setState({
-                    forfaits: [res.data.data[0].Results],
+                    forfaits: res.data,
                     isForfaits: true,
                 })
-            } else {
-                console.log('error of notification ');
-                //this.addNotification("", "Please refresh the page and retry again")
-            }
+            })
+            .catch(err => {
+                this.setState({ isForfaits: true });
+                console.log(err);
+            })
         } catch (e) {
             console.log(e)
         }
@@ -60,9 +46,8 @@ class Forfait extends Component {
     }    
 
     render() {
-
         let forfaitsList = <span> Loading...</span>;
-        if(this.state.isForfaits) {
+        if(this.state.isForfaits) { 
             forfaitsList = this.state.forfaits.map(forfait => (
                 <h3 key={forfait.id} onClick={() => this.props.pay(forfait)}>{forfait.email} Emails - {forfait.niche} Niches</h3>
             ))
