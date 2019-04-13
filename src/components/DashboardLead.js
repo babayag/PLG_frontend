@@ -240,7 +240,7 @@ class DashboardLead extends Component {
                 isPaymentLoading: true,
                 chosenForfait: { ...forfait }
             })
-            let devUrlLocal = "http://127.0.0.1:8000/api/lead/createPayment";
+            let devUrlLocal = "/api/lead/createPayment";
             try {
                 const res = await axios.post(devUrlLocal, {
                     price: forfait.price,
