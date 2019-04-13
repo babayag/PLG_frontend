@@ -165,7 +165,7 @@ class SignupPage extends Component {
             //     console.log(e)
             // }
 
-            let devUrlLocal = "http://127.0.0.1:8000/api/lead/auth/users/create/";
+            let devUrlLocal = "/api/lead/auth/users/create/";
             let devUrl = "/api/lead/auth/users/create/";
             try {
                 const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);

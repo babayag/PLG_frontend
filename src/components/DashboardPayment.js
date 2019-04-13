@@ -8,7 +8,7 @@ export class DashboardPayment extends Component {
         const parsed = queryString.parse(window.location.search);
         console.log(parsed);
 
-        let devUrlLocal = "http://127.0.0.1:8000/api/lead/executePayment";
+        let devUrlLocal = "/api/lead/executePayment";
         try {
             const res = await axios.post(devUrlLocal, parsed) //await fetch(devUrl);
             if(res.status === 200 || res.status === 201)
