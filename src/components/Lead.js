@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -93,7 +94,11 @@ export class Lead extends Component {
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrl, { niche: niche, city: location })
+                const res = await axios.post(devUrlLocal, { 
+                                                        niche: niche, 
+                                                        city: location,
+                                                        email: this.props.user.email
+                                                     })
 
                 if (res.data.data.length !== 0) {
                     var emailsThatWhereFound = res.data.data[0].Results;
@@ -387,3 +392,11 @@ export class Lead extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user,
+    }
+}
+
+export default connect(mapStateToProps)(Lead);

@@ -16,13 +16,13 @@ const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
 const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin/>
 
-class Historic extends Component {
+class UserSearch extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            payments:[],
-            HistoricIsLoad : false
+            searchList:[],
+            searchIsLoad : false
         }
     }
 
@@ -31,14 +31,14 @@ class Historic extends Component {
     componentDidMount() {
         
 
-        let devUrlLocal = "http://127.0.0.1:8000/api/lead/getAllPayement";
+        let devUrlLocal = "http://127.0.0.1:8000/api/lead/getallusersearch";
         let user = { email: this.props.user.email };
         try {
             axios.post(devUrlLocal,user)
             .then(res => {
                 this.setState({
-                    payments: res.data,
-                    HistoricIsLoad: true
+                    searchList: res.data,
+                    searchIsLoad: true
                 })
             })
             .catch(err => {
@@ -75,11 +75,10 @@ class Historic extends Component {
     
 
     render() {
-        let historicList = <span> Loading...</span>;
-        if(this.state.HistoricIsLoad) { 
-            historicList = this.state.payments.map(payement => (
-                <tr><td>{payement.description}</td> <td>${payement.price}</td><td>{payement.date}</td> 
-                <td className="display_valid">{payement.Isvalid ? "valid" : "expired"}</td></tr>
+        let SearchList = <span> Loading...</span>;
+        if(this.state.searchIsLoad) { 
+            SearchList = this.state.searchList.map(search => (
+                <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.created_at}</td></tr>
             ))
           
         }
@@ -92,16 +91,15 @@ class Historic extends Component {
 
                     <div className="historicData">
                        
-                         <h1 id="title_h"> Transaction History</h1> 
+                         <h1 id="title_h"> Leads History</h1> 
                             <table id="historictable">  
                                 <tr>
-                                    <th className="description">Forfait description</th>
-                                    <th>Price</th>
-                                    <th>Date</th>
-                                    <th className="isvalid">Isvalid</th>
+                                    <th className="description">Niche</th>
+                                    <th>Location</th>
+                                    <th className="isvalid">Date</th>
                                 </tr>
 
-                                    {historicList}
+                                    {SearchList}
                     
                             </table>
   
@@ -119,4 +117,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Historic);
+export default connect(mapStateToProps)(UserSearch);
