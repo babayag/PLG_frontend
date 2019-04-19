@@ -15,6 +15,7 @@ import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
 const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin />
+const smallerSpinnerViolet = <FontAwesomeIcon icon={faSpinner} color="#212529" size="1x" spin />
 const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/> 
 const invalid = <FontAwesomeIcon icon={faTimes} color="#FF0515"/> 
 
@@ -26,16 +27,19 @@ export class Lead extends Component {
             niche: "",
             location: "",
             isLoading: false, //has the search already stopped ??
+            isSearchingMore: false, // is it still searching more leads?
             foundEmails: [],
             shouldWeDisplayTable: false,
             remainingEmails: [],
-            isShowmore: false
+            isShowmore: false,
+            p:0
 
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
         this.displayResults = this.displayResults.bind(this);
+        this.searchMore = this.searchMore.bind(this);
     }
 
     toggle = () => {
@@ -58,7 +62,13 @@ export class Lead extends Component {
 
     showAndHide() {
         this.setState({
-            isLoading: true,
+            isLoading: true
+        })
+    }
+
+    showAndHideSearchMore() {
+        this.setState({
+            isSearchingMore: true
         })
     }
 
@@ -96,7 +106,7 @@ export class Lead extends Component {
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrlLocal, { niche: niche, city: location })
+                const res = await axios.post(devUrlLocal, { niche: niche, city: location, p:0 })
                 console.log(res)
                 if (res.data.data.length !== 0) {
                     var emailsThatWhereFound = res.data.data.Results;
@@ -116,10 +126,19 @@ export class Lead extends Component {
                     var readyToState = this.sortEmails(finalFoundEmails);
 
                     this.setState({
-                        remainingEmails: readyToState
+                        remainingEmails: readyToState,
+                        foundEmails: finalFoundEmails,
+                        shouldWeDisplayTable: true,
                     });
 
-                    this.displayResults();
+                    if(finalFoundEmails.length >= 10){
+                        this.setState({
+                            isShowmore: true,
+                            p:10 
+                        })
+                    }
+
+                    // this.displayResults();
 
                 } else {
                     this.setState({
@@ -243,13 +262,62 @@ export class Lead extends Component {
         }
     }
 
+    searchMore = async() => {
+        await this.showAndHideSearchMore(); /*To show the spinner */
+        this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
+        const devUrl = '/api/lead/betterfindlead';
+        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
+
+        try {
+            let niche = this.state.niche.toLowerCase()
+            let location = this.state.location.toLowerCase()
+            const res = await axios.post(devUrlLocal, { niche: niche, city: location, p: this.state.p })
+            console.log(res)
+            if (res.data.data.length !== 0) {
+                var emailsThatWhereFound = res.data.data.Results;
+
+                var finalFoundEmails = [];
+                if (emailsThatWhereFound.length !== 0) {
+                    for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                        // console.log(emailsThatWhereFound[i].Domain);
+                        finalFoundEmails.push(emailsThatWhereFound[i]);
+                    }
+                    this.setState({
+                        foundEmails: this.state.foundEmails.concat(finalFoundEmails)
+                    })
+                    if(finalFoundEmails.length >= 10){
+                        this.setState({
+                            isShowmore: true,
+                            p: this.state.p + 10
+                        })
+                    }else{
+                        this.setState({
+                            isShowmore: false
+                        })
+                    }
+
+                } else { //no more lead
+                    finalFoundEmails = this.state.finalFoundEmails
+                }
+            }
+        } catch (e) {
+            console.log(e);
+            this.setState({
+                isLoading: false,
+            });
+
+            this.addNotification("An error occured", "Please refresh the page and try again.");
+        }
+    } 
+
 
     render() {
         var showmore;
         if(this.state.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                    <button onClick={this.displayResults}>Show more</button>
+                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Searching... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
+                    
                 </div>
             )
         }else{
