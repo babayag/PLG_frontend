@@ -78,7 +78,7 @@ class UserSearch extends Component {
         let SearchList = <span> Loading...</span>;
         if(this.state.searchIsLoad) { 
             SearchList = this.state.searchList.map(search => (
-                <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.created_at}</td></tr>
+                <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.counter}</td><td>{search.created_at}</td></tr>
             ))
           
         }
@@ -96,6 +96,7 @@ class UserSearch extends Component {
                                 <tr>
                                     <th className="description">Niche</th>
                                     <th>Location</th>
+                                    <th> x Times</th>
                                     <th className="isvalid">Date</th>
                                 </tr>
 

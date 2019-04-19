@@ -89,6 +89,7 @@ class DashboardLead extends Component {
                 const res = await axios.post(devUrlLocal, { niche: niche, 
                                                             city: location,
                                                             email: this.props.user.email })
+                console.log(res.data)
                
                 if(res.data.data.length !== 0){
                     var emailsThatWhereFound = res.data.data[0].Results;
@@ -100,7 +101,7 @@ class DashboardLead extends Component {
                             finalFoundEmails.push(emailsThatWhereFound[i]);
                         }
                     }else {
-                        finalFoundEmails = []
+                        finalFoundEmails.push(res.data[0])
                     }
     
                     // Sort Email list by number of emails

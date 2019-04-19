@@ -99,7 +99,7 @@ export class Lead extends Component {
                                                         city: location,
                                                         email: this.props.user.email
                                                      })
-
+                                                     
                 if (res.data.data.length !== 0) {
                     var emailsThatWhereFound = res.data.data[0].Results;
 
