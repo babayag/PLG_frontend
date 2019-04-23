@@ -38,7 +38,6 @@ export class Lead extends Component {
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
-        this.displayResults = this.displayResults.bind(this);
         this.searchMore = this.searchMore.bind(this);
     }
 
@@ -123,11 +122,11 @@ export class Lead extends Component {
 
 
                     // Sort Email list by number of emails
-                    var readyToState = this.sortEmails(finalFoundEmails);
+                    var sortedEmails = this.sortEmails(finalFoundEmails);
 
                     this.setState({
-                        remainingEmails: readyToState,
-                        foundEmails: finalFoundEmails,
+                        remainingEmails: sortedEmails,
+                        foundEmails: sortedEmails,
                         shouldWeDisplayTable: true,
                     });
 
@@ -138,7 +137,8 @@ export class Lead extends Component {
                         })
                     }
 
-                    // this.displayResults();
+                    this.checkFacebookAndGooglePixel(this.state.foundEmails)
+
 
                 } else {
                     this.setState({
@@ -234,33 +234,6 @@ export class Lead extends Component {
         return sortedEmailList;
     }
 
-    displayResults = () => {
-        let prevRemainingEmails = [...this.state.remainingEmails];
-        let nPrev = prevRemainingEmails.length;
-
-        let emailsToDisplay = [...this.state.foundEmails];
-
-        if (nPrev > 10){
-            // If there are more than ten emails
-            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails.slice(0, 10));
-            let newRemainingEmails = prevRemainingEmails.slice(10);
-
-            this.setState({ 
-                foundEmails: emailsToDisplay,
-                shouldWeDisplayTable: true, 
-                remainingEmails: newRemainingEmails, 
-                isShowmore: true 
-            });
-        }else{
-            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
-            this.setState({
-                foundEmails: emailsToDisplay,
-                shouldWeDisplayTable: true,  
-                remainingEmails: [],
-                isShowmore: false 
-            });
-        }
-    }
 
     searchMore = async() => {
         await this.showAndHideSearchMore(); /*To show the spinner */
@@ -275,16 +248,22 @@ export class Lead extends Component {
             console.log(res)
             if (res.data.data.length !== 0) {
                 var emailsThatWhereFound = res.data.data.Results;
-
+                    
                 var finalFoundEmails = [];
                 if (emailsThatWhereFound.length !== 0) {
                     for (var i = 0; i < emailsThatWhereFound.length; i++) {
                         // console.log(emailsThatWhereFound[i].Domain);
                         finalFoundEmails.push(emailsThatWhereFound[i]);
                     }
+                    var emails = this.state.foundEmails.concat(finalFoundEmails);
                     this.setState({
-                        foundEmails: this.state.foundEmails.concat(finalFoundEmails)
+                        foundEmails: this.sortEmails(emails)
                     })
+                    
+                    this.checkFacebookAndGooglePixel(this.state.foundEmails) 
+                    
+                        
+
                     if(finalFoundEmails.length >= 10){
                         this.setState({
                             isShowmore: true,
@@ -310,13 +289,49 @@ export class Lead extends Component {
         }
     } 
 
+    // this method send a request for each domain and checks FB and Google pixels
+    checkFacebookAndGooglePixel = async(foundEmails) => {
+        const devUrl = '/api/lead/checkpixel';
+        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/checkpixel';
+
+        this.setState({
+            isSearchingMore: true   
+        })
+        for(var i=0; i<foundEmails.length; i++){
+            //I create an instance of the state foundEmais that I will use to set the checking value
+            var foundEmailsInstance = this.state.foundEmails;
+            try {
+                if(foundEmails[i].hasFacebookPixel == "pending"){
+                    const res = await axios.post(devUrlLocal, { domain: foundEmails[i].Domain })
+                    console.log(res.data.data)
+                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
+                    foundEmailsInstance[i].hasFacebookPixel = res.data.data.hasFacebookPixel;
+                    foundEmailsInstance[i].hasGooglePixel = res.data.data.hasGooglePixel;
+
+                    //I update the state so that it displays the results on the table
+                    this.setState({
+                        foundEmails: foundEmailsInstance
+                    })
+                }
+               
+            } catch (e) {
+            console.log(e);
+            
+            }
+            
+        }
+        this.setState({
+            isSearchingMore: false   
+        })
+    }
+
 
     render() {
         var showmore;
         if(this.state.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Searching... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
+                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Please wait... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
                     
                 </div>
             )
@@ -403,8 +418,18 @@ export class Lead extends Component {
                                                         <tr>
                                                             <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
-                                                            <td>{item.hasFacebookPixel? valid : invalid}</td>
-                                                            <td>{item.hasGooglePixel? valid : invalid}</td>
+                                                            <td>{item.hasFacebookPixel == "pending" ? 
+                                                                smallerSpinnerViolet :
+                                                                item.hasFacebookPixel ? 
+                                                                    valid : invalid 
+                                                                }
+                                                            </td>
+                                                            <td>{item.hasGooglePixel == "pending" ? 
+                                                                smallerSpinnerViolet :
+                                                                item.hasGooglePixel ? 
+                                                                    valid : invalid 
+                                                                }
+                                                            </td>
                                                             <td>
                                                                 <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {

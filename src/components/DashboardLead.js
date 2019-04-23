@@ -8,12 +8,16 @@ import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
 import NavBarDashboard from './NavBarDashboard';
 import stanley_img from '../dr_stanley.png';
+import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
 const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin/>
+const smallerSpinnerViolet = <FontAwesomeIcon icon={faSpinner} color="#212529" size="1x" spin />
+const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/> 
+const invalid = <FontAwesomeIcon icon={faTimes} color="#FF0515"/> 
 
 export class DashboardLead extends Component {
 
@@ -23,13 +27,18 @@ export class DashboardLead extends Component {
             niche: "",
             location: "",
             isLoading: false, //has the search already stopped ??
+            isSearchingMore: false, // is it still searching more leads??
             foundEmails: [],
-            shouldWeDisplayTable: false
+            shouldWeDisplayTable: false,
+            isShowmore: false,
+            p:0
             
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
+        this.searchMore = this.searchMore.bind(this);
+
     }
 
     toggle = () => {
@@ -53,6 +62,12 @@ export class DashboardLead extends Component {
     showAndHide(){
         this.setState({
             isLoading : true,
+        })
+    }
+
+    showAndHideSearchMore() {
+        this.setState({
+            isSearchingMore: true
         })
     }
 
@@ -104,15 +119,21 @@ export class DashboardLead extends Component {
                     }else {
                         finalFoundEmails = []
                     }
-    
-                    // Sort Email list by number of emails
-                    var readyToState = this.sortEmails(finalFoundEmails);
+                        // Sort Email list by number of emails
+                        var sortEmails = this.sortEmails(finalFoundEmails);
 
-                    this.setState({
-                        remainingEmails: readyToState
-                    });
+                        this.setState({
+                            remainingEmails: sortEmails,
+                            foundEmails: sortEmails,
+                            shouldWeDisplayTable: true,
+                        });
 
-                    this.displayResults();
+                        if(finalFoundEmails.length >= 10){
+                            this.setState({
+                                isShowmore: true,
+                                p:10 
+                            })
+                        }
 
                 }else{
                     this.setState({
@@ -237,12 +258,63 @@ export class DashboardLead extends Component {
         }
 
 
+        searchMore = async() => {
+            await this.showAndHideSearchMore(); /*To show the spinner */
+            this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
+            const devUrl = '/api/lead/betterfindlead';
+            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
+    
+            try {
+                let niche = this.state.niche.toLowerCase()
+                let location = this.state.location.toLowerCase()
+                const res = await axios.post(devUrlLocal, { niche: niche, city: location, p: this.state.p })
+                console.log(res)
+                if (res.data.data.length !== 0) {
+                    var emailsThatWhereFound = res.data.data.Results;
+    
+                    var finalFoundEmails = [];
+                    if (emailsThatWhereFound.length !== 0) {
+                        for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                            // console.log(emailsThatWhereFound[i].Domain);
+                            finalFoundEmails.push(emailsThatWhereFound[i]);
+                        }
+                        var emails = this.state.foundEmails.concat(finalFoundEmails);
+                        this.setState({
+                            foundEmails: this.sortEmails(emails)
+                        })
+                        if(finalFoundEmails.length >= 10){
+                            this.setState({
+                                isShowmore: true,
+                                p: this.state.p + 10
+                            })
+                        }else{
+                            this.setState({
+                                isShowmore: false
+                            })
+                        }
+    
+                    } else { //no more lead
+                        finalFoundEmails = this.state.finalFoundEmails
+                    }
+                }
+            } catch (e) {
+                console.log(e);
+                this.setState({
+                    isLoading: false,
+                });
+    
+                this.addNotification("An error occured", "Please refresh the page and try again.");
+            }
+        } 
+    
+
+
     render() {
         var showmore;
         if(this.state.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                    <button onClick={this.displayResults}>Show more</button>
+                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Searching... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
                 </div>
             )
         }else{
@@ -300,6 +372,25 @@ export class DashboardLead extends Component {
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col" className="table__col--1">Business</th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">FP</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Facebook Pixel
+                                                                </div>
+                                                            </MappleToolTip>
+                                                        </th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">GA</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Google Analytics
+                                                                </div>
+                                                            </MappleToolTip></th>
                                                         <th scope="col" className="table__col--2">Email</th>
                                                     </tr>
                                                 </thead>
@@ -308,6 +399,8 @@ export class DashboardLead extends Component {
                                                         <tr>
                                                             <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
+                                                            <td>{item.hasFacebookPixel? valid : invalid}</td>
+                                                            <td>{item.hasGooglePixel? valid : invalid}</td>
                                                             <td>
                                                                 <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {
