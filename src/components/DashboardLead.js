@@ -25,8 +25,10 @@ class DashboardLead extends Component {
             isLoading: false, //has the search already stopped ??
             foundEmails: [],
             shouldWeDisplayTable: false,
-            isPaymentLoading: false
-            
+            isPaymentLoading: false,
+            forfaitFinished : '',
+            restRequestIsLoad : false,
+            request :""
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
@@ -67,6 +69,28 @@ class DashboardLead extends Component {
         });
     }
 
+    componentDidMount() {
+        
+
+        let devUrlLocal = "http://127.0.0.1:8000/api/lead/getRestOfrequest";
+        let user = { email: this.props.user.email };
+        try {
+            axios.post(devUrlLocal,user)
+            .then(response => {
+                this.setState({
+                    request : response.data,
+                    restRequestIsLoad: true
+                })
+            })
+            .catch(err => {
+                
+                console.log(err);
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     /*This is run when we hit on the search button */
     async searchTheseData(){
         this.setState({
@@ -89,8 +113,12 @@ class DashboardLead extends Component {
                 const res = await axios.post(devUrlLocal, { niche: niche, 
                                                             city: location,
                                                             email: this.props.user.email })
-                console.log(res.data)
-               
+
+                if ( typeof(res.data) == "string" ){
+                   this.setState({
+                    forfaitFinished : res.data
+                   })                                        
+                }
                 if(res.data.data.length !== 0){
                     var emailsThatWhereFound = res.data.data[0].Results;
     
@@ -235,6 +263,8 @@ class DashboardLead extends Component {
             }
         }
 
+        
+
         makePayment = async (forfait) => {
 
             localStorage.setItem("idForfait", forfait.id)
@@ -279,6 +309,12 @@ class DashboardLead extends Component {
             showmore = null;
         }
 
+        let restRequest = "";
+        if(this.state.restRequestIsLoad){
+
+            restRequest = <b className="nb_request">{this.state.request}</b>
+        }
+
         return (
             <div class="dashboard__page">
                 <NavBarDashboard />
@@ -306,6 +342,8 @@ class DashboardLead extends Component {
                                 />
                                 <button class="finder__btn dashboard_finder__btn" disabled={this.state.isLoading} onClick={() => this.searchTheseData()}><span>{this.state.isLoading ? <span>{smallerSpinner}</span> : <span>SEARCH</span>}</span></button>
                             </div>
+
+                            <div className="titleOfTheInfo endForfaitMessage"> {this.state.forfaitFinished}</div>
 
                             {this.state.shouldWeDisplayTable ?  //can hide the whole table
                                 <div>
@@ -388,6 +426,9 @@ class DashboardLead extends Component {
                         {/* <span>Left Side</span> */}
                         <div class="lead__dashboard--right">
                             <Forfait pay={this.makePayment} isPayLoading={this.state.isPaymentLoading}/>
+
+                            <div class="coldemail__title"><h3><b>Request</b>{restRequest}</h3></div>
+
                             <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
                             <div class="video__course">
                                 <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">

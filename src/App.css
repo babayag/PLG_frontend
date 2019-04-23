@@ -3686,7 +3686,7 @@ th:first-child, td:first-child{
 }
 
 .plugin__page .download__plugin{
-  background-color: #5e06d2;
+  background-color: #e7d9fa;
   border: none;
   outline: none;
   border-radius: 5px;
@@ -3814,4 +3814,12 @@ th:first-child, td:first-child{
 
 #title_h{
   text-align: center;
+}
+
+.endForfaitMessage{
+  color: #D25F06;
+}
+
+.nb_request{
+  color: #D25F06;
 }
