@@ -3821,5 +3821,18 @@ th:first-child, td:first-child{
 }
 
 .nb_request{
-  color: #D25F06;
+  font-size: 15px;
 }
+.numberRequestSpan{
+  border-radius: 50%;
+  padding: 0.8rem;
+  background-color: #D25F06;
+  color: #fff;
+  margin-left: 15.2rem
+}
+
+.historicSpinner{
+  padding-left: 45rem;
+  margin-bottom: 100px;
+}
+

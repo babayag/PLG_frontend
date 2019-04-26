@@ -75,7 +75,7 @@ class UserSearch extends Component {
     
 
     render() {
-        let SearchList = <span> Loading...</span>;
+        let SearchList = <span className="historicSpinner"> {spinner} </span>;
         if(this.state.searchIsLoad) { 
             SearchList = this.state.searchList.map(search => (
                 <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.counter}</td><td>{search.created_at}</td></tr>

@@ -250,7 +250,8 @@ class DashboardLead extends Component {
                     foundEmails: emailsToDisplay,
                     shouldWeDisplayTable: true, 
                     remainingEmails: newRemainingEmails, 
-                    isShowmore: true 
+                    isShowmore: true,
+                    forfaitFinished : '' 
                 });
             }else{
                 emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
@@ -427,9 +428,9 @@ class DashboardLead extends Component {
                         <div class="lead__dashboard--right">
                             <Forfait pay={this.makePayment} isPayLoading={this.state.isPaymentLoading}/>
 
-                            <div class="coldemail__title"><h3><b>Request</b>{restRequest}</h3></div>
+                            <div class="coldemail__title"> <h3>Request <span className="numberRequestSpan nb_request">{restRequest}</span></h3></div>
 
-                            <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
+                            <div class="coldemail__title "><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
                             <div class="video__course">
                                 <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
                                     <img src={stanley_img} />

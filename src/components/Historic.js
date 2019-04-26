@@ -29,7 +29,6 @@ class Historic extends Component {
 
 
     componentDidMount() {
-        
 
         let devUrlLocal = "http://127.0.0.1:8000/api/lead/getAllPayement";
         let user = { email: this.props.user.email };
@@ -75,7 +74,7 @@ class Historic extends Component {
     
 
     render() {
-        let historicList = <span> Loading...</span>;
+        let historicList = <span className="historicSpinner"> {spinner}</span>;
         if(this.state.HistoricIsLoad) { 
             historicList = this.state.payments.map(payement => (
                 <tr><td>{payement.description}</td> <td>${payement.price}</td><td>{payement.date}</td> 
