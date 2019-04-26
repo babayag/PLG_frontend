@@ -279,7 +279,8 @@ class DashboardLead extends Component {
                     foundEmails: emailsToDisplay,
                     shouldWeDisplayTable: true, 
                     remainingEmails: newRemainingEmails, 
-                    isShowmore: true 
+                    isShowmore: true,
+                    forfaitFinished : '' 
                 });
             }else{
                 emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
