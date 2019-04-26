@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
@@ -11,6 +12,7 @@ import stanley_img from '../dr_stanley.png';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Forfait from "./Forfait";
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
@@ -19,7 +21,7 @@ const smallerSpinnerViolet = <FontAwesomeIcon icon={faSpinner} color="#212529" s
 const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/> 
 const invalid = <FontAwesomeIcon icon={faTimes} color="#FF0515"/> 
 
-export class DashboardLead extends Component {
+class DashboardLead extends Component {
 
     constructor(props){
         super(props);
@@ -31,7 +33,11 @@ export class DashboardLead extends Component {
             foundEmails: [],
             shouldWeDisplayTable: false,
             isShowmore: false,
-            p:0
+            p:0,
+            isPayamentLoading : false,
+            request:"",
+            forfaitFinished:'',
+            restRequestIsLoad: false,
             
         }
         /*unless these, notification won't work */
@@ -86,6 +92,28 @@ export class DashboardLead extends Component {
         });
     }
 
+    /* reload number of quest */
+    componentDidMount() {
+
+
+        let devUrlLocal = "/api/lead/getRestOfrequest";
+        let user = { email: this.props.user.email };
+        try {
+        axios.post(devUrlLocal,user)
+        .then(response => {
+        this.setState({
+        request : response.data,
+        restRequestIsLoad: true
+        })
+        })
+        .catch(err => {
+        
+        console.log(err);
+        })
+        } catch (e) {
+        console.log(e)
+        }
+        }
     /*This is run when we hit on the search button */
     async searchTheseData(){
         this.setState({
@@ -105,10 +133,17 @@ export class DashboardLead extends Component {
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrl, { niche: niche, city: location })
-               
+                const res = await axios.post(devUrl, { niche: niche, city: location , email : this.props.user.email })
+                
+                if (typeof(res.data) == "string")
+                {
+                    this.setState({
+                        forfaitFinished : res.data
+                    })
+                }
                 if(res.data.data.length !== 0){
-                    var emailsThatWhereFound = res.data.data[0].Results;
+                    console.log(res.data.data)
+                    var emailsThatWhereFound = res.data.data.Results;
     
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length != 0){
@@ -267,7 +302,7 @@ export class DashboardLead extends Component {
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrlLocal, { niche: niche, city: location, p: this.state.p })
+                const res = await axios.post(devUrl, { niche: niche, city: location, p: this.state.p })
                 console.log(res)
                 if (res.data.data.length !== 0) {
                     var emailsThatWhereFound = res.data.data.Results;
@@ -307,7 +342,36 @@ export class DashboardLead extends Component {
             }
         } 
     
+        makePayment = async (forfait) => {
 
+                localStorage.setItem("idForfait", forfait.id)
+                
+                this.setState({
+                isPaymentLoading: true,
+                chosenForfait: { ...forfait }
+                })
+                let devUrlLocal = "/api/lead/createPayment";
+                try {
+                const res = await axios.post(devUrlLocal, {
+                price: forfait.price,
+                email: this.props.user.email,
+                idForfait: forfait.id
+                })
+                
+                if (res.status === 200 || res.status === 201) {
+                this.setState({
+                isPaymentLoading: false,
+                })
+                window.location.href = res.data.redirect_url;
+                } else {
+                console.log('error of notification ');
+                this.addNotification("Please refresh the page and retry again")
+                }
+                }
+                catch (e) {
+                console.log(e)
+                }
+            }
 
     render() {
         var showmore;
@@ -320,7 +384,11 @@ export class DashboardLead extends Component {
         }else{
             showmore = null;
         }
+        let restRequest = "";
+        if(this.state.restRequestIsLoad){
 
+            restRequest = <b className="nb_request">{this.state.request}</b>
+        }
         return (
             <div class="dashboard__page">
                 <NavBarDashboard />
@@ -348,7 +416,7 @@ export class DashboardLead extends Component {
                                 />
                                 <button class="finder__btn dashboard_finder__btn" disabled={this.state.isLoading} onClick={() => this.searchTheseData()}><span>{this.state.isLoading ? <span>{smallerSpinner}</span> : <span>SEARCH</span>}</span></button>
                             </div>
-
+                            <div className="titleOfTheInfo endForfaitMessage"> {this.state.forfaitFinished}</div>
                             {this.state.shouldWeDisplayTable ?  //can hide the whole table
                                 <div>
                                     <div className="titleOfTheInfo">
@@ -452,13 +520,10 @@ export class DashboardLead extends Component {
 
                         {/* <span>Left Side</span> */}
                         <div class="lead__dashboard--right">
-                            <div class="recent__search">
-                                <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
-                            </div>
+                            <Forfait pay={this.makePayment} isPayLoading={this.state.isPaymentLoading}/>
 
-                            <div class="recent__searchs" ref="recent__search">
-                                ...
-                        </div>
+                            <div class="coldemail__title"><h3><b>Request</b>{restRequest}</h3></div>
+
                             <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
                             <div class="video__course">
                                 <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
@@ -477,3 +542,10 @@ export class DashboardLead extends Component {
     }
 }
     
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user,
+    }
+}
+
+export default connect(mapStateToProps)(DashboardLead);
