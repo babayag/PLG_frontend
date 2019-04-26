@@ -11,8 +11,9 @@ export const loadUser = () => {
       if (token) {
         headers["Authorization"] = `JWT ${token}`;
       }
+      let devLocalUrl = "http://127.0.0.1:8000/api/lead/auth/users/me/"
       let Devurl = "/api/lead/auth/users/me/";
-      return fetch(Devurl, {headers, })
+      return fetch(devLocalUrl, {headers, })
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
