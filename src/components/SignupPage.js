@@ -98,7 +98,7 @@ class SignupPage extends Component {
     }
 
     async registerUser(){
-/*
+
         this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
             allowOnchange: true  
         })
@@ -130,61 +130,33 @@ class SignupPage extends Component {
             emailRegex.test(this.state.email)            // and if email is correct
             ){
 
-                console.log('laelazrzf');
-
-                let devUrlLocal = "http://127.0.0.1:8000/api/lead/auth/users/create/";
-                let devUrl = "/api/lead/auth/users/create/";
-                try {
-                    const res = await axios.post(devUrl, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
-                    if(res.status === 200 || res.status === 201)
-                    {
-                        this.setState({
-                            isRegister : true,
-                        })
-                    }else
-                    {
-                        console.log('error of notification ');
-                        this.addNotification("Please refresh the page and retry again")
-                    }
-                }
-                catch(e){
-                    console.log(e)
-                }*/
-            
-                
-                /*We can freely send the request */
-
-                /*ERIC PLEASE CHANGE THE ROUTE */
-            // const devUrl = 'http://leadmehome.io/api/lead/';
-            // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/';
-            // console.log("tets")
-            // try {
-            //     const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
-            // }
-            // catch(e){
-            //     console.log(e)
-            // }
+            /*We can freely send the request */
 
             let devUrlLocal = "/api/lead/auth/users/create/";
             let devUrl = "/api/lead/auth/users/create/";
-            try {
-                const res = await axios.post(devUrlLocal, { email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+            try {console.log("qwertty") 
+                const res = await axios.post(devUrlLocal, {email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+                console.log(res)
+                
                 if(res.status === 200 || res.status === 201)
                 {
                     this.setState({
                         isRegister : true,
                     })
-                }else
+                } 
+                else
                 {
                     console.log('error of notification ');
                     this.addNotification("Please refresh the page and retry again")
                 }
             }
             catch(e){
+                this.addNotification("Email already exists or too common Password.")
                 console.log(e)
-            }
+            }         
 
         }
+    }
     
 
     addNotification(message) {

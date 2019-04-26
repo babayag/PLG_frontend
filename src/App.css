@@ -3590,11 +3590,17 @@ th:first-child, td:first-child{
   cursor: pointer;
 }
 .table__col--1{
-  width: 35% !important;
+  width: 30% !important;
 }
 .table__col--2{
-  width: 60% !important;
+  width: 55% !important;
 }
+.table__col--3{
+  width: 5% !important;
+  cursor: pointer;
+}
+
+
 
 .titleOfTheInfo{
   font-size: 1.8em;

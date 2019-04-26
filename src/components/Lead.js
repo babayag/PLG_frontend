@@ -8,12 +8,15 @@ import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
 import { NavBar } from './NavBar';
 import stanley_img from '../dr_stanley.png';
+import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
 const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin />
+const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/> 
+const invalid = <FontAwesomeIcon icon={faTimes} color="#FF0515"/> 
 
 export class Lead extends Component {
 
@@ -93,10 +96,10 @@ export class Lead extends Component {
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrl, { niche: niche, city: location })
-
+                const res = await axios.post(devUrlLocal, { niche: niche, city: location })
+                console.log(res)
                 if (res.data.data.length !== 0) {
-                    var emailsThatWhereFound = res.data.data[0].Results;
+                    var emailsThatWhereFound = res.data.data.Results;
 
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length !== 0) {
@@ -294,6 +297,7 @@ export class Lead extends Component {
                                             </span>:
                                             <p>We found nothing.</p>
                                         }
+                                        
                                     </div>
 
                                     {/* <span>Table of results</span> */}
@@ -304,6 +308,25 @@ export class Lead extends Component {
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col" className="table__col--1">Business</th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">FP</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Facebook Pixel
+                                                                </div>
+                                                            </MappleToolTip>
+                                                        </th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">GA</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Google Analytics
+                                                                </div>
+                                                            </MappleToolTip></th>
                                                         <th scope="col" className="table__col--2">Email</th>
                                                     </tr>
                                                 </thead>
@@ -312,6 +335,8 @@ export class Lead extends Component {
                                                         <tr>
                                                             <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
+                                                            <td>{item.hasFacebookPixel? valid : invalid}</td>
+                                                            <td>{item.hasGooglePixel? valid : invalid}</td>
                                                             <td>
                                                                 <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {
