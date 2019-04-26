@@ -1,21 +1,25 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import $ from 'jquery';
+import { findDOMNode } from 'react-dom';
 import NavBarDashboard from './NavBarDashboard';
 import stanley_img from '../dr_stanley.png';
+import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import Forfait from './Forfait'
+import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
 const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin/>
+const smallerSpinnerViolet = <FontAwesomeIcon icon={faSpinner} color="#212529" size="1x" spin />
+const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/> 
+const invalid = <FontAwesomeIcon icon={faTimes} color="#FF0515"/> 
 
-class DashboardLead extends Component {
+export class DashboardLead extends Component {
 
     constructor(props){
         super(props);
@@ -23,14 +27,23 @@ class DashboardLead extends Component {
             niche: "",
             location: "",
             isLoading: false, //has the search already stopped ??
+            isSearchingMore: false, // is it still searching more leads??
             foundEmails: [],
             shouldWeDisplayTable: false,
-            isPaymentLoading: false
+            isShowmore: false,
+            p:0
             
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
+        this.searchMore = this.searchMore.bind(this);
+
+    }
+
+    toggle = () => {
+      const el = findDOMNode(this.refs.recent__search);
+      $(el).slideToggle();
     }
 
     /*When the value of an input changes, we directly set the state to the new value */
@@ -49,6 +62,12 @@ class DashboardLead extends Component {
     showAndHide(){
         this.setState({
             isLoading : true,
+        })
+    }
+
+    showAndHideSearchMore() {
+        this.setState({
+            isSearchingMore: true
         })
     }
 
@@ -100,15 +119,21 @@ class DashboardLead extends Component {
                     }else {
                         finalFoundEmails = []
                     }
-    
-                    // Sort Email list by number of emails
-                    var readyToState = this.sortEmails(finalFoundEmails);
+                        // Sort Email list by number of emails
+                        var sortEmails = this.sortEmails(finalFoundEmails);
 
-                    this.setState({
-                        remainingEmails: readyToState
-                    });
+                        this.setState({
+                            remainingEmails: sortEmails,
+                            foundEmails: sortEmails,
+                            shouldWeDisplayTable: true,
+                        });
 
-                    this.displayResults();
+                        if(finalFoundEmails.length >= 10){
+                            this.setState({
+                                isShowmore: true,
+                                p:10 
+                            })
+                        }
 
                 }else{
                     this.setState({
@@ -232,36 +257,56 @@ class DashboardLead extends Component {
             }
         }
 
-        makePayment = async (forfait) => {
 
-            localStorage.setItem("idForfait", forfait.id)
-            
-            this.setState({
-                isPaymentLoading: true,
-                chosenForfait: { ...forfait }
-            })
-            let devUrlLocal = "/api/lead/createPayment";
+        searchMore = async() => {
+            await this.showAndHideSearchMore(); /*To show the spinner */
+            this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
+            const devUrl = '/api/lead/betterfindlead';
+            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
+    
             try {
-                const res = await axios.post(devUrlLocal, {
-                    price: forfait.price,
-                    email: this.props.user.email,
-                    idForfait: forfait.id
-                })
-                
-                if (res.status === 200 || res.status === 201) {
-                    this.setState({
-                        isPaymentLoading: false,
-                    })
-                    window.location.href = res.data.redirect_url;
-                } else {
-                    console.log('error of notification ');
-                    this.addNotification("Please refresh the page and retry again")
+                let niche = this.state.niche.toLowerCase()
+                let location = this.state.location.toLowerCase()
+                const res = await axios.post(devUrlLocal, { niche: niche, city: location, p: this.state.p })
+                console.log(res)
+                if (res.data.data.length !== 0) {
+                    var emailsThatWhereFound = res.data.data.Results;
+    
+                    var finalFoundEmails = [];
+                    if (emailsThatWhereFound.length !== 0) {
+                        for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                            // console.log(emailsThatWhereFound[i].Domain);
+                            finalFoundEmails.push(emailsThatWhereFound[i]);
+                        }
+                        var emails = this.state.foundEmails.concat(finalFoundEmails);
+                        this.setState({
+                            foundEmails: this.sortEmails(emails)
+                        })
+                        if(finalFoundEmails.length >= 10){
+                            this.setState({
+                                isShowmore: true,
+                                p: this.state.p + 10
+                            })
+                        }else{
+                            this.setState({
+                                isShowmore: false
+                            })
+                        }
+    
+                    } else { //no more lead
+                        finalFoundEmails = this.state.finalFoundEmails
+                    }
                 }
+            } catch (e) {
+                console.log(e);
+                this.setState({
+                    isLoading: false,
+                });
+    
+                this.addNotification("An error occured", "Please refresh the page and try again.");
             }
-            catch (e) {
-                console.log(e)
-            }
-        }
+        } 
+    
 
 
     render() {
@@ -269,7 +314,7 @@ class DashboardLead extends Component {
         if(this.state.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                    <button onClick={this.displayResults}>Show more</button>
+                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Searching... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
                 </div>
             )
         }else{
@@ -327,6 +372,25 @@ class DashboardLead extends Component {
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col" className="table__col--1">Business</th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">FP</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Facebook Pixel
+                                                                </div>
+                                                            </MappleToolTip>
+                                                        </th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">GA</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Google Analytics
+                                                                </div>
+                                                            </MappleToolTip></th>
                                                         <th scope="col" className="table__col--2">Email</th>
                                                     </tr>
                                                 </thead>
@@ -335,6 +399,8 @@ class DashboardLead extends Component {
                                                         <tr>
                                                             <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
+                                                            <td>{item.hasFacebookPixel? valid : invalid}</td>
+                                                            <td>{item.hasGooglePixel? valid : invalid}</td>
                                                             <td>
                                                                 <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {
@@ -379,12 +445,20 @@ class DashboardLead extends Component {
                                     }
 
                                 </span>
+
+
                             }
                         </div>
 
                         {/* <span>Left Side</span> */}
                         <div class="lead__dashboard--right">
-                            <Forfait pay={this.makePayment} isPayLoading={this.state.isPaymentLoading}/>
+                            <div class="recent__search">
+                                <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
+                            </div>
+
+                            <div class="recent__searchs" ref="recent__search">
+                                ...
+                        </div>
                             <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
                             <div class="video__course">
                                 <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
@@ -402,11 +476,4 @@ class DashboardLead extends Component {
         );
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        user: state.auth.user,
-    }
-}
-
-export default connect(mapStateToProps)(DashboardLead);
+    
