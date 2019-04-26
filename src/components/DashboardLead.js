@@ -96,24 +96,26 @@ class DashboardLead extends Component {
     componentDidMount() {
 
 
-        let devUrlLocal = "/api/lead/getRestOfrequest";
+        let devUrl = "/api/lead/getRestOfrequest";
+        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/getRestOfrequest';
+
         let user = { email: this.props.user.email };
         try {
-        axios.post(devUrlLocal,user)
-        .then(response => {
-        this.setState({
-        request : response.data,
-        restRequestIsLoad: true
-        })
-        })
+            axios.post(devUrlLocal,user)
+            .then(response => {
+                this.setState({
+                    request : response.data,
+                    restRequestIsLoad: true
+                })
+            })
         .catch(err => {
         
-        console.log(err);
-        })
+                console.log(err);
+            })
         } catch (e) {
-        console.log(e)
+            console.log(e)
         }
-        }
+    }
     /*This is run when we hit on the search button */
     async searchTheseData(){
         this.setState({

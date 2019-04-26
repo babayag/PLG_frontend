@@ -100,13 +100,13 @@ export class Lead extends Component {
         else {
             await this.showAndHide(); /*To show the spinner */
             this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
-            const devUrl = '/api/lead/betterfindlead';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
+            const devUrl = '/api/lead/normalFindLeads';
+            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
 
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrl, { niche: niche, city: location, p:0 })
+                const res = await axios.post(devUrlLocal, { niche: niche, city: location, p:0 })
                 console.log(res)
                 // const res = await axios.post(devUrlLocal, { 
                 //                                         niche: niche, 
@@ -245,13 +245,13 @@ export class Lead extends Component {
     searchMore = async() => {
         await this.showAndHideSearchMore(); /*To show the spinner */
         this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
-        const devUrl = '/api/lead/betterfindlead';
-        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
+        const devUrl = '/api/lead/normalFindLeads';
+        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
 
         try {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
-            const res = await axios.post(devUrl, { niche: niche, city: location, p: this.state.p })
+            const res = await axios.post(devUrlLocal, { niche: niche, city: location, p: this.state.p })
             console.log(res)
             if (res.data.data.length !== 0) {
                 var emailsThatWhereFound = res.data.data.Results;
@@ -309,7 +309,7 @@ export class Lead extends Component {
             var foundEmailsInstance = this.state.foundEmails;
             try {
                 if(foundEmails[i].hasFacebookPixel == "pending"){
-                    const res = await axios.post(devUrl, { domain: foundEmails[i].Domain })
+                    const res = await axios.post(devUrlLocal, { domain: foundEmails[i].Domain })
                     console.log(res.data.data)
                     //In my FoundEmalsInstance, I assign the values of the two variables I was checking
                     foundEmailsInstance[i].hasFacebookPixel = res.data.data.hasFacebookPixel;
