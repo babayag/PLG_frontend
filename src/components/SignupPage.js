@@ -135,7 +135,7 @@ class SignupPage extends Component {
             let devUrlLocal = 'http://127.0.0.1:8000/api/lead/auth/users/create/';
             let devUrl = "/api/lead/auth/users/create/";
             try {console.log("qwertty") 
-                const res = await axios.post(devUrlLocal, {email : this.state.email, password:this.state.password}) //await fetch(devUrl);
+                const res = await axios.post(devUrl, {email : this.state.email, password:this.state.password}) //await fetch(devUrl);
                 console.log(res)
                 
                 if(res.status === 200 || res.status === 201)
