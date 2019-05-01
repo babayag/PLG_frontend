@@ -13,7 +13,7 @@ export const loadUser = () => {
       }
       let devLocalUrl = "http://127.0.0.1:8000/api/lead/auth/users/me/"
       let Devurl = "/api/lead/auth/users/me/";
-      return fetch(devLocalUrl, {headers, })
+      return fetch(Devurl, {headers, })
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
