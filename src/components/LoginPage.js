@@ -4,22 +4,31 @@ import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {auth} from "../actions";
 import logo from '../plg_logo.png';
+import ReactNotification from "react-notifications-component";
 
 
 class LoginPage extends Component {
-    state = {
+    constructor(props){
+      super(props);
+      this.state = {
         email: "",
         password: "",
         emailValidationMessage:"",
         passwordValidationMessage: "",
-        userNotFoundMsg: "",
         allowOnchange: false,   //this is to display the error messages when the user tries to register but with incorrect inputs
         
     }
 
-    login = e => { 
-        //e.preventDefault();
-      /*this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
+      /*Without these, notification won't work */
+      this.addNotification = this.addNotification.bind(this);
+      this.notificationDOMRef = React.createRef();
+    }
+    
+    
+
+    login = e => { console.log(this.props.errors[0].message);  
+      //e.preventDefault();
+      this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
         allowOnchange: true  
       })
 
@@ -34,25 +43,23 @@ class LoginPage extends Component {
           emailValidationMessage: "This field should not be empty"
         })
       }
-      /*
-      if(1==1){
-        this.setState({
-          userNotFoundMsg: "User not found."
-        })
-      }*/
-
-      // console.log(this.props.login(this.state.email, this.state.password)); 
       
-      this.props.login(this.state.email,this.state.password)                                  
+      if(this.state.allowOnchange && this.props.errors[0].message == "Authentication credentials were not provided." || 
+      this.props.errors[0].message == "This field may not be blank." ||
+      this.props.errors[0].message == "No active account found with the given credentials"){
+        this.addNotification("Invalid email or password.")
+      }
 
-
+      else{
+      // console.log(this.props.login(this.state.email, this.state.password)); 
+        this.props.login(this.state.email,this.state.password)                                  
+      }
     }
 
       handleChange = e => {
       //console.log(e.target.value);
       this.setState({
         [e.target.name]: e.target.value,
-        userNotFoundMsg: ""
       });
 
       /*focus on the keyboard changes only when the user has tried to register at least once*/
@@ -82,6 +89,20 @@ class LoginPage extends Component {
       if(e.keyCode === 13){
           this.login();
       }
+    }
+
+    addNotification = (message) => {
+      this.notificationDOMRef.current.addNotification({
+          title: "Error",
+          message: message,
+          type: "awesome",
+          insert: "top",
+          container: "bottom-left",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: { duration: 3000 },
+          dismissable: { click: true }
+      });
     }
 
     render() {
@@ -122,14 +143,21 @@ class LoginPage extends Component {
                         
                         <button onClick={() => this.login()} class="signUpBtn loginBtn col-md-9">Sign In</button>
                       </div>
-                      <div className="invalidField">
-                            {this.state.userNotFoundMsg}
-                          </div>
                       <div class="col-md-12">
                           <p className=""> 
                             Not yet a member? <a href="/signup">Register</a>
                           </p>
                       </div>
+
+                      <ReactNotification
+                        types={[{
+                            htmlClasses: ["notification-awesome"],
+                            name: "awesome"
+                        }]}
+                        ref={this.notificationDOMRef}
+                        style="text-align:left !important"
+                      />
+
                   </div>
               </div>
            </div>

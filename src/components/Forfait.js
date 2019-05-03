@@ -49,7 +49,7 @@ class Forfait extends Component {
         let forfaitsList = <span> Loading...</span>;
         if(this.state.isForfaits) { 
             forfaitsList = this.state.forfaits.map(forfait => (
-                <h3 key={forfait.id} onClick={() => this.props.pay(forfait)}>{forfait.email} Emails - {forfait.niche} Niches</h3>
+                <h3 key={forfait.id} onClick={() => this.props.pay(forfait)}>{/*forfait.email Emails - */} {forfait.niche} Niches</h3>
             ))
         }
 

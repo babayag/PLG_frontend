@@ -32,7 +32,7 @@ export class Dashboard extends Component {
       this.setState({
         isLoading: true
       })
-      let devUrlLocal = "http://127.0.0.1:8000/api/lead/createPayment";
+      let devUrlLocal = "/api/lead/createPayment";
       try {
           const res = await axios.post(devUrlLocal, { price : "10", description : "tenTowns"}) //await fetch(devUrl);
           if(res.status === 200 || res.status === 201)

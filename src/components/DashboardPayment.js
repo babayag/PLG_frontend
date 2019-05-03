@@ -13,7 +13,7 @@ class DashboardPayment extends Component {
 
         let data = {...parsed,email: this.props.user.email, idForfait:forfaitId}
 
-        let devUrlLocal = "http://127.0.0.1:8000/api/lead/executePayment";
+        let devUrlLocal = "/api/lead/executePayment";
         try {
             const res = await axios.post(devUrlLocal, data) //await fetch(devUrl);
             if(res.status === 200 || res.status === 201)

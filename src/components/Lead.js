@@ -9,12 +9,16 @@ import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
 import { NavBar } from './NavBar';
 import stanley_img from '../dr_stanley.png';
+import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
 const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin />
+const smallerSpinnerViolet = <FontAwesomeIcon icon={faSpinner} color="#212529" size="1x" spin />
+const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/> 
+const invalid = <FontAwesomeIcon icon={faTimes} color="#FF0515"/> 
 
 export class Lead extends Component {
 
@@ -24,16 +28,18 @@ export class Lead extends Component {
             niche: "",
             location: "",
             isLoading: false, //has the search already stopped ??
+            isSearchingMore: false, // is it still searching more leads?
             foundEmails: [],
             shouldWeDisplayTable: false,
             remainingEmails: [],
-            isShowmore: false
+            isShowmore: false,
+            p:0
 
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
         this.notificationDOMRef = React.createRef();
-        this.displayResults = this.displayResults.bind(this);
+        this.searchMore = this.searchMore.bind(this);
     }
 
     toggle = () => {
@@ -56,7 +62,13 @@ export class Lead extends Component {
 
     showAndHide() {
         this.setState({
-            isLoading: true,
+            isLoading: true
+        })
+    }
+
+    showAndHideSearchMore() {
+        this.setState({
+            isSearchingMore: true
         })
     }
 
@@ -88,20 +100,22 @@ export class Lead extends Component {
         else {
             await this.showAndHide(); /*To show the spinner */
             this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
-            const devUrl = '/api/lead/betterfindlead';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/betterfindlead';
+            const devUrl = '/api/lead/normalFindLeads';
+            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
 
             try {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrlLocal, { 
-                                                        niche: niche, 
-                                                        city: location,
-                                                        email: this.props.user.email
-                                                     })
+                const res = await axios.post(devUrl, { niche: niche, city: location, p:0 })
+                console.log(res)
+                // const res = await axios.post(devUrlLocal, { 
+                //                                         niche: niche, 
+                //                                         city: location,
+                //                                         email: this.props.user.email
+                //                                      })
                                                      
                 if (res.data.data.length !== 0) {
-                    var emailsThatWhereFound = res.data.data[0].Results;
+                    var emailsThatWhereFound = res.data.data.Results;
 
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length !== 0) {
@@ -115,13 +129,23 @@ export class Lead extends Component {
 
 
                     // Sort Email list by number of emails
-                    var readyToState = this.sortEmails(finalFoundEmails);
+                    var sortedEmails = this.sortEmails(finalFoundEmails);
 
                     this.setState({
-                        remainingEmails: readyToState
+                        remainingEmails: sortedEmails,
+                        foundEmails: sortedEmails,
+                        shouldWeDisplayTable: true,
                     });
 
-                    this.displayResults();
+                    if(finalFoundEmails.length >= 10){
+                        this.setState({
+                            isShowmore: true,
+                            p:10 
+                        })
+                    }
+
+                    this.checkFacebookAndGooglePixel(this.state.foundEmails)
+
 
                 } else {
                     this.setState({
@@ -217,32 +241,95 @@ export class Lead extends Component {
         return sortedEmailList;
     }
 
-    displayResults = () => {
-        let prevRemainingEmails = [...this.state.remainingEmails];
-        let nPrev = prevRemainingEmails.length;
 
-        let emailsToDisplay = [...this.state.foundEmails];
+    searchMore = async() => {
+        await this.showAndHideSearchMore(); /*To show the spinner */
+        this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
+        const devUrl = '/api/lead/normalFindLeads';
+        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
 
-        if (nPrev > 10){
-            // If there are more than ten emails
-            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails.slice(0, 10));
-            let newRemainingEmails = prevRemainingEmails.slice(10);
+        try {
+            let niche = this.state.niche.toLowerCase()
+            let location = this.state.location.toLowerCase()
+            const res = await axios.post(devUrl, { niche: niche, city: location, p: this.state.p })
+            console.log(res)
+            if (res.data.data.length !== 0) {
+                var emailsThatWhereFound = res.data.data.Results;
+                    
+                var finalFoundEmails = [];
+                if (emailsThatWhereFound.length !== 0) {
+                    for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                        // console.log(emailsThatWhereFound[i].Domain);
+                        finalFoundEmails.push(emailsThatWhereFound[i]);
+                    }
+                    var emails = this.state.foundEmails.concat(finalFoundEmails);
+                    this.setState({
+                        foundEmails: this.sortEmails(emails)
+                    })
+                    
+                    this.checkFacebookAndGooglePixel(this.state.foundEmails) 
+                    
+                        
 
-            this.setState({ 
-                foundEmails: emailsToDisplay,
-                shouldWeDisplayTable: true, 
-                remainingEmails: newRemainingEmails, 
-                isShowmore: true 
-            });
-        }else{
-            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
+                    if(finalFoundEmails.length >= 10){
+                        this.setState({
+                            isShowmore: true,
+                            p: this.state.p + 10
+                        })
+                    }else{
+                        this.setState({
+                            isShowmore: false
+                        })
+                    }
+
+                } else { //no more lead
+                    finalFoundEmails = this.state.finalFoundEmails
+                }
+            }
+        } catch (e) {
+            console.log(e);
             this.setState({
-                foundEmails: emailsToDisplay,
-                shouldWeDisplayTable: true,  
-                remainingEmails: [],
-                isShowmore: false 
+                isLoading: false,
             });
+
+            this.addNotification("An error occured", "Please refresh the page and try again.");
         }
+    } 
+
+    // this method send a request for each domain and checks FB and Google pixels
+    checkFacebookAndGooglePixel = async(foundEmails) => {
+        const devUrl = '/api/lead/checkpixel';
+        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/checkpixel';
+
+        this.setState({
+            isSearchingMore: true   
+        })
+        for(var i=0; i<foundEmails.length; i++){
+            //I create an instance of the state foundEmais that I will use to set the checking value
+            var foundEmailsInstance = this.state.foundEmails;
+            try {
+                if(foundEmails[i].hasFacebookPixel == "pending"){
+                    const res = await axios.post(devUrl, { domain: foundEmails[i].Domain })
+                    console.log(res.data.data)
+                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
+                    foundEmailsInstance[i].hasFacebookPixel = res.data.data.hasFacebookPixel;
+                    foundEmailsInstance[i].hasGooglePixel = res.data.data.hasGooglePixel;
+
+                    //I update the state so that it displays the results on the table
+                    this.setState({
+                        foundEmails: foundEmailsInstance
+                    })
+                }
+               
+            } catch (e) {
+            console.log(e);
+            
+            }
+            
+        }
+        this.setState({
+            isSearchingMore: false   
+        })
     }
 
 
@@ -251,7 +338,8 @@ export class Lead extends Component {
         if(this.state.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                    <button onClick={this.displayResults}>Show more</button>
+                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Please wait... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
+                    
                 </div>
             )
         }else{
@@ -299,6 +387,7 @@ export class Lead extends Component {
                                             </span>:
                                             <p>We found nothing.</p>
                                         }
+                                        
                                     </div>
 
                                     {/* <span>Table of results</span> */}
@@ -309,6 +398,25 @@ export class Lead extends Component {
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col" className="table__col--1">Business</th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">FP</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Facebook Pixel
+                                                                </div>
+                                                            </MappleToolTip>
+                                                        </th>
+                                                        <th scope="col" className="table__col--3">
+                                                            <MappleToolTip className="mttipValidEmail" padding={'8px 12px 8px 12px'} shadow={false} float={true} direction={'top'} mappleType={'light'}>
+                                                                <div>
+                                                                    <span className="validIcon">GA</span>
+                                                                </div>
+                                                                <div>
+                                                                    This website uses Google Analytics
+                                                                </div>
+                                                            </MappleToolTip></th>
                                                         <th scope="col" className="table__col--2">Email</th>
                                                     </tr>
                                                 </thead>
@@ -317,6 +425,18 @@ export class Lead extends Component {
                                                         <tr>
                                                             <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
+                                                            <td>{item.hasFacebookPixel == "pending" ? 
+                                                                smallerSpinnerViolet :
+                                                                item.hasFacebookPixel ? 
+                                                                    valid : invalid 
+                                                                }
+                                                            </td>
+                                                            <td>{item.hasGooglePixel == "pending" ? 
+                                                                smallerSpinnerViolet :
+                                                                item.hasGooglePixel ? 
+                                                                    valid : invalid 
+                                                                }
+                                                            </td>
                                                             <td>
                                                                 <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {

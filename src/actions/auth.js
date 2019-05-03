@@ -11,7 +11,8 @@ export const loadUser = () => {
       if (token) {
         headers["Authorization"] = `JWT ${token}`;
       }
-      let Devurl = "http://127.0.0.1:8000/api/lead/auth/users/me/";
+      let devLocalUrl = "/api/lead/auth/users/me/"
+      let Devurl = "/api/lead/auth/users/me/";
       return fetch(Devurl, {headers, })
         .then(res => {
           if (res.status < 500) {
@@ -40,7 +41,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({email, password});
 
-      return fetch("http://127.0.0.1:8000/api/lead/auth/jwt/create/", {headers, body, method: "POST"})
+      return fetch("/api/lead/auth/jwt/create/", {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
@@ -74,7 +75,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({email, password});
 
-      return fetch("http://127.0.0.1:8000/api/lead/auth/users/create/", {headers, body, method: "POST"})
+      return fetch("/api/lead/auth/users/create/", {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {

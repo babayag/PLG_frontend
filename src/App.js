@@ -18,7 +18,7 @@ import { ExportPage } from "./components/ExportPage";
 import { BulkSearch } from "./components/BulkSearch";
 import { Dashboard } from "./components/Dashboard";
 import { Finder } from "./components/Finder";
-import DashboardLead from "./components/DashboardLead";
+import  DashboardLead  from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
 import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
 import { Page404 } from "./components/Page404";
@@ -31,6 +31,7 @@ import { Lead } from "./components/Lead";
 import  DashboardPayment  from "./components/DashboardPayment";
 import Historic from "./components/Historic"
 import UserSearch from "./components/UserSearch"
+
 // import  TestIt  from "./components/TestIt";
 
 import './App.css';
