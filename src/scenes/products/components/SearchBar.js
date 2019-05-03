@@ -8,7 +8,6 @@ import "react-notifications-component/dist/theme.css";
 import { SearchResults } from "./SearchResults";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner} from '@fortawesome/free-solid-svg-icons';
-import { SeeMoreButton } from "./SeeMoreButton";
 import {ExportPage} from './ExportPage';
 
 const cookies = new Cookies();

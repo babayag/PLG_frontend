@@ -13,11 +13,11 @@ import {auth} from "./actions";
 import Store from "./reducers/index";
 import  SignupPage  from "./components/SignupPage";
 import  LoginPage  from "./components/LoginPage";
-import { WholeLandingPage } from "./components/WholeLandingPage";
+import { WholeLandingPage } from "./scenes/products/guests/scenes/landing page/components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
-import { BulkSearch } from "./components/BulkSearch";
+import { BulkSearchPage } from "./scenes/products/guests/scenes/bulk search/components/BulkSearchPage";
 import { Dashboard } from "./components/Dashboard";
-import { Finder } from "./components/Finder";
+import { EmailsFinderPage } from "./scenes/products/guests/scenes/emails finder/components/EmailsFinderPage";
 import  DashboardLead  from "./components/DashboardLead";
 import { DashboardFinder } from "./components/DashboardFinder";
 import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
@@ -25,9 +25,9 @@ import { Page404 } from "./components/Page404";
 import { Error } from "./components/Error";
 import { DashboardChrome } from "./components/DashboardChrome";
 import { DashboardFirefox } from "./components/DashboardFirefox";
-import { Chrome } from "./components/Chrome";
-import { Firefox } from "./components/Firefox";
-import { Lead } from "./components/Lead";
+import { ChromePage } from "./scenes/products/extensions/scenes/chrome/components/ChromePage";
+import { FirefoxPage } from "./scenes/products/extensions/scenes/firefox/components/FirefoxPage";
+import { LeadsPage } from './scenes/products/guests/scenes/leads finder/components/LeadsPage';
 import  DashboardPayment  from "./components/DashboardPayment";
 import Historic from "./components/Historic"
 import UserSearch from "./components/UserSearch"
@@ -80,14 +80,14 @@ class RootContainerComponent extends Component {
             <PrivateRoute exact path="/dashboard/history/payment" component={Historic} />
             <PrivateRoute exact path="/dashboard/history/leadsearch" component={UserSearch} />
             <Route exact path="/" component={WholeLandingPage} />
-            <Route exact path={"/finder"} component={Finder}  />
-            <Route exact path={"/lead"} component={Lead}  />
+            <Route exact path={"/finder"} component={EmailsFinderPage}  />
+            <Route exact path={"/lead"} component={LeadsPage}  />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path={"/export"} component={ExportPage}  />
-            <Route exact path={"/bulksearch"} component={BulkSearch}  />
-            <Route exact path={"/chrome"} component={Chrome}  />
-            <Route exact path={"/firefox"} component={Firefox}  />
+            <Route exact path={"/bulksearch"} component={BulkSearchPage}  />
+            <Route exact path={"/chrome"} component={ChromePage}  />
+            <Route exact path={"/firefox"} component={FirefoxPage}  />
             <Route component={Page404} />
         </Switch>
       </BrowserRouter>

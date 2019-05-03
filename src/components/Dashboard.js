@@ -6,7 +6,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
 import NavBarDashboard from './NavBarDashboard';
-import { SearchBar } from './SearchBar';
+// import { SearchBar } from './SearchBar';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
@@ -60,7 +60,7 @@ export class Dashboard extends Component {
             <div class="dashboard__content">
               <div class="dashboard__content--left">
                 <h3>Domain search</h3>
-                <SearchBar />
+                {/* <SearchBar /> */}
                 {/* <SearchResults emailList={this.state.emails}/>  */}
               </div>
 
