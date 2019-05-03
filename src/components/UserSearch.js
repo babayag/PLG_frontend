@@ -29,7 +29,6 @@ class UserSearch extends Component {
 
 
     componentDidMount() {
-        
 
         let devUrlLocal = "http://127.0.0.1:8000/api/lead/getallusersearch";
         let user = { email: this.props.user.email };
