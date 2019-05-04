@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
@@ -11,6 +11,7 @@ import stanley_img from '../img/dr_stanley.png';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {searchTheseDatas} from '../../../services/Api/leadService';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
@@ -99,71 +100,79 @@ export class Lead extends Component {
         else {
             await this.showAndHide(); /*To show the spinner */
             this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
-            const devUrl = '/api/lead/normalFindLeads';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
+            // const devUrl = '/api/lead/normalFindLeads';
+            // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
 
-            try {
-                let niche = this.state.niche.toLowerCase()
-                let location = this.state.location.toLowerCase()
-                const res = await axios.post(devUrl, { niche: niche, city: location, p:0 })
-                console.log(res)
+            // try {
+                // let niche = this.state.niche.toLowerCase()
+                // let location = this.state.location.toLowerCase()
+                // const res = await axios.post(devUrl, { niche: niche, city: location, p:0 })
+                // console.log(res)
+
+                await searchTheseDatas(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.state.p).then(data => {
+                    console.log(data.data)
+
+                    // if (data.data.length !== 0) {
+                    //     var emailsThatWhereFound = data.data.Results;
+    
+                    //     var finalFoundEmails = [];
+                    //     if (emailsThatWhereFound.length !== 0) {
+                    //         for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                    //             // console.log(emailsThatWhereFound[i].Domain);
+                    //             finalFoundEmails.push(emailsThatWhereFound[i]);
+                    //         }
+                    //     } else {
+                    //         finalFoundEmails = []
+                    //     }
+    
+    
+                    //     // Sort Email list by number of emails
+                    //     var sortedEmails = this.sortEmails(finalFoundEmails);
+    
+                    //     this.setState({
+                    //         remainingEmails: sortedEmails,
+                    //         foundEmails: sortedEmails,
+                    //         shouldWeDisplayTable: true,
+                    //     });
+    
+                    //     if(finalFoundEmails.length >= 10){
+                    //         this.setState({
+                    //             isShowmore: true,
+                    //             p:10 
+                    //         })
+                    //     }
+    
+                    //     this.checkFacebookAndGooglePixel(this.state.foundEmails)
+    
+    
+                    // } else {
+                    //     this.setState({
+                    //         // foundEmails: [],
+                    //         shouldWeDisplayTable: true
+                    //     });
+                    // }
+                       
+                        
+                     })
                 // const res = await axios.post(devUrlLocal, { 
                 //                                         niche: niche, 
                 //                                         city: location,
                 //                                         email: this.props.user.email
                 //                                      })
                                                      
-                if (res.data.data.length !== 0) {
-                    var emailsThatWhereFound = res.data.data.Results;
-
-                    var finalFoundEmails = [];
-                    if (emailsThatWhereFound.length !== 0) {
-                        for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                            // console.log(emailsThatWhereFound[i].Domain);
-                            finalFoundEmails.push(emailsThatWhereFound[i]);
-                        }
-                    } else {
-                        finalFoundEmails = []
-                    }
-
-
-                    // Sort Email list by number of emails
-                    var sortedEmails = this.sortEmails(finalFoundEmails);
-
-                    this.setState({
-                        remainingEmails: sortedEmails,
-                        foundEmails: sortedEmails,
-                        shouldWeDisplayTable: true,
-                    });
-
-                    if(finalFoundEmails.length >= 10){
-                        this.setState({
-                            isShowmore: true,
-                            p:10 
-                        })
-                    }
-
-                    this.checkFacebookAndGooglePixel(this.state.foundEmails)
-
-
-                } else {
-                    this.setState({
-                        // foundEmails: [],
-                        shouldWeDisplayTable: true
-                    });
-                }
+             
 
 
                 // console.log(this.state.foundEmails);
 
-            } catch (e) {
-                console.log(e);
+            // } catch (e) {
+            //     console.log(e);
                 this.setState({
                     isLoading: false,
                 });
 
                 this.addNotification("An error occured", "Please refresh the page and try again.");
-            }
+            // }
         }
 
     }

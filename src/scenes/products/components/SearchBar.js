@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Provider } from 'react-redux';
 import Cookies from 'universal-cookie';
 import ReactNotification from "react-notifications-component";
@@ -9,6 +8,7 @@ import { SearchResults } from "./SearchResults";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {ExportPage} from './ExportPage';
+import {findEmails} from '../../../services/Api/searchEmailService'
 
 const cookies = new Cookies();
 
@@ -80,36 +80,37 @@ export class SearchBar extends Component {
             await this.showAndHide();
             this.state.isload = false;
             this.state.isAboutVisible = true;
-            const devUrl = '/api/lead/testSharing';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
-            //const ProductionURL = 'api/lead/testSharing';
-            try {
-                const res = await axios.post(devUrl, { url : this.state.message, p:this.state.valueOfp}) //await fetch(devUrl);
+            
+            await findEmails(this.state.message, this.state.valueOfp).then(data => {
+             console.log(data.data)
+                this.setState({
+                    emails: data.data[0],
+                    valueOfp :  data.data[1],
+                    firstResults: data.data, /*set the value of the state*/
+                    // numberOfSearches: newNumberOfSearches
+                });
 
-                const emails = await res.data.data[0];
-                const valueOfp = await res.data.data[1];
+              })
+              console.log(this.state.emails)
+                
+                
+               
                 //cookies.set('numberOfSearches', parseInt(cookies.get('numberOfSearches'))+1, { path: '/' }); /*sets the value of the cookie to 1 so that user will need to login to do more researches */
                 //const newNumberOfSearches = cookies.get('numberOfSearches');
                 //console.log(valueOfp);
-                this.setState({
-                    emails: emails,
-                    valueOfp : valueOfp,
-                    firstResults: res.data.data, /*set the value of the state*/
-                    //numberOfSearches: newNumberOfSearches
-                });
-                //alert(this.state.numberOfSearches)
-                localStorage.setItem('domain', this.state.message);
+                // this.setState({
+                //     emails: emails,
+                //     valueOfp : valueOfp,
+                //     firstResults: res.data.data, /*set the value of the state*/
+                //     numberOfSearches: newNumberOfSearches
+                // });
+             
 
-
-            }
-            catch (e) {
-                console.log(e);
                 this.setState({
                     isload : false,
                 });
 
                 this.addNotification("An error occured", "Please refresh the page and try again.");
-            }
 
             /*Sets the value of the lastest search to whar the user has entered */
             this.setState({
