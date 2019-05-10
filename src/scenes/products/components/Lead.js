@@ -11,7 +11,7 @@ import stanley_img from '../img/dr_stanley.png';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import {searchTheseDatas} from '../../../services/Api/leadService';
+import {searchTheseDatas, searchMores, checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
@@ -100,79 +100,60 @@ export class Lead extends Component {
         else {
             await this.showAndHide(); /*To show the spinner */
             this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
-            // const devUrl = '/api/lead/normalFindLeads';
-            // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
-
-            // try {
-                // let niche = this.state.niche.toLowerCase()
-                // let location = this.state.location.toLowerCase()
-                // const res = await axios.post(devUrl, { niche: niche, city: location, p:0 })
-                // console.log(res)
-
+           
                 await searchTheseDatas(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.state.p).then(data => {
-                    console.log(data.data)
+                    // alert(data.data)
 
-                    // if (data.data.length !== 0) {
-                    //     var emailsThatWhereFound = data.data.Results;
+                    if (data.data.length !== 0) {
+                        var emailsThatWhereFound = data.data.Results;
     
-                    //     var finalFoundEmails = [];
-                    //     if (emailsThatWhereFound.length !== 0) {
-                    //         for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                    //             // console.log(emailsThatWhereFound[i].Domain);
-                    //             finalFoundEmails.push(emailsThatWhereFound[i]);
-                    //         }
-                    //     } else {
-                    //         finalFoundEmails = []
-                    //     }
-    
-    
-                    //     // Sort Email list by number of emails
-                    //     var sortedEmails = this.sortEmails(finalFoundEmails);
-    
-                    //     this.setState({
-                    //         remainingEmails: sortedEmails,
-                    //         foundEmails: sortedEmails,
-                    //         shouldWeDisplayTable: true,
-                    //     });
-    
-                    //     if(finalFoundEmails.length >= 10){
-                    //         this.setState({
-                    //             isShowmore: true,
-                    //             p:10 
-                    //         })
-                    //     }
-    
-                    //     this.checkFacebookAndGooglePixel(this.state.foundEmails)
+                        var finalFoundEmails = [];
+                        if (emailsThatWhereFound.length !== 0) {
+                            for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                                // console.log(emailsThatWhereFound[i].Domain);
+                                finalFoundEmails.push(emailsThatWhereFound[i]);
+                            }
+                        } else {
+                            finalFoundEmails = []
+                        }
     
     
-                    // } else {
-                    //     this.setState({
-                    //         // foundEmails: [],
-                    //         shouldWeDisplayTable: true
-                    //     });
-                    // }
+                        // Sort Email list by number of emails
+                        var sortedEmails = this.sortEmails(finalFoundEmails);
+    
+                        this.setState({
+                            remainingEmails: sortedEmails,
+                            foundEmails: sortedEmails,
+                            shouldWeDisplayTable: true,
+                        });
+    
+                        if(finalFoundEmails.length >= 10){
+                            this.setState({
+                                isShowmore: true,
+                                p:10 
+                            })
+                        }
+    
+                        this.checkFacebookAndGooglePixel(this.state.foundEmails)
+    
+    
+                    } else {
+                        this.setState({
+                            // foundEmails: [],
+                            shouldWeDisplayTable: true
+                        });
+                    }
                        
                         
                      })
-                // const res = await axios.post(devUrlLocal, { 
-                //                                         niche: niche, 
-                //                                         city: location,
-                //                                         email: this.props.user.email
-                //                                      })
-                                                     
+               
              
-
-
-                // console.log(this.state.foundEmails);
-
-            // } catch (e) {
-            //     console.log(e);
                 this.setState({
                     isLoading: false,
                 });
 
                 this.addNotification("An error occured", "Please refresh the page and try again.");
-            // }
+            
         }
 
     }
@@ -253,47 +234,52 @@ export class Lead extends Component {
     searchMore = async() => {
         await this.showAndHideSearchMore(); /*To show the spinner */
         this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
-        const devUrl = '/api/lead/normalFindLeads';
-        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
+        // const devUrl = '/api/lead/normalFindLeads';
+        // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
 
         try {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
-            const res = await axios.post(devUrl, { niche: niche, city: location, p: this.state.p })
-            console.log(res)
-            if (res.data.data.length !== 0) {
-                var emailsThatWhereFound = res.data.data.Results;
-                    
-                var finalFoundEmails = [];
-                if (emailsThatWhereFound.length !== 0) {
-                    for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                        // console.log(emailsThatWhereFound[i].Domain);
-                        finalFoundEmails.push(emailsThatWhereFound[i]);
-                    }
-                    var emails = this.state.foundEmails.concat(finalFoundEmails);
-                    this.setState({
-                        foundEmails: this.sortEmails(emails)
-                    })
-                    
-                    this.checkFacebookAndGooglePixel(this.state.foundEmails) 
-                    
+            // const res = await axios.post(devUrl, { niche: niche, city: location, p: this.state.p })
+            
+            await searchTheseDatas(niche, location, this.state.p).then(data => {
+                if (data.data.length !== 0) {
+                    var emailsThatWhereFound = data.data.Results;
                         
-
-                    if(finalFoundEmails.length >= 10){
+                    var finalFoundEmails = [];
+                    if (emailsThatWhereFound.length !== 0) {
+                        for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                            // console.log(emailsThatWhereFound[i].Domain);
+                            finalFoundEmails.push(emailsThatWhereFound[i]);
+                        }
+                        var emails = this.state.foundEmails.concat(finalFoundEmails);
                         this.setState({
-                            isShowmore: true,
-                            p: this.state.p + 10
+                            foundEmails: this.sortEmails(emails)
                         })
-                    }else{
-                        this.setState({
-                            isShowmore: false
-                        })
+                        
+                        this.checkFacebookAndGooglePixel(this.state.foundEmails) 
+                        
+                            
+    
+                        if(finalFoundEmails.length >= 10){
+                            this.setState({
+                                isShowmore: true,
+                                p: this.state.p + 10
+                            })
+                        }else{
+                            this.setState({
+                                isShowmore: false
+                            })
+                        }
+    
+                    } else { //no more lead
+                        finalFoundEmails = this.state.finalFoundEmails
                     }
-
-                } else { //no more lead
-                    finalFoundEmails = this.state.finalFoundEmails
                 }
-            }
+
+            })
+            
+           
         } catch (e) {
             console.log(e);
             this.setState({
@@ -306,8 +292,8 @@ export class Lead extends Component {
 
     // this method send a request for each domain and checks FB and Google pixels
     checkFacebookAndGooglePixel = async(foundEmails) => {
-        const devUrl = '/api/lead/checkpixel';
-        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/checkpixel';
+        // const devUrl = '/api/lead/checkpixel';
+        // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/checkpixel';
 
         this.setState({
             isSearchingMore: true   
@@ -317,16 +303,21 @@ export class Lead extends Component {
             var foundEmailsInstance = this.state.foundEmails;
             try {
                 if(foundEmails[i].hasFacebookPixel == "pending"){
-                    const res = await axios.post(devUrl, { domain: foundEmails[i].Domain })
-                    console.log(res.data.data)
-                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
-                    foundEmailsInstance[i].hasFacebookPixel = res.data.data.hasFacebookPixel;
-                    foundEmailsInstance[i].hasGooglePixel = res.data.data.hasGooglePixel;
 
+                    await checkFacebookAndGooglePixels({ domain: foundEmails[i].Domain }).then(data => {
+
+                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
+
+                        foundEmailsInstance[i].hasFacebookPixel = data.data.hasFacebookPixel;
+                        foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
+                      
                     //I update the state so that it displays the results on the table
                     this.setState({
                         foundEmails: foundEmailsInstance
                     })
+
+                    })
+                    
                 }
                
             } catch (e) {
