@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
-import { NavBar } from "../../../../components/NavBar";
-import { BulkSearch } from "../../../../components/BulkSearch"
+import { NavBar } from "../../../../common/NavBar";
+import { BulkSearch } from "../../../../common/BulkSearch"
 
 
 export class BulkSearchPage extends Component {

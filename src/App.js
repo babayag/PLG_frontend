@@ -25,8 +25,8 @@ import { Page404 } from "./components/Page404";
 import { Error } from "./components/Error";
 import { DashboardChrome } from "./components/DashboardChrome";
 import { DashboardFirefox } from "./components/DashboardFirefox";
-import { ChromePage } from "./scenes/products/extensions/scenes/chrome/components/ChromePage";
-import { FirefoxPage } from "./scenes/products/extensions/scenes/firefox/components/FirefoxPage";
+import { ChromePage } from "./scenes/products/common/extensions/scenes/chrome/ChromePage";
+import { FirefoxPage } from "./scenes/products/common/extensions/scenes/firefox/FirefoxPage";
 import { LeadsPage } from './scenes/products/guests/scenes/leads finder/components/LeadsPage';
 import  DashboardPayment  from "./components/DashboardPayment";
 import Historic from "./components/Historic"

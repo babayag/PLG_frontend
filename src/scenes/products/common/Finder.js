@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCheck, faSpinner, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import MappleToolTip from 'reactjs-mappletooltip';
 import idGenerator from 'react-id-generator';
 import ReactNotification from "react-notifications-component";
+import {searchTheseDatas} from "../../../services/Api/emailfinderService"
 
 const search = <FontAwesomeIcon icon={faSearch} color="white" size="1x"/>
 const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/>   //this is the green checked icon to testify that an email is valid
@@ -60,9 +60,9 @@ export class Finder extends Component {
 
         /*When one or two names to find are entered and a correct domain too */
         else{
-            const devUrl = '/api/lead/findervalidEmail';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/findervalidEmail';
-
+        //    const devUrl = '/api/lead/findervalidEmail';
+           // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/findervalidEmail';
+           
             /*When only one name to find was entered */
             if(name.split(" ").length == 1){
                 await this.showAndHide(); /*To show the spinner */
@@ -72,15 +72,16 @@ export class Finder extends Component {
                 var lastName = "";   /*get the second element of the splitted array */
                 try {
                     /*Send an email with the three parameters */
-                    const res = await axios.post(devUrl, { firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
-                    console.log(res.data);
+                    await searchTheseDatas({ firstname:firstName, lastname:lastName, domain:this.state.domainToFind}).then(data => {
 
-                    var emailsThatWhereFound = res.data;
+
+
+                    var emailsThatWhereFound = data;
 
                     this.setState({
                         foundEmails: emailsThatWhereFound,
                     });
-
+                })
                 } catch (e) {
                     console.log(e);
                 }
@@ -93,19 +94,22 @@ export class Finder extends Component {
                 var firstName = splitedName[0];
                 var lastName = splitedName[1];
                 try {
-                    const res = await axios.post(devUrl, {firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
-                    console.log(res.data);
+                    // const res = await axios.post(devUrl, {firstname:firstName, lastname:lastName, domain:this.state.domainToFind})
+                    // console.log(res.data);
 
-                    var emailsThatWhereFound = res.data;
+                    await searchTheseDatas({ firstname:firstName, lastname:lastName, domain:this.state.domainToFind}).then(data => {
+
+                    var emailsThatWhereFound = data;
 
                     this.setState({
                         foundEmails: emailsThatWhereFound,
                     });
-
+                })
                 } catch (e) {
                     this.setState({
                         isLoading : false,
                     });
+                
         
                     this.addNotification("Please refresh the page and try again.");
                 }

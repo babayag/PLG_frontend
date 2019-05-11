@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { NavBar } from "../../../../components/NavBar";
-import { SliderContent } from "../../Slider";
+import { NavBar } from "../../../../common/NavBar";
+import { SliderContent } from "../Slider";
 
-export class ChromePage extends Component {
+export class FirefoxPage extends Component {
     render() {
         return (
             <div>
-                 <NavBar />
+                <NavBar /> 
                 <div className="container plugin__page chrome__page">
                     <div className="row justify-content-center">
                         <div className="content col-sm-11 col-md-9 col-lg-7">
-                            <h1>Leadmehome for Chrome</h1>
-                            <p>Leadmehome Chrome extension lets you immediately find the email addresses behind the websites you're browsing.</p>
-                            <a href="https://chrome.google.com/webstore/detail/leadmehome/kjfgnlanbaeoljhmiommbmjgjcacfghc/related?h1=fr" className="download__plugin"> Add to Chrome <span>(It's free)</span></a>
+                            <h1>Leadmehome for Firefox</h1>
+                            <p>Leadmehome Firefox extension lets you immediately find the email addresses behind the websites you're browsing.</p>
+                            <a href="https://addons.mozilla.org/fr/firefox/addon/leadmehome/" className="download__plugin"> Add to Firefox <span>(It's free)</span></a>
                         </div>
                     </div>
                 </div>

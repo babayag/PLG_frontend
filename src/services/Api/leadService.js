@@ -8,7 +8,6 @@ async function searchTheseData(niche, location, p){
 
     return axios.post(Url, { niche: niche, city: location, p:p }).then(response => {
         // returning the data here allows the caller to get it through another .then(...)
-        // localStorage.setItem('domain', url);
         return response.data
       })    
    
@@ -20,14 +19,11 @@ async function checkFacebookAndGooglePixel(domain){
 
   return axios.post(Url,domain ).then(response => {
       // returning the data here allows the caller to get it through another .then(...)
-      // localStorage.setItem('domain', url);
+      
       return response.data
     })    
  
 }
-
-
-// checkFacebookAndGooglePixel checkpixel
 
 export const searchTheseDatas = searchTheseData;
 export const checkFacebookAndGooglePixels = checkFacebookAndGooglePixel;

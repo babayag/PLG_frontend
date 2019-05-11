@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { NavBar } from '../../../../components/NavBar';
-import { Lead } from '../../../../components/Lead'
+import { NavBar } from '../../../../common/NavBar';
+import { Lead } from '../../../../common/Lead'
 
 export class LeadsPage extends Component {
 

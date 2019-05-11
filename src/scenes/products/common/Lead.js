@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -102,7 +101,7 @@ export class Lead extends Component {
             this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
            
                 await searchTheseDatas(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.state.p).then(data => {
-                    // alert(data.data)
+                   
 
                     if (data.data.length !== 0) {
                         var emailsThatWhereFound = data.data.Results;
@@ -110,7 +109,7 @@ export class Lead extends Component {
                         var finalFoundEmails = [];
                         if (emailsThatWhereFound.length !== 0) {
                             for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                                // console.log(emailsThatWhereFound[i].Domain);
+                               
                                 finalFoundEmails.push(emailsThatWhereFound[i]);
                             }
                         } else {

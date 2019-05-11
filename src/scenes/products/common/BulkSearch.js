@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import ReactNotification from "react-notifications-component";
 import CSVReader from "react-csv-reader";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { CSVLink } from "react-csv";
-
+import {getListEmails} from "../../../services/Api/bulksearchService"
 
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
@@ -32,8 +31,6 @@ export class BulkSearch extends Component {
     data = data.toString().split(",");
     domains = data;
 
-    console.log(domains);
-
     this.setState({
       domainList: domains,  // is set to true when the draged and dropped file is read
       fileIsRead: true,   //is set to true when the draged and dropped file is read
@@ -44,25 +41,24 @@ export class BulkSearch extends Component {
     await this.showAndHide();
     this.state.isBulkSearchProcessing = false;
     this.state.canDownLoad = true;
-    console.log(this.state.domainList)
-    const devUrl = '/api/lead/getAllDomains';
-    const devUrlLocal = 'http://127.0.0.1:8000/api/lead/getAllDomains';
+ 
     try{
-      const res = await axios.post(devUrl, {'domains' : this.state.domainList}) //await fetch(devUrl);
-      const data = res.data.data;
+   
+      await getListEmails({'domains' : this.state.domainList}).then(data => {
+
       let finalData = [];
-      // data = data[0];
       for(var i=0; i<data.length; i++){
         for(var j=0; j<data[i].concern.length; j++){ //study the structure of the data object to understand this logic
           finalData.push(data[i].concern[j])
         }
       }
-      console.log(finalData);
-      console.log(data[0].concern);
+      
       this.setState({
         dataThatWillBeDownloaded: finalData, //we set the value of this state as the data that will be downloaded into csv
         canDownLoad: true  //at the end of the search we display the download button by triggering it there
       })
+    })
+    
     }
     catch(e){
       console.log(e);
