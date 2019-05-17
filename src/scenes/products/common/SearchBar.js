@@ -129,7 +129,6 @@ export class SearchBar extends Component {
         if(e.keyCode === 13){
             this.findEmails()
         }
-
     }
 
     render() {

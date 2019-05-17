@@ -1,4 +1,4 @@
-import {BaseUrl} from '../services/constante';
+import {BaseUrl} from '../../../services/constante';
 
 export const loadUser = () => {
     return (dispatch, getState) => {

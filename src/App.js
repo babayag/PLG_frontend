@@ -11,8 +11,8 @@ import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 
 import {auth} from "./actions";
 import Store from "./reducers/index";
-import  SignupPage  from "./components/SignupPage";
-import  LoginPage  from "./components/LoginPage";
+import  SignupPage  from "./scenes/auth/signUp/components/SignupPage";
+import  LoginPage  from "./scenes/auth/login/components/LoginPage";
 import { WholeLandingPage } from "./scenes/products/guests/scenes/landing page/components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
 import { BulkSearchPage } from "./scenes/products/guests/scenes/bulk search/components/BulkSearchPage";
