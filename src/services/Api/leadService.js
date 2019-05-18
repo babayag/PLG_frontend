@@ -25,5 +25,31 @@ async function checkFacebookAndGooglePixel(domain){
  
 }
 
+async function BetterFinder(niche, location, email, p){
+  let Url = BaseUrl + "betterfindlead"
+  
+
+  return axios.post(Url,{ niche: niche, city: location, email : email, p: p } ).then(response => {
+      // returning the data here allows the caller to get it through another .then(...)
+      
+      return response.data
+    })    
+ 
+}
+
+async function GetRestOfUserRequest( email ){
+  let Url = BaseUrl + "getRestOfrequest"
+  
+
+  return axios.post(Url, { email: email }).then(response => {
+      // returning the data here allows the caller to get it through another .then(...)
+      
+      return response.data
+    })    
+ 
+}
+
 export const searchTheseDatas = searchTheseData;
 export const checkFacebookAndGooglePixels = checkFacebookAndGooglePixel;
+export const BetterFinders = BetterFinder;
+export const GetRestOfUserRequests = GetRestOfUserRequest

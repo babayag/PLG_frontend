@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link, Redirect} from "react-router-dom";
 // import { GoogleAuth } from "./googleAuth";
 import {connect} from "react-redux";
-import {auth} from "../../actions";
+import {auth} from "../../../actions";
 import logo from '../../../../images/plg_logo.png';
 import ReactNotification from "react-notifications-component";
 import {checkIfEmpty} from "../../utilities/authUtilities";
@@ -27,7 +27,8 @@ class LoginPage extends Component {
     
     
 
-    login = e => { console.log(this.props.errors[0].message);  
+    login = e => {
+      //  console.log(this.props.errors[0].message);  
       //e.preventDefault();
       this.setState({  //now the validation will directly be know everytime the user changes a field, see onchanges functions above
         allowOnchange: true,

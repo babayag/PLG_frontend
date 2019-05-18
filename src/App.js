@@ -16,13 +16,14 @@ import  LoginPage  from "./scenes/auth/login/components/LoginPage";
 import { WholeLandingPage } from "./scenes/products/guests/scenes/landing page/components/WholeLandingPage";
 import { ExportPage } from "./components/ExportPage";
 import { BulkSearchPage } from "./scenes/products/guests/scenes/bulk search/components/BulkSearchPage";
-import { Dashboard } from "./components/Dashboard";
+import { Dashboard } from "./scenes/products/users/scenes/dashboard/component/DashboardPage";
 import { EmailsFinderPage } from "./scenes/products/guests/scenes/emails finder/components/EmailsFinderPage";
-import  DashboardLead  from "./components/DashboardLead";
-import { DashboardFinder } from "./components/DashboardFinder";
-import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
+import  DashboardLeadFinderPage  from "../src/scenes/products/users/scenes/leadfinder/components/DashboardLeadFinderPage";
+import { DashboardFinder } from "./scenes/products/users/scenes/emailFinder/components/DashboardEmailFinderPage";
+import { DasboardBulkSearch } from "./scenes/products/users/scenes/bulksearch/components/DashboardBulkPage";
 import { Page404 } from "./components/Page404";
 import { Error } from "./components/Error";
+
 import { DashboardChrome } from "./components/DashboardChrome";
 import { DashboardFirefox } from "./components/DashboardFirefox";
 import { ChromePage } from "./scenes/products/common/extensions/scenes/chrome/ChromePage";
@@ -71,7 +72,7 @@ class RootContainerComponent extends Component {
       <BrowserRouter>
         <Switch>
             <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
-            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLeadFinderPage}  />
             <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
             <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
             <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
@@ -142,7 +143,7 @@ class App extends Component {
     ReactPixel.init('672417766469134');
     ReactPixel.pageView()
     ReactQuoraPixel.init('af384036318349ffb92d15b813190967');
-
+    console.log(Store);
     return (
       <div className="App">
         <Provider store={Store}>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 // import { GoogleAuth } from "./googleAuth";
 import axios from 'axios';
-import {auth} from "../../actions";
+import {auth} from "../../../actions";
 import {Link, Redirect} from "react-router-dom";
 import ReactNotification from "react-notifications-component";
 import {register} from "../../../../services/Api/authService";
@@ -101,9 +101,8 @@ class SignupPage extends Component {
 
             /*We can freely send the request */
 
-            let devUrlLocal = 'http://127.0.0.1:8000/api/lead/auth/users/create/';
-            let devUrl = "/api/lead/auth/users/create/";
-            try {console.log("qwertty") 
+        
+            try { 
                 const res = await register(this.state.email, this.state.password); //await fetch(devUrl);
                 console.log(res)
                 
