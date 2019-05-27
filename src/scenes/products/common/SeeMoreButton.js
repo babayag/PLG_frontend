@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactNotification from "react-notifications-component";
-import {EmailResult} from './EmailResult';
 import {findEmails} from '../../../services/Api/searchEmailService'
 
 
@@ -29,13 +28,18 @@ export class SeeMoreButton extends Component {
         });
 
         await findEmails(this.state.requestedUrl, this.state.valueOfp).then(data => {
-            console.log(data.data)
                 this.setState({
                     newResults: this.state.newResults.concat(data.data[0]),
                     valueOfp : data.data[1],
                     hideShowMore : data.data[2]
                 });
                 this.props.updateEmails(data.data[0])
+             }).catch(err =>{
+                 console.log(err)
+                this.setState({
+                    isloading: false
+                });
+                this.addNotification("An error occured", "Please try again.")
              })
        
             this.setState({
@@ -48,10 +52,7 @@ export class SeeMoreButton extends Component {
             }
 
         
-            this.setState({
-                isloading: false
-            });
-            this.addNotification("An error occured", "Please try again.")
+           
 
     }
 

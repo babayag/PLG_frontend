@@ -82,7 +82,6 @@ export class SearchBar extends Component {
             this.state.isAboutVisible = true;
             
             await findEmails(this.state.message, this.state.valueOfp).then(data => {
-             console.log(data.data)
                 this.setState({
                     emails: data.data[0],
                     valueOfp :  data.data[1],
@@ -90,27 +89,18 @@ export class SearchBar extends Component {
                     // numberOfSearches: newNumberOfSearches
                 });
 
-              })
-              console.log(this.state.emails)
+                localStorage.setItem('domain', this.state.message);
                 
                 
-               
-                //cookies.set('numberOfSearches', parseInt(cookies.get('numberOfSearches'))+1, { path: '/' }); /*sets the value of the cookie to 1 so that user will need to login to do more researches */
-                //const newNumberOfSearches = cookies.get('numberOfSearches');
-                //console.log(valueOfp);
-                // this.setState({
-                //     emails: emails,
-                //     valueOfp : valueOfp,
-                //     firstResults: res.data.data, /*set the value of the state*/
-                //     numberOfSearches: newNumberOfSearches
-                // });
-             
-
                 this.setState({
                     isload : false,
                 });
-
-                this.addNotification("An error occured", "Please refresh the page and try again.");
+            }).catch(err => {
+                console.log(err);
+                this.addNotification("An error occured", "Please refresh the page and try again.")
+            })
+            
+            
 
             /*Sets the value of the lastest search to whar the user has entered */
             this.setState({

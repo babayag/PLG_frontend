@@ -1,21 +1,21 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import NavBarDashboard from '../../../components/NavBarDashboard';
-import DashboardLead from '../../../../common/DashboardLead';
+import NavBarDashboard from '../../../../components/NavBarDashboard';
+import  PaymentHistoric  from './components/PaymentHistoric';
 
-class DashboardLeadFinderPage extends Component {
+class PaymentHistoricPage extends Component {
   
     render() {
        
         return (
             <div class="dashboard__page">
                 <NavBarDashboard />
-                <DashboardLead />
+                <PaymentHistoric />
                
             </div>
         );
     }
 }
     
-export default (DashboardLeadFinderPage);
+export default (PaymentHistoricPage);

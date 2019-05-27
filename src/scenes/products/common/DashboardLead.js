@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -11,9 +10,10 @@ import stanley_img from '../users/images/dr_stanley.png';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import Forfait from "../../../components/Forfait";
+import Forfait from "../../products/users/components/Forfait";
 import {BetterFinders} from '../../../services/Api/leadService';
-import {GetRestOfUserRequests, checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
+import {makePayments} from '../../../services/Api/paymentService';
+import {getRestOfUserRequests, checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
@@ -96,13 +96,8 @@ class DashboardLead extends Component {
     /* reload number of quest */
     componentDidMount() {
 
-
-        // let devUrl = "/api/lead/getRestOfrequest";
-        // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/getRestOfrequest';
-
-        // let user = { email: this.props.user.email };
         try {
-             GetRestOfUserRequests(this.props.user.email ).then(data => {
+             getRestOfUserRequests(this.props.user.email ).then(data => {
                     this.setState({
                         request : data,
                         restRequestIsLoad: true
@@ -356,29 +351,28 @@ class DashboardLead extends Component {
             localStorage.setItem("idForfait", forfait.id)
             
             this.setState({
-            isPaymentLoading: true,
-            chosenForfait: { ...forfait }
+                isPaymentLoading: true,
+                chosenForfait: { ...forfait }
             })
-            let devUrlLocal = "/api/lead/createPayment";
+
             try {
-            const res = await axios.post(devUrlLocal, {
-            price: forfait.price,
-            email: this.props.user.email,
-            idForfait: forfait.id
-            })
+                console.log(forfait);
+                makePayments(forfait.price, this.props.user.email, forfait.id).then(res => {
+
+                    if (res.status === 200 || res.status === 201) {
+                        this.setState({
+                        isPaymentLoading: false,
+                    })
+                    window.location.href = res.data.redirect_url;
+                    } else {
+                        console.log('error of notification ');
+                        this.addNotification("Please refresh the page and retry again")
+                    }
+                })
             
-            if (res.status === 200 || res.status === 201) {
-            this.setState({
-            isPaymentLoading: false,
-            })
-            window.location.href = res.data.redirect_url;
-            } else {
-            console.log('error of notification ');
-            this.addNotification("Please refresh the page and retry again")
-            }
             }
             catch (e) {
-            console.log(e)
+                console.log(e)
             }
         }
 

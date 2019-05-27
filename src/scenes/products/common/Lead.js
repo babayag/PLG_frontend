@@ -46,25 +46,41 @@ export class Lead extends Component {
         $(el).slideToggle();
     }
 
-    /*When the value of an input changes, we directly set the state to the new value */
+    /***
+     * description: When the value of an input changes, we directly set the state to the new value 
+     * params: e (event)
+     * return: void
+     */
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
     };
-
+        /***
+         * description: When the user presses a key 
+         * params: e (event)
+         * return: void
+         */
     _handleKeyPress = e => { // When user presses on a keyboardtouch
         if (e.keyCode === 13) {
             this.searchTheseData()
         }
     }
-
+        /***
+         * description: triggers the state that shows and hide spinner when searching emails
+         * params: void
+         * return: void
+         */
     showAndHide() {
         this.setState({
             isLoading: true
         })
     }
-
+         /***
+         * description: triggers the state that shows and hide spinner when searching more emails
+         * params: void
+         * return: void
+         */
     showAndHideSearchMore() {
         this.setState({
             isSearchingMore: true
@@ -85,7 +101,11 @@ export class Lead extends Component {
             dismissable: { click: true }
         });
     }
-
+        /***
+         * description: calls searchTheseDatas service and displays returned emails
+         * params: void
+         * return: void
+         */
     /*This is run when we hit on the search button */
     async searchTheseData() {
         this.setState({
@@ -138,25 +158,30 @@ export class Lead extends Component {
     
                     } else {
                         this.setState({
-                            // foundEmails: [],
                             shouldWeDisplayTable: true
                         });
                     }
                        
                         
-                     })
-               
-             
-                this.setState({
-                    isLoading: false,
-                });
-
-                this.addNotification("An error occured", "Please refresh the page and try again.");
+                     }).catch( err =>{
+                         console.log(err)
+                            this.setState({
+                                isLoading: false,
+                            });
             
+                            this.addNotification("An error occured", "Please refresh the page and try again.");
+                     })             
+             
+                
         }
 
     }
 
+    /***
+     * description: verifies if and object is empty
+     * params: oject to verify
+     * return: boolean (true if the object is empty and false if not)
+     */
     isEmpty(obj) {  //test if an object is empty or not
         for (var key in obj) {
             if (obj.hasOwnProperty(key))
@@ -165,6 +190,11 @@ export class Lead extends Component {
         return true;
     }
 
+    /***
+     * description: copy element we clicked on
+     * params: e (event)
+     * return: bool
+     */
     getEmailTextOnClick(e) {
         e.preventDefault();
         var emailText = e.target.innerHTML;
@@ -175,6 +205,11 @@ export class Lead extends Component {
         document.getElementById(e.currentTarget.id).className = "copiedElt";
     }
 
+    /***
+     * description: display "Copy?"" when a user hovers an email
+     * params: e (event)
+     * return: void
+     */
     displayCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
 
@@ -184,6 +219,11 @@ export class Lead extends Component {
 
     }
 
+    /***
+     * description: removes the displayed "Copy?" when user ends hovering an email
+     * params: e (event)
+     * return: void
+     */
     eraseCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
         document.getElementById(idOfElt).textContent = "";
@@ -191,7 +231,11 @@ export class Lead extends Component {
 
     }
 
-    // This function take email and sources list, generate the csv file to download
+    /***
+     * description: This function takes email and sources list, generate the csv file to download
+     * params: data : the data that will be writen in the CSV file
+     * return: void
+     */
     generateCSV = (data) => {
         let csvContent = "data:text/csv;charset=utf-8,";
         // Format our csv file content
@@ -210,7 +254,12 @@ export class Lead extends Component {
         link.click();
     }
 
-    // This function sort it basing on numbers of email per domains
+
+    /***
+     * description: This function sorts a list of domains basing on numbers of email per domains
+     * params: data : the domains list (with their emails) that will be sorted
+     * return: void
+     */
     sortEmails = (emailList) => {
         let sortedEmailList = [...emailList];
         for (var i = 0; i < sortedEmailList.length; i++) {
@@ -229,17 +278,18 @@ export class Lead extends Component {
         return sortedEmailList;
     }
 
-
+    /***
+     * description: This function recalls searchTheseDatas service precising the current number of pages
+     * params: void
+     * return: void
+     */
     searchMore = async() => {
         await this.showAndHideSearchMore(); /*To show the spinner */
         this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
-        // const devUrl = '/api/lead/normalFindLeads';
-        // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/normalFindLeads';
 
         try {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
-            // const res = await axios.post(devUrl, { niche: niche, city: location, p: this.state.p })
             
             await searchTheseDatas(niche, location, this.state.p).then(data => {
                 if (data.data.length !== 0) {
@@ -248,7 +298,6 @@ export class Lead extends Component {
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length !== 0) {
                         for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                            // console.log(emailsThatWhereFound[i].Domain);
                             finalFoundEmails.push(emailsThatWhereFound[i]);
                         }
                         var emails = this.state.foundEmails.concat(finalFoundEmails);
@@ -289,10 +338,13 @@ export class Lead extends Component {
         }
     } 
 
-    // this method send a request for each domain and checks FB and Google pixels
+    // 
+    /***
+     * description: this method calls checkFacebookAndGooglePixels service for each domain to check FB and Google pixels
+     * params: foundEmails : List os domains to check
+     * return: void
+     */
     checkFacebookAndGooglePixel = async(foundEmails) => {
-        // const devUrl = '/api/lead/checkpixel';
-        // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/checkpixel';
 
         this.setState({
             isSearchingMore: true   
