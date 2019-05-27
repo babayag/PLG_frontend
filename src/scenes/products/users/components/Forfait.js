@@ -18,6 +18,11 @@ class Forfait extends Component {
         forfaits: []
     }
 
+    /* 
+    * description : the method load all forfait available
+    * params : 
+    * return : void
+    */
     componentDidMount() {
         
 

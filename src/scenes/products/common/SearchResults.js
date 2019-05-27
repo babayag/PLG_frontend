@@ -15,7 +15,11 @@ export class SearchResults extends Component {
         //this.props.emailList
     }
 
-
+    /* 
+    * description : the method data to export 
+    * params : 
+    * return : void
+    */
     sendDataToExport(){
         this.props.router.push({
             pathname: '/export',
@@ -26,6 +30,11 @@ export class SearchResults extends Component {
           })
     }
 
+    /* 
+    * description : the method count sources on a particular email 
+    * params : 
+    * return : void
+    */
     countSources(){ console.log(this.state.emails)
         if(this.state.emails.length === 0){
            return <span><span class="text-right">No Email Address Found.</span><br/><span className="mt-3 d-block" id="training__post_id">LEARN HOW TO <b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK.</a></b></span></span>
@@ -65,9 +74,11 @@ export class SearchResults extends Component {
         }
     }
 
-    /*this function updates the value of emails by concataining
-    the new search (when we press on show more Button)
-    results to the first search result */
+    /* 
+    * description : the method update list of email when we search more 
+    * params : newEmails 
+    * return : void
+    */
     updateEmails = (newEmails) => {
         console.log(this.state.emails);
         this.setState({

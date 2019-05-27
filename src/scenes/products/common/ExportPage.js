@@ -21,6 +21,12 @@ export class ExportPage extends Component{
 
          this.findEmails();
     }
+
+    /* 
+    * description : the method send request for download email as csv
+    * params : 
+    * return : void
+    */
     async findEmails() {
         var regEx = /\w+\.\w+/;
         if(!regEx.test(this.state.domain)) {

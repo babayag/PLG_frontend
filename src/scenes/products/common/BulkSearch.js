@@ -26,6 +26,12 @@ export class BulkSearch extends Component {
     this.notificationDOMRef = React.createRef();
   }
 
+  /* 
+    * description : the method load the content file into state of the component
+    * params : data
+    * return : void
+  */
+ 
   afterLoading = data =>{
     let domains;
     data = data.toString().split(",");
@@ -37,6 +43,11 @@ export class BulkSearch extends Component {
     })
   };
 
+  /* 
+    * description : the method sen request for bulk search emails on many domains
+    * params : 
+    * return : void
+    */
   getListEmail = async () => {
     await this.showAndHide();
     this.state.isBulkSearchProcessing = false;
@@ -78,6 +89,11 @@ export class BulkSearch extends Component {
     })
   }
 
+  /* 
+    * description : the method export emails and domains into csv
+    * params : 
+    * return : void
+    */
   exportDatasToCsv(){
     setTimeout(
       function() {

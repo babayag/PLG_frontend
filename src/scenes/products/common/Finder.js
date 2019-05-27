@@ -39,7 +39,11 @@ export class Finder extends Component {
     };
 
 
-    /*This is run when we hit on the search button */
+    /* 
+    * description : the method send the request for guest valid emails 
+    * params :  
+    * return : void
+    */
     async searchTheseData(){
         var name = this.state.nameToFind.trim();
         var regEx = /\w+\.\w+/;
@@ -144,6 +148,11 @@ export class Finder extends Component {
         }
     }
 
+    /* 
+    * description : the method count sources on a particular email 
+    * params : e (event)
+    * return : void
+    */
     getEmailTextOnClick(e) { 
         e.preventDefault();
         var emailText = e.target.innerHTML;
@@ -152,8 +161,14 @@ export class Finder extends Component {
         var idOfElt = "copy" + e.currentTarget.id;
         document.getElementById(idOfElt).textContent = "Copied!";
         document.getElementById(e.currentTarget.id).className = "copiedElt";
+    
     }
 
+    /* 
+    * description : the method display the message "copy text"
+    * params : e (event)
+    * return : void
+    */
     displayCopyText(e){
         var idOfElt = "copy" + e.currentTarget.id;
         
@@ -163,6 +178,11 @@ export class Finder extends Component {
         
     }
 
+    /* 
+    * description : the method undisplay message "copy text" 
+    * params : e (event)
+    * return : void
+    */
     eraseCopyText(e){
         var idOfElt = "copy" + e.currentTarget.id;
         document.getElementById(idOfElt).textContent = "";

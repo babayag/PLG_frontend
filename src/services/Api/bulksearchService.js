@@ -1,6 +1,8 @@
 import axios from 'axios';
 import {BaseUrl} from '../constante';
 
+
+
 async function getListEmail(domain){
     let Url = BaseUrl + "findervalidEmail"
     

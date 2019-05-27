@@ -28,6 +28,12 @@ export class Dashboard extends Component {
       $(el).slideToggle();
     }
 
+    /* 
+    * description : the method send the request for make payement
+    * params : e (event)
+    * return : void
+    */
+
     makePayment = async () => {
       this.setState({
         isLoading: true

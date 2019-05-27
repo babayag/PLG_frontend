@@ -63,6 +63,11 @@ export class SearchBar extends Component {
         });
     };
 
+    /* 
+    * description : the method send the request to find emails on a domain 
+    * params : 
+    * return : void
+    */
     async findEmails() {
         var regEx = /\w+\.\w+/;
         if(!regEx.test(this.state.message)) {

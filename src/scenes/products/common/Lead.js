@@ -46,7 +46,11 @@ export class Lead extends Component {
         $(el).slideToggle();
     }
 
-    /*When the value of an input changes, we directly set the state to the new value */
+    /* 
+    * description : the method handle changes on input 
+    * params : 
+    * return : void
+    */
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -86,7 +90,11 @@ export class Lead extends Component {
         });
     }
 
-    /*This is run when we hit on the search button */
+   /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     async searchTheseData() {
         this.setState({
             shouldWeDisplayTable: false,
@@ -165,6 +173,11 @@ export class Lead extends Component {
         return true;
     }
 
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     getEmailTextOnClick(e) {
         e.preventDefault();
         var emailText = e.target.innerHTML;
@@ -175,6 +188,11 @@ export class Lead extends Component {
         document.getElementById(e.currentTarget.id).className = "copiedElt";
     }
 
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     displayCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
 
@@ -184,6 +202,11 @@ export class Lead extends Component {
 
     }
 
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     eraseCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
         document.getElementById(idOfElt).textContent = "";
@@ -191,7 +214,11 @@ export class Lead extends Component {
 
     }
 
-    // This function take email and sources list, generate the csv file to download
+   /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     generateCSV = (data) => {
         let csvContent = "data:text/csv;charset=utf-8,";
         // Format our csv file content
@@ -210,7 +237,11 @@ export class Lead extends Component {
         link.click();
     }
 
-    // This function sort it basing on numbers of email per domains
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     sortEmails = (emailList) => {
         let sortedEmailList = [...emailList];
         for (var i = 0; i < sortedEmailList.length; i++) {
@@ -229,7 +260,11 @@ export class Lead extends Component {
         return sortedEmailList;
     }
 
-
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     searchMore = async() => {
         await this.showAndHideSearchMore(); /*To show the spinner */
         this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
@@ -289,7 +324,11 @@ export class Lead extends Component {
         }
     } 
 
-    // this method send a request for each domain and checks FB and Google pixels
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     checkFacebookAndGooglePixel = async(foundEmails) => {
         // const devUrl = '/api/lead/checkpixel';
         // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/checkpixel';

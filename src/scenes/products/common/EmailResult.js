@@ -26,6 +26,12 @@ export class EmailResult extends Component {
         })
     }
 
+    /* 
+    * description : the method display message "copied" when we click on it
+    * params : e (event)
+    * return : void
+    */
+
     getEmailTextOnClick(e) {
         e.preventDefault();
         var emailText = e.target.innerHTML;
@@ -36,6 +42,12 @@ export class EmailResult extends Component {
         document.getElementById(e.currentTarget.id).className = "copiedElt";
     }
 
+    /* 
+    * description : the method display message "copy?" when we hover and email
+    * params : e (event)
+    * return : void
+    */
+
     displayCopyText(e){
         var idOfElt = "copy" + e.currentTarget.id;
         
@@ -44,6 +56,12 @@ export class EmailResult extends Component {
         document.getElementById(e.currentTarget.id).className = "foundEmailValue";
         
     }
+
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
 
     eraseCopyText(e){
         var idOfElt = "copy" + e.currentTarget.id;

@@ -1,6 +1,11 @@
 let emailRegex = /^[\w-]+@([\w-]+\.)+[\w-]+$/;
 let passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{7,}/;
 
+/* 
+* description : the method check if a field is empty
+* params : field
+* return : a String object message 
+*/
 export const checkIfEmpty = (field) => {
     let returnMsg = "";
     if(field == ""){
@@ -9,6 +14,12 @@ export const checkIfEmpty = (field) => {
 
     return returnMsg;
 }
+
+/* 
+* description : the method check if a field is a valid email value
+* params : email
+* return : a String object message 
+*/
 
 export const checkEmailValidation = (email) => {
     let returnMsg = "";
@@ -23,6 +34,11 @@ export const checkEmailValidation = (email) => {
     return returnMsg;
 }
 
+/* 
+* description : the method check if the password is secure enough
+* params : field
+* return : a String object message 
+*/
 export const checkPasswordValidation = (password) => {
     let returnMsg = "";
 

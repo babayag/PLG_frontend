@@ -26,6 +26,11 @@ class LoginPage extends Component {
     }
     
     
+    /* 
+    * description : the method login a user 
+    * params : e (event)
+    * return : void
+    */
 
     login = e => {
       //  console.log(this.props.errors[0].message);  
@@ -48,6 +53,12 @@ class LoginPage extends Component {
       }
     }
 
+    /* 
+    * description : the method  handle changes on email field 
+    * params : e (event)
+    * return : void
+    */
+
       handleChange = e => {
       //console.log(e.target.value);
       this.setState({
@@ -62,6 +73,12 @@ class LoginPage extends Component {
         })
       }
     };
+
+    /* 
+    * description : the method handle keypress event   
+    * params : e (event)
+    * return : void
+    */
 
     _handleKeyPress = e => { // When user presses on a keyboardtouch
       if(e.keyCode === 13){

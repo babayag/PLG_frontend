@@ -93,14 +93,13 @@ class DashboardLead extends Component {
         });
     }
 
-    /* reload number of quest */
+    /* 
+    * description : the method reload the number of request
+    * params : 
+    * return : void
+    */
     componentDidMount() {
 
-
-        // let devUrl = "/api/lead/getRestOfrequest";
-        // const devUrlLocal = 'http://127.0.0.1:8000/api/lead/getRestOfrequest';
-
-        // let user = { email: this.props.user.email };
         try {
              GetRestOfUserRequests(this.props.user.email ).then(data => {
                     this.setState({
@@ -113,7 +112,12 @@ class DashboardLead extends Component {
             console.log(e)
         }
     }
-    /*This is run when we hit on the search button */
+    
+    /* 
+    * description : the method send request for getting domain and emails on it for a particular niche and location
+    * params : 
+    * return : void
+    */
     async searchTheseData(){
         this.setState({
             shouldWeDisplayTable: false,
@@ -200,6 +204,12 @@ class DashboardLead extends Component {
         return true;
     }
 
+    /* 
+    * description : the method display message "copied" when we click on it
+    * params : e (event)
+    * return : void
+    */
+
     getEmailTextOnClick(e) {
         e.preventDefault();
         var emailText = e.target.innerHTML;
@@ -210,6 +220,11 @@ class DashboardLead extends Component {
         document.getElementById(e.currentTarget.id).className = "copiedElt";
     }
 
+    /* 
+    * description : the method display message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     displayCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
 
@@ -219,6 +234,11 @@ class DashboardLead extends Component {
 
     }
 
+    /* 
+    * description : the method erase message "copy?" when we mousse leave on it
+    * params : e (event)
+    * return : void
+    */
     eraseCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
         document.getElementById(idOfElt).textContent = "";
@@ -226,7 +246,11 @@ class DashboardLead extends Component {
 
     }
 
-    // This function take email and sources list, generate the csv file to download
+    /* 
+    * description : the method generate csv for data params
+    * params : data
+    * return : void
+    */
     generateCSV = (data) => {
         let csvContent = "data:text/csv;charset=utf-8,";
         // Format our csv file content
@@ -245,7 +269,11 @@ class DashboardLead extends Component {
         link.click();
     }
 
-        // This function sort it basing on numbers of email per domains
+    /* 
+    * description : the method sort the list of domain from which has emails to which has not email
+    * params : emailList
+    * return : void
+    */
         sortEmails = (emailList) => {
             let sortedEmailList = [...emailList];
             for (var i = 0; i < sortedEmailList.length; i++) {
@@ -264,6 +292,11 @@ class DashboardLead extends Component {
             return sortedEmailList;
         }
     
+        /* 
+    * description : the method display domain and email found on it
+    * params : 
+    * return : void
+    */
         displayResults = () => {
             let prevRemainingEmails = [...this.state.remainingEmails];
             let nPrev = prevRemainingEmails.length;
@@ -293,7 +326,11 @@ class DashboardLead extends Component {
             }
         }
 
-
+        /* 
+    * description : the method sent the request for searching more emails
+    * params : 
+    * return : void
+    */
         searchMore = async() => {
             await this.showAndHideSearchMore(); /*To show the spinner */
             this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
@@ -350,7 +387,11 @@ class DashboardLead extends Component {
                 this.addNotification("An error occured", "Please refresh the page and try again.");
             }
         } 
-    
+        /* 
+    * description : the method sent request for ordering a payment for a forfait choosen
+    * params : forfait
+    * return : void
+    */
         makePayment = async (forfait) => {
 
             localStorage.setItem("idForfait", forfait.id)
@@ -381,7 +422,11 @@ class DashboardLead extends Component {
             console.log(e)
             }
         }
-
+        /* 
+    * description : the method sent request to check if the pixel is valid
+    * params : foundEmails
+    * return : void
+    */
         checkFacebookAndGooglePixel = async(foundEmails) => {
     
             this.setState({

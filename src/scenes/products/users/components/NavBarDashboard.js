@@ -28,6 +28,12 @@ class NavBarDashboard extends Component {
       $(el).slideToggle();
     }
 
+    /* 
+    * description : the method logout the user
+    * params : 
+    * return : void
+    */
+
     logout = () => {
 
       localStorage.removeItem("token");

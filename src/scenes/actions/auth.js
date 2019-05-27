@@ -1,5 +1,10 @@
 import {BaseUrl} from '../../services/constante';
 
+/* 
+* description : the method load the user if it is connected 
+* params : 
+* return : a json object contain the user informations
+*/
 export const loadUser = () => {
     return (dispatch, getState) => {
       dispatch({type: "USER_LOADING"});
@@ -36,6 +41,12 @@ export const loadUser = () => {
     }
   }
 
+/* 
+* description : the method login a user with his credentials
+* params : email, password
+* return : a json object contains the user infos
+*/
+
   export const login = (email, password) => {
     return (dispatch, getState) => {
       let headers = {"Content-Type": "application/json"};
@@ -69,6 +80,12 @@ export const loadUser = () => {
         })
     }
   }
+
+/* 
+* description : the method register a user with his credentials
+* params : email, password
+* return : a json object contains the user infos
+*/
 
   export const register = (email, password) => {
     return (dispatch, getState) => {

@@ -35,6 +35,11 @@ class SignupPage extends Component {
          this.notificationDOMRef = React.createRef();
     }
 
+    /* 
+    * description : the method handle the change on email field
+    * params : e (event)
+    * return : void
+    */
     handleEmailInputChange = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -48,6 +53,11 @@ class SignupPage extends Component {
         }
     };
 
+     /* 
+    * description : the method handle the change on password field
+    * params : e (event)
+    * return : void
+    */
     handlePasswordInputChange = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -61,6 +71,11 @@ class SignupPage extends Component {
         }
     };
 
+     /* 
+    * description : the method handle the change on password confirmation field
+    * params : e (event)
+    * return : void
+    */
     handlePassword2InputChange = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -74,6 +89,11 @@ class SignupPage extends Component {
         }
     };
 
+     /* 
+    * description : the method handle the click on button register
+    * params : e (event)
+    * return : void
+    */
     _handleKeyPress = e => { // When user presses on a keyboardtouch
         if(e.keyCode === 13){
             this.registerUser();
@@ -81,6 +101,11 @@ class SignupPage extends Component {
 
     }
 
+    /* 
+    * description : the method register the user 
+    * params : 
+    * return : void
+    */
     async registerUser(){  
         await this.showAndHide();
         this.state.isRegistering = false;
@@ -126,6 +151,7 @@ class SignupPage extends Component {
         }
     }
 
+    
     showAndHide(){
         this.setState({
           isRegistering : true,

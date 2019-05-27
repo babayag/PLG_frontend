@@ -22,6 +22,11 @@ export class SeeMoreButton extends Component {
         this.notificationDOMRef = React.createRef();
     }
 
+    /* 
+    * description : the method run the request for searching new email 
+    * params : 
+    * return : void
+    */
     async findNewEmails() {
        
         this.setState({
