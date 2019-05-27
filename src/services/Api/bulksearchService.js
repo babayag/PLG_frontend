@@ -2,7 +2,11 @@ import axios from 'axios';
 import {BaseUrl} from '../constante';
 
 
-
+/* 
+* description : the method guess the valid email by combination   
+* params : domain
+* return : a json object contain the list of valid emails
+*/
 async function getListEmail(domain){
     let Url = BaseUrl + "findervalidEmail"
     

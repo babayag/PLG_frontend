@@ -5,7 +5,7 @@ import {BaseUrl} from '../constante';
 /* 
 * description : the method get the list of Email 
 * params : domain
-* return : a json object contain the list of emails and sources
+* return : a json object contain the list of emails an thier sources
 */
 async function findEmail(url,p){
     
