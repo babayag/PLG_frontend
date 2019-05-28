@@ -20,7 +20,7 @@ class Forfait extends Component {
 
     componentDidMount() {
         /***
-         * description: calls for getAllforfaits service and sets forfait state as the response returned by the service
+         * description: calls for getAllforfaits service and sets forfaits state as the response returned by the service
          * params: void
          * return: void
          */

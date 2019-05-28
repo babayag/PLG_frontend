@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
 import Cookies from 'universal-cookie';
 import ReactNotification from "react-notifications-component";
-import {BrowserRouter , Route, Link} from "react-router-dom";
+import { Route } from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
 import { SearchResults } from "./SearchResults";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
