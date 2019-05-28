@@ -14,7 +14,7 @@ import Store from "./reducers/index";
 import  SignupPage  from "./scenes/auth/signUp/components/SignupPage";
 import  LoginPage  from "./scenes/auth/login/components/LoginPage";
 import { WholeLandingPage } from "./scenes/products/guests/scenes/landing page/components/WholeLandingPage";
-import { ExportPage } from "./components/ExportPage";
+import { GuestExportPage } from "./scenes/products/guests/scenes/export/GuestExportPage";
 import { BulkSearchPage } from "./scenes/products/guests/scenes/bulk search/components/BulkSearchPage";
 import { Dashboard } from "./scenes/products/users/scenes/dashboard/component/DashboardPage";
 import { EmailsFinderPage } from "./scenes/products/guests/scenes/emails finder/components/EmailsFinderPage";
@@ -29,9 +29,9 @@ import { DashboardFirefox } from "./components/DashboardFirefox";
 import { ChromePage } from "./scenes/products/common/extensions/scenes/chrome/ChromePage";
 import { FirefoxPage } from "./scenes/products/common/extensions/scenes/firefox/FirefoxPage";
 import { LeadsPage } from './scenes/products/guests/scenes/leads finder/components/LeadsPage';
-import  DashboardPayment  from "./components/DashboardPayment";
-import Historic from "./components/Historic"
-import UserSearch from "./components/UserSearch"
+import DashboardPayment  from "./scenes/products/users/scenes/leadfinder/components/DashboardPayment";
+import PaymentHistoricPage from "./scenes/products/users/scenes/historics/scenes/payement/PaymentHistoricPage"
+import SearchHistoricPage from "./scenes/products/users/scenes/historics/scenes/search/SearchHistoricPage"
 
 // import  TestIt  from "./components/TestIt";
 
@@ -78,14 +78,14 @@ class RootContainerComponent extends Component {
             <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
             <PrivateRoute exact path={'/dashboard/firefox'} component={DashboardFirefox} />
             <PrivateRoute exact path={'/dashboard/payment'} component={DashboardPayment} />
-            <PrivateRoute exact path="/dashboard/history/payment" component={Historic} />
-            <PrivateRoute exact path="/dashboard/history/leadsearch" component={UserSearch} />
+            <PrivateRoute exact path="/dashboard/history/payment" component={PaymentHistoricPage} />
+            <PrivateRoute exact path="/dashboard/history/leadsearch" component={SearchHistoricPage} />
             <Route exact path="/" component={WholeLandingPage} />
             <Route exact path={"/finder"} component={EmailsFinderPage}  />
             <Route exact path={"/lead"} component={LeadsPage}  />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/login" component={LoginPage} />
-            <Route exact path={"/export"} component={ExportPage}  />
+            <Route exact path={"/export"} component={GuestExportPage}  />
             <Route exact path={"/bulksearch"} component={BulkSearchPage}  />
             <Route exact path={"/chrome"} component={ChromePage}  />
             <Route exact path={"/firefox"} component={FirefoxPage}  />

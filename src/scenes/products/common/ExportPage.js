@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios';
-import { faDownload, faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons'
 import { NavBar } from "./NavBar";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import dr_screen from "../img/dr_screen.png";
-
-
-const download = <FontAwesomeIcon icon={faDownload} />
-const externalLink = <FontAwesomeIcon icon={faExternalLinkAlt} />
+import NavBarDashboard from '../users/components/NavBarDashboard';
+import {getDomains} from '../../../services/Api/exportService'
 
 export class ExportPage extends Component{
-    constructor()
+    constructor(props)
     {
-        super();
+        super(props);
         this.state = {
             emails: [],
             domain: localStorage.getItem('domain')
@@ -29,26 +24,20 @@ export class ExportPage extends Component{
     */
     async findEmails() {
         var regEx = /\w+\.\w+/;
+        
+        console.log(this.state.domain);
         if(!regEx.test(this.state.domain)) {
 
         }else{
-            /*this resets the value of p so that it is 0 for each new research */
-            const devUrl = '/api/lead/downloadEmails';
-            const devUrlLocal = 'http://127.0.0.1:8000/api/lead/downloadEmails';
-            //const ProductionURL = 'api/lead/testSharing';
-            try {
-                const res = await axios.post(devUrl, { url : this.state.domain }) //await fetch(devUrl);
-                const emails = await res.data.data
+           
+            getDomains(this.state.domain).then(res => {
                 this.setState({
-                    emails: emails,
+                    emails: res.data
                 });
-
-            } catch (e) {
-            console.log(e);
-            }
-
-            /*Sets the value of the lastest search to whar the user has entered */
-
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
     }
 
@@ -56,7 +45,12 @@ export class ExportPage extends Component{
         return(
 
             <div>
-                <NavBar/>
+                {this.props.isSignedIn ? 
+                    <NavBarDashboard />
+                     :
+                    <NavBar />
+                }
+
                 <div className="row export__page justify-content-center">
                   <div className="col-sm-10 col-md-7 col-lg-6">
                     <h2>You can export the emails of your prospect below</h2>

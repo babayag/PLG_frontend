@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
-import axios from 'axios';
+import {getAllforfaits} from '../../../../services/Api/forfaitService';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Aux from './Hoc';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
-const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin />
 
 class Forfait extends Component {
 
@@ -24,27 +22,27 @@ class Forfait extends Component {
     * return : void
     */
     componentDidMount() {
-        
-
-        let devUrlLocal = "http://127.0.0.1:8000/api/lead/getAllforfait";
-        try {
-            axios.post(devUrlLocal)
-            .then(res => {
-                console.log(res.data)
-                this.setState({
-                    forfaits: res.data,
-                    isForfaits: true,
-                })
+        /***
+         * description: calls for getAllforfaits service and sets forfait state as the response returned by the service
+         * params: void
+         * return: void
+         */
+        getAllforfaits().then(data => {
+            this.setState({
+                forfaits: data,
+                isForfaits: true,
             })
-            .catch(err => {
-                this.setState({ isForfaits: true });
-                console.log(err);
-            })
-        } catch (e) {
-            console.log(e)
-        }
+        }).catch(err => {
+            this.setState({ isForfaits: true });
+            console.log(err);
+        })
+       
     }
-
+        /***
+         * description: dropdown menu
+         * params: void
+         * return: void
+         */
     toggle = () => {
         const el = findDOMNode(this.refs.recent__search);
         $(el).slideToggle();

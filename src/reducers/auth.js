@@ -6,7 +6,11 @@ const initialState = {
   errors: {},
 };
 
-
+/* 
+  * description : the method undisplay message "copy text" 
+  * params : state , action
+  * return : state
+*/
 export default function auth(state=initialState, action) {
 
   switch (action.type) {

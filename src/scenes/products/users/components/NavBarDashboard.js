@@ -16,7 +16,6 @@ class NavBarDashboard extends Component {
   constructor(props)
   {
     super(props);
-    console.log(props);
   }
 
   state = {
@@ -69,8 +68,8 @@ class NavBarDashboard extends Component {
 
                     <ul ref="dropdown__content" class="dropdown__content">
                       {/* <li><a href="/profile">Profile</a></li> */}
-                      <li ><a href="/dashboard/history/leadsearch">Search</a></li>
-                      <li ><a href="/dashboard/history/payment">payments</a></li>
+                      <li ><a href="/dashboard/history/leadsearch">Searches</a></li>
+                      <li ><a href="/dashboard/history/payment">Payments</a></li>
                       <li ><a href="/" onClick={this.logout}>Logout</a></li>
                     </ul>
                 </div>

@@ -8,7 +8,7 @@ import {BaseUrl} from '../constante';
 * return : a json object contain the list of valid emails
 */
 async function getListEmail(domain){
-    let Url = BaseUrl + "findervalidEmail"
+    let Url = BaseUrl + "bulksearch"
     
 
     return axios.post(Url, domain).then(response => {
