@@ -68,9 +68,7 @@ export class SearchBar extends Component {
         if(!regEx.test(this.state.message)) {
             this.addNotification("Error", "Please enter a domain name like 'medievaltimes.com'");
         }
-        // else if(this.state.numberOfSearches == 1){
-        //     this.addNotification("Error", "You need to Login to do more researches.")
-        // }
+        
         else{
             /*this resets the value of p so that it is 0 for each new research */
             this.setState({

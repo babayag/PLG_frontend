@@ -32,13 +32,13 @@ export class DashboardFinder extends Component {
                     </div>
 
                     <div class="dashboard__content--right">
-                        <div class="recent__search">
+                        {/* <div class="recent__search">
                         <h3>Recents Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
                         </div>
 
                         <div class="recent__searchs" ref="recent__search">
                         <h3>Recents</h3>
-                        </div>
+                        </div> */}
 
                         <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
                         <div class="video__course">

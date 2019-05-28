@@ -21,12 +21,20 @@ class NavBarDashboard extends Component {
   state = {
     email :"refresh....",
   }
-
+    /***
+         * description: dropdown menu
+         * params: void
+         * return: void
+         */
     toggle = () => {
       const el = findDOMNode(this.refs.dropdown__content);
       $(el).slideToggle();
     }
-
+    /***
+         * description: this method delete completly current user token
+         * params: void
+         * return: void
+         */
     logout = () => {
 
       localStorage.removeItem("token");

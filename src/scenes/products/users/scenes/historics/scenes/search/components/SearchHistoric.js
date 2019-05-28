@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { getAllSearches } from '../../../../../../../../services/Api/historicService';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import  moment  from 'moment'
 
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
@@ -69,7 +70,7 @@ class SearchHistoric extends Component {
         let SearchList = <span className="searchHistoricSpinner"> {spinner} </span>;
         if(this.state.searchIsLoad) { 
             SearchList = this.state.searchList.map(search => (
-                <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.counter}</td><td>{search.created_at}</td></tr>
+                <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.counter}</td><td>{moment(search.created_at).format("ddd GG MMM YYYY HH:mm",'en')}</td></tr>
             ))
           
         }

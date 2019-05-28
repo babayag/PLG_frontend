@@ -3285,6 +3285,7 @@ button:disabled{
 }
 .recent__search{
   background-color: white;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: row;
   border: 1px solid #dddddd;
@@ -3294,6 +3295,8 @@ button:disabled{
 }
 .recent__searchs{
   display: none;
+  margin-top: -2rem;
+  margin-bottom: 2rem;
   border: 1px solid #dddddd;
   border-radius: 4px;
   padding: 1.7rem 2.5rem;
@@ -3303,8 +3306,17 @@ button:disabled{
 .recent__search-icon{
   margin-left: auto;
 }
-.coldemail__title, .video__course{
-  margin-top: 2rem;
+ .video__course{
+  /* margin-top: 2rem; */
+  margin-bottom: 2rem;
+  background-color: white;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 1.7rem 2.5rem;
+  box-shadow: 0px 2px 5px #dddddd;
+}
+.coldemail__title{
+  margin-bottom: 2rem;
   background-color: white;
   border: 1px solid #dddddd;
   border-radius: 4px;
@@ -3834,7 +3846,8 @@ th:first-child, td:first-child{
   padding: 0.8rem;
   background-color: #D25F06;
   color: #fff;
-  margin-left: 15.2rem
+  float: right;
+  /* margin-left: 59%; */
 }
 
 .historicPaymentSpinner svg{
@@ -3846,8 +3859,3 @@ th:first-child, td:first-child{
   margin-top: 30px !important;
   margin-left: 200%;
 }
-
-
-
-
-

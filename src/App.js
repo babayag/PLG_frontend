@@ -14,7 +14,7 @@ import Store from "./reducers/index";
 import  SignupPage  from "./scenes/auth/signUp/components/SignupPage";
 import  LoginPage  from "./scenes/auth/login/components/LoginPage";
 import { WholeLandingPage } from "./scenes/products/guests/scenes/landing page/components/WholeLandingPage";
-import { GuestExportPage } from "./scenes/products/guests/scenes/export/GuestExportPage";
+import { ExportPage } from "./scenes/products/common/ExportPage";
 import { BulkSearchPage } from "./scenes/products/guests/scenes/bulk search/components/BulkSearchPage";
 import { Dashboard } from "./scenes/products/users/scenes/dashboard/component/DashboardPage";
 import { EmailsFinderPage } from "./scenes/products/guests/scenes/emails finder/components/EmailsFinderPage";
@@ -85,7 +85,7 @@ class RootContainerComponent extends Component {
             <Route exact path={"/lead"} component={LeadsPage}  />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/login" component={LoginPage} />
-            <Route exact path={"/export"} component={GuestExportPage}  />
+            <Route exact path={"/export"} component={() => <ExportPage isSignedIn={this.props.auth.isAuthenticated} />}  />
             <Route exact path={"/bulksearch"} component={BulkSearchPage}  />
             <Route exact path={"/chrome"} component={ChromePage}  />
             <Route exact path={"/firefox"} component={FirefoxPage}  />
@@ -111,6 +111,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 let RootContainer = connect(mapStateToProps,mapDispatchToProps)(RootContainerComponent);
+
 
 const advancedMatching = { em: 'some@email.com' };
 const options = {

@@ -10,6 +10,7 @@ import {getListEmails} from "../../../services/Api/bulksearchService"
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
 
 export class BulkSearch extends Component {
+  
   constructor(props){
     super(props);
 
@@ -26,6 +27,12 @@ export class BulkSearch extends Component {
     this.notificationDOMRef = React.createRef();
   }
 
+
+    /***
+* description: splits current data by comma 
+* params: void
+* return: void
+*/
   afterLoading = data =>{
     let domains;
     data = data.toString().split(",");
@@ -37,6 +44,11 @@ export class BulkSearch extends Component {
     })
   };
 
+  /***
+* description: calls getListEmails service 
+* params: void
+* return: void
+*/
   getListEmail = async () => {
     await this.showAndHide();
     this.state.isBulkSearchProcessing = false;
@@ -71,13 +83,22 @@ export class BulkSearch extends Component {
 
     }
   }
-
+/***
+* description: sets the isBulkSearchProcessing state to true
+* params: void
+* return: void
+*/
   showAndHide(){
     this.setState({
       isBulkSearchProcessing : true,
     })
   }
 
+  /***
+* description: downlod the data 2 second after clicking on export 
+* params: void
+* return: void
+*/
   exportDatasToCsv(){
     setTimeout(
       function() {
@@ -87,6 +108,12 @@ export class BulkSearch extends Component {
       2000
     );
   }
+
+  /***
+* description: Displays the notification with the provided chraracteristics
+* params: title: title of notification, message: message displayed in the notificatio body
+* return: void
+*/
 
   addNotification(title, message) {
     this.notificationDOMRef.current.addNotification({

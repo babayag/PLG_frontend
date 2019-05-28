@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCheck, faSpinner, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import MappleToolTip from 'reactjs-mappletooltip';
 import idGenerator from 'react-id-generator';
-import ReactNotification from "react-notifications-component";
 import {searchTheseDatas} from "../../../services/Api/emailfinderService"
 
 const search = <FontAwesomeIcon icon={faSearch} color="white" size="1x"/>
