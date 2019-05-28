@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getAllPayments } from '../../../../../../../../services/Api/historicService';
-import  moment  from 'moment'
+import  moment  from 'moment';
 
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>

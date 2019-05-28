@@ -22,10 +22,9 @@ import  DashboardLeadFinderPage  from "../src/scenes/products/users/scenes/leadf
 import { DashboardFinder } from "./scenes/products/users/scenes/emailFinder/components/DashboardEmailFinderPage";
 import { DasboardBulkSearch } from "./scenes/products/users/scenes/bulksearch/components/DashboardBulkPage";
 import { Page404 } from "./components/Page404";
-import { Error } from "./components/Error";
 
-import { DashboardChrome } from "./components/DashboardChrome";
-import { DashboardFirefox } from "./components/DashboardFirefox";
+// import { DashboardChrome } from "./components/DashboardChrome";
+// import { DashboardFirefox } from "./components/DashboardFirefox";
 import { ChromePage } from "./scenes/products/common/extensions/scenes/chrome/ChromePage";
 import { FirefoxPage } from "./scenes/products/common/extensions/scenes/firefox/FirefoxPage";
 import { LeadsPage } from './scenes/products/guests/scenes/leads finder/components/LeadsPage';
@@ -75,8 +74,8 @@ class RootContainerComponent extends Component {
             <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLeadFinderPage}  />
             <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
             <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
-            <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
-            <PrivateRoute exact path={'/dashboard/firefox'} component={DashboardFirefox} />
+            {/* <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
+            <PrivateRoute exact path={'/dashboard/firefox'} component={DashboardFirefox} /> */}
             <PrivateRoute exact path={'/dashboard/payment'} component={DashboardPayment} />
             <PrivateRoute exact path="/dashboard/history/payment" component={PaymentHistoricPage} />
             <PrivateRoute exact path="/dashboard/history/leadsearch" component={SearchHistoricPage} />
@@ -87,9 +86,9 @@ class RootContainerComponent extends Component {
             <Route exact path="/login" component={LoginPage} />
             <Route exact path={"/export"} component={() => <ExportPage isSignedIn={this.props.auth.isAuthenticated} />}  />
             <Route exact path={"/bulksearch"} component={BulkSearchPage}  />
-            <Route exact path={"/chrome"} component={ChromePage}  />
-            <Route exact path={"/firefox"} component={FirefoxPage}  />
-            <Route component={Page404} />
+            <Route exact path={"/chrome"} component={() => <ChromePage isSignedIn={this.props.auth.isAuthenticated} />}  />
+            <Route exact path={"/firefox"} component={() => <FirefoxPage isSignedIn={this.props.auth.isAuthenticated} />}/>
+            <Route component={() => <Page404 isSignedIn={this.props.auth.isAuthenticated} /> }/>
         </Switch>
       </BrowserRouter>
     );
