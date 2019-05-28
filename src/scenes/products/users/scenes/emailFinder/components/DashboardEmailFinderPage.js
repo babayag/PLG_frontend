@@ -22,12 +22,12 @@ export class DashboardFinder extends Component {
     
     render() {
         return (
-            <div className="finderContainer">
+            <div className="">
                 <NavBarDashboard/>
                 <div class="dashboard__content">
                     <div class="dashboard__content--left">
                         
-                        <Finder/>
+                        <Finder shouldSetClassName={true}/>
                         
                     </div>
 

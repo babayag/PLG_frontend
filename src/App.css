@@ -2777,8 +2777,8 @@ button:disabled{
 }
 
 /* ------------------- BULK SEARCH PAGE --------------------- */
-.finderContainer,.bulkSearchContainer{
-    padding-top: 10rem;
+.bulkSearchContainer, .finderContain{
+  padding-top: 10rem;
 }
 
 .fileReader{

@@ -7,10 +7,10 @@ export class EmailsFinderPage extends Component {
 
     render() {
         return (
-            <div className="finderContainer">
+            <div className="finderContain">
                 <NavBar/>
                
-                <Finder/>
+                <Finder shouldSetClassName={false}/>
             </div>
         );
     }

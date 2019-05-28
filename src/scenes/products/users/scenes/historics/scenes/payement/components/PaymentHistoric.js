@@ -25,6 +25,11 @@ class PaymentHistoric extends Component {
 
     componentDidMount() {
 
+        /***
+         * description: calls getAllPayments service to get the list of all the payments the user has ever made
+         * params:  email: email of the current user   
+         * return: void
+        */
         getAllPayments(this.props.user.email) .then(res => {
             this.setState({
                 payments: res,
@@ -38,14 +43,22 @@ class PaymentHistoric extends Component {
         
     }
 
-
+    /***
+     * description: triggers the state that shows and hide spinner when searching emails
+     * params: void
+     * return: void
+     */
     showAndHide(){
         this.setState({
             isLoading : true,
         })
     }
 
-    /*Displays the notifications with the following chraracteristics */
+    /***
+     * description: Displays the notification with the provided chraracteristics
+     * params: title: title of notification, message: message displayed in the notificatio body
+     * return: void
+     */
     addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
             title: title,
