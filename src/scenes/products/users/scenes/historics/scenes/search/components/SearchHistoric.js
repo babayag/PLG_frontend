@@ -27,7 +27,11 @@ class SearchHistoric extends Component {
 
     componentDidMount() {
 
-        
+        /***
+         * description: calls getAllSearches service to get the list of all the searches the user has ever made
+         * params:  email: email of the current user   
+         * return: void
+        */
         getAllSearches(this.props.user.email) .then(res => {
             this.setState({
                 searchList: res,
@@ -41,14 +45,22 @@ class SearchHistoric extends Component {
      
     }
 
-
+    /***
+     * description: triggers the state that shows and hide spinner when searching emails
+     * params: void
+     * return: void
+    */
     showAndHide(){
         this.setState({
             isLoading : true,
         })
     }
 
-    /*Displays the notifications with the following chraracteristics */
+    /***
+     * description: Displays the notification with the provided chraracteristics
+     * params: title: title of notification, message: message displayed in the notificatio body
+     * return: void
+     */
     addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
             title: title,

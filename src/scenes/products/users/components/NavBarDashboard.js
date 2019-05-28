@@ -19,7 +19,7 @@ class NavBarDashboard extends Component {
   }
 
   state = {
-    email :"refresh....",
+    email :"refresh the page...",
   }
 
     toggle = () => {
