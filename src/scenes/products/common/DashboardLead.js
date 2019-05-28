@@ -162,6 +162,8 @@ class DashboardLead extends Component {
                 */
                 await BetterFinders(niche, location, this.props.user.email, this.state.p ).then(data => {
 
+                    console.log(data);
+                    
                     if (typeof(data) == "string")
                 {
                     this.setState({
@@ -368,6 +370,7 @@ class DashboardLead extends Component {
 
             await BetterFinders( niche,location, this.props.user.email, this.state.p ).then(data => {
                 
+               
                 if (data.data.length !== 0) {
                     var emailsThatWhereFound = data.data.Results;
     

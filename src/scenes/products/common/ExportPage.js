@@ -43,7 +43,7 @@ export class ExportPage extends Component{
         return(
 
             <div>
-                {console.log(this.props)}
+               
                 {this.props.isSignedIn ? 
                     <NavBarDashboard />
                      :
