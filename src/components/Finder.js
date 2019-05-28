@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { NavBar } from "./NavBar";
+// import { NavBar } from "./NavBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCheck, faSpinner, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import MappleToolTip from 'reactjs-mappletooltip';
@@ -170,7 +170,7 @@ export class Finder extends Component {
     render() {
         return (
             <div className="finderContainer">
-                <NavBar/>
+                {/* <NavBar/> */}
                 <div class="row finder justify-content-center mt-5">
                   <div class="col-md-11 col-lg-7 mt-5 inner finder_home_page p-5">
                     <div>

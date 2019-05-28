@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import { faDownload, faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons'
-import { NavBar } from "./NavBar";
+// import { NavBar } from "./NavBar";
 import { CSVLink, CSVDownload } from "react-csv";
 import dr_screen from "../dr_screen.png";
 
@@ -50,7 +50,6 @@ export class ExportPage extends Component{
         return(
 
             <div>
-                <NavBar/>
                 <div className="row export__page justify-content-center">
                   <div className="col-sm-10 col-md-7 col-lg-6">
                     <h2>You can export the emails of your prospect below</h2>

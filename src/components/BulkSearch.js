@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactNotification from "react-notifications-component";
-import { NavBar } from "./NavBar";
 import CSVReader from "react-csv-reader";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner} from '@fortawesome/free-solid-svg-icons';
@@ -110,7 +109,6 @@ export class BulkSearch extends Component {
   render() {
     return (
       <div className="bulkSearchContainer">
-        <NavBar/>
         <div class="fileReader">
           <div class="inner">
             <h3 class="fileReader__text">Drag and Drop or Click to Import your CSV File</h3>

@@ -65,7 +65,7 @@ class NavBarDashboard extends Component {
                       {/* <li><a href="/profile">Profile</a></li> */}
                       <li ><a href="/dashboard/history/leadsearch">Search</a></li>
                       <li ><a href="/dashboard/history/payment">payments</a></li>
-                      <li ><a href="#" >Logout</a></li>
+                      <li ><a href="/" onClick={this.logout}>Logout</a></li>
                     </ul>
                 </div>
             </header>

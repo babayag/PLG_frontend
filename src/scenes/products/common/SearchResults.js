@@ -12,7 +12,6 @@ export class SearchResults extends Component {
             emails: this.props.emailList,
             fileName: this.props.requestedUrl
          }
-        //this.props.emailList
     }
 
 
@@ -26,7 +25,7 @@ export class SearchResults extends Component {
           })
     }
 
-    countSources(){ console.log(this.state.emails)
+    countSources(){ 
         if(this.state.emails.length === 0){
            return <span><span class="text-right">No Email Address Found.</span><br/><span className="mt-3 d-block" id="training__post_id">LEARN HOW TO <b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK.</a></b></span></span>
 
@@ -69,11 +68,11 @@ export class SearchResults extends Component {
     the new search (when we press on show more Button)
     results to the first search result */
     updateEmails = (newEmails) => {
-        console.log(this.state.emails);
+        
         this.setState({
             emails: this.state.emails.concat(newEmails)
         })
-        console.log(this.state.emails);
+        
     }
 
     render() {
@@ -86,15 +85,6 @@ export class SearchResults extends Component {
                     </p>
 
                 </div>
-                    {/* this is used to display just the half of the results */
-                    /* {this.state.emails.slice(0, (this.state.emails.length + 1)/2).map(item => (
-                        (this.state.emails.length).map(item => (
-                        <div class="theResults">
-                            <p> <EmailResult result= {item}/></p>
-                            <span>{item.description}</span>
-                        </div>
-                     */
-                    }
 
                     {/* This displays all the results */
                         (this.state.emails).map(item => (

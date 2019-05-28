@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import ReactNotification from "react-notifications-component";
-import {EmailResult} from './EmailResult';
+import {findEmails} from '../../../services/Api/searchEmailService'
 
 
 
@@ -23,45 +22,37 @@ export class SeeMoreButton extends Component {
     }
 
     async findNewEmails() {
-        // await this.showAndHide();
-        // this.state.isloading = false;
-        // this.state.isAboutVisible = true;
-        const devUrl = '/api/lead/testSharing';
-        const devUrlLocal = 'http://127.0.0.1:8000/api/lead/testSharing';
-        //const ProductionURL = 'api/lead/testSharing';
-        try {
-            this.setState({
-                isloading: true
-            });
-            const res = await axios.post(devUrl, { url : this.state.requestedUrl, p:this.state.valueOfp}) //await fetch(devUrl);
-            const emails = await res.data.data[0];
-            const valueOfp = await res.data.data[1];
-            var hideShowMore = await res.data.data[2];
+       
+        this.setState({
+            isloading: true
+        });
 
-            /*this will update the value of emails in the parent of this component */
-            this.props.updateEmails(emails)
-            console.log(res.data);
-            this.setState({
-                newResults: this.state.newResults.concat(emails),
-                valueOfp : valueOfp
-            });
-
+        await findEmails(this.state.requestedUrl, this.state.valueOfp).then(data => {
+                this.setState({
+                    newResults: this.state.newResults.concat(data.data[0]),
+                    valueOfp : data.data[1],
+                    hideShowMore : data.data[2]
+                });
+                this.props.updateEmails(data.data[0])
+             }).catch(err =>{
+                 console.log(err)
+                this.setState({
+                    isloading: false
+                });
+                this.addNotification("An error occured", "Please try again.")
+             })
+       
             this.setState({
                 isloading: false
             });
-            if(!hideShowMore){
+            if(!this.state.hideShowMore){
                 this.setState({
                     hideShowMore: true
                 });
             }
 
-        } catch (e) {
-            console.log(e);
-            this.setState({
-                isloading: false
-            });
-            this.addNotification("An error occured", "Please try again.")
-        }
+        
+           
 
     }
 
@@ -84,14 +75,6 @@ export class SeeMoreButton extends Component {
         return (
             <div className="newResults">
 
-                {/* This displays all the new results */
-                    /*    (this.state.newResults).map(item => (
-                            <div className="theResults">
-                                <p> <EmailResult result= {item}/></p>
-                            </div>
-                        ))
-                    */
-                }
                 <div className="theResults seeMoreBtnParent the moreresult">
                     <div className="quaterWidthDiv"> </div>
                     <div className="emailResult seeMoreBtnParentFirstChild seemorebtn">

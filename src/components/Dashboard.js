@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import stanley_img from '../dr_stanley.png';
+// import stanley_img from '../dr_stanley.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
 import NavBarDashboard from './NavBarDashboard';
-import { SearchBar } from './SearchBar';
+// import { SearchBar } from './SearchBar';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
@@ -60,7 +60,7 @@ export class Dashboard extends Component {
             <div class="dashboard__content">
               <div class="dashboard__content--left">
                 <h3>Domain search</h3>
-                <SearchBar />
+                {/* <SearchBar /> */}
                 {/* <SearchResults emailList={this.state.emails}/>  */}
               </div>
 
@@ -84,7 +84,7 @@ export class Dashboard extends Component {
                     <source src="movie.mp4" type="video/mp4" />
                   </video> */}
                   <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
-                    <img src={stanley_img} />
+                    {/* <img src={stanley_img} /> */}
                   </a>
                 </div>
               </div>

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { SignupPage } from "./SignupPage";
-import logo from '../plg_logo.png';
+import logo from '../../../images/plg_logo.png';
 
 const toogleMenu = <FontAwesomeIcon icon={faBars}/>
 const signInIcon = <FontAwesomeIcon icon={faSignInAlt}/>

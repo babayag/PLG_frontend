@@ -11,26 +11,27 @@ import { faSpinner} from '@fortawesome/free-solid-svg-icons';
 
 import {auth} from "./actions";
 import Store from "./reducers/index";
-import  SignupPage  from "./components/SignupPage";
-import  LoginPage  from "./components/LoginPage";
-import { WholeLandingPage } from "./components/WholeLandingPage";
-import { ExportPage } from "./components/ExportPage";
-import { BulkSearch } from "./components/BulkSearch";
-import { Dashboard } from "./components/Dashboard";
-import { Finder } from "./components/Finder";
-import  DashboardLead  from "./components/DashboardLead";
-import { DashboardFinder } from "./components/DashboardFinder";
-import { DasboardBulkSearch } from "./components/DasboardBulkSearch";
+import  SignupPage  from "./scenes/auth/signUp/components/SignupPage";
+import  LoginPage  from "./scenes/auth/login/components/LoginPage";
+import { WholeLandingPage } from "./scenes/products/guests/scenes/landing page/components/WholeLandingPage";
+import { ExportPage } from "./scenes/products/common/ExportPage";
+import { BulkSearchPage } from "./scenes/products/guests/scenes/bulk search/components/BulkSearchPage";
+import { Dashboard } from "./scenes/products/users/scenes/dashboard/component/DashboardPage";
+import { EmailsFinderPage } from "./scenes/products/guests/scenes/emails finder/components/EmailsFinderPage";
+import  DashboardLeadFinderPage  from "../src/scenes/products/users/scenes/leadfinder/components/DashboardLeadFinderPage";
+import { DashboardFinder } from "./scenes/products/users/scenes/emailFinder/components/DashboardEmailFinderPage";
+import { DasboardBulkSearch } from "./scenes/products/users/scenes/bulksearch/components/DashboardBulkPage";
 import { Page404 } from "./components/Page404";
 import { Error } from "./components/Error";
+
 import { DashboardChrome } from "./components/DashboardChrome";
 import { DashboardFirefox } from "./components/DashboardFirefox";
-import { Chrome } from "./components/Chrome";
-import { Firefox } from "./components/Firefox";
-import { Lead } from "./components/Lead";
-import  DashboardPayment  from "./components/DashboardPayment";
-import Historic from "./components/Historic"
-import UserSearch from "./components/UserSearch"
+import { ChromePage } from "./scenes/products/common/extensions/scenes/chrome/ChromePage";
+import { FirefoxPage } from "./scenes/products/common/extensions/scenes/firefox/FirefoxPage";
+import { LeadsPage } from './scenes/products/guests/scenes/leads finder/components/LeadsPage';
+import DashboardPayment  from "./scenes/products/users/scenes/leadfinder/components/DashboardPayment";
+import PaymentHistoricPage from "./scenes/products/users/scenes/historics/scenes/payement/PaymentHistoricPage"
+import SearchHistoricPage from "./scenes/products/users/scenes/historics/scenes/search/SearchHistoricPage"
 
 // import  TestIt  from "./components/TestIt";
 
@@ -71,23 +72,23 @@ class RootContainerComponent extends Component {
       <BrowserRouter>
         <Switch>
             <PrivateRoute exact path={"/dashboard"} component={Dashboard}  />
-            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLead}  />
+            <PrivateRoute exact path={"/dashboard/lead"} component={DashboardLeadFinderPage}  />
             <PrivateRoute exact path={"/dashboard/finder"} component={DashboardFinder}  />
             <PrivateRoute exact path={'/dashboard/bulksearch'} component={DasboardBulkSearch} />
             <PrivateRoute exact path={'/dashboard/chrome'} component={DashboardChrome} />
             <PrivateRoute exact path={'/dashboard/firefox'} component={DashboardFirefox} />
             <PrivateRoute exact path={'/dashboard/payment'} component={DashboardPayment} />
-            <PrivateRoute exact path="/dashboard/history/payment" component={Historic} />
-            <PrivateRoute exact path="/dashboard/history/leadsearch" component={UserSearch} />
+            <PrivateRoute exact path="/dashboard/history/payment" component={PaymentHistoricPage} />
+            <PrivateRoute exact path="/dashboard/history/leadsearch" component={SearchHistoricPage} />
             <Route exact path="/" component={WholeLandingPage} />
-            <Route exact path={"/finder"} component={Finder}  />
-            <Route exact path={"/lead"} component={Lead}  />
+            <Route exact path={"/finder"} component={EmailsFinderPage}  />
+            <Route exact path={"/lead"} component={LeadsPage}  />
             <Route exact path="/signup" component={SignupPage} />
             <Route exact path="/login" component={LoginPage} />
-            <Route exact path={"/export"} component={ExportPage}  />
-            <Route exact path={"/bulksearch"} component={BulkSearch}  />
-            <Route exact path={"/chrome"} component={Chrome}  />
-            <Route exact path={"/firefox"} component={Firefox}  />
+            <Route exact path={"/export"} component={() => <ExportPage isSignedIn={this.props.auth.isAuthenticated} />}  />
+            <Route exact path={"/bulksearch"} component={BulkSearchPage}  />
+            <Route exact path={"/chrome"} component={ChromePage}  />
+            <Route exact path={"/firefox"} component={FirefoxPage}  />
             <Route component={Page404} />
         </Switch>
       </BrowserRouter>
@@ -110,6 +111,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 let RootContainer = connect(mapStateToProps,mapDispatchToProps)(RootContainerComponent);
+
 
 const advancedMatching = { em: 'some@email.com' };
 const options = {
@@ -142,7 +144,7 @@ class App extends Component {
     ReactPixel.init('672417766469134');
     ReactPixel.pageView()
     ReactQuoraPixel.init('af384036318349ffb92d15b813190967');
-
+    console.log(Store);
     return (
       <div className="App">
         <Provider store={Store}>

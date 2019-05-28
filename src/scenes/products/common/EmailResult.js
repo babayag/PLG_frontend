@@ -51,18 +51,12 @@ export class EmailResult extends Component {
         document.getElementById(e.currentTarget.id).className = "foundEmailValue";
         
     }
-    
 
-    /*writeEmailTextInClipBoard(e){
-        var clipBoardValue = getEmailTextOnClick(e)
-        navigator.clipboard.writeText(clipBoardValue);
-    }*/
 
     render() {
 
         return (
             <div class="resultBlock my_resultBlock">
-            {console.log(this.props.result.url)}
                 <div class="quaterWidthDiv my_quaterWidthDiv"> </div>
                 <div class="emailResult my_email_result">
                     <div class="email">

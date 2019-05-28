@@ -1,4 +1,5 @@
-let DevUrlPRoduction = "/api/lead/auth/users/me/";
+import {BaseUrl} from '../services/constante';
+
 export const loadUser = () => {
     return (dispatch, getState) => {
       dispatch({type: "USER_LOADING"});
@@ -11,9 +12,8 @@ export const loadUser = () => {
       if (token) {
         headers["Authorization"] = `JWT ${token}`;
       }
-      let devLocalUrl = "/api/lead/auth/users/me/"
-      let Devurl = "/api/lead/auth/users/me/";
-      return fetch(Devurl, {headers, })
+
+      return fetch(BaseUrl + "auth/users/me/", {headers, })
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
@@ -41,7 +41,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({email, password});
 
-      return fetch("/api/lead/auth/jwt/create/", {headers, body, method: "POST"})
+      return fetch(BaseUrl + "auth/jwt/create/", {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {
@@ -75,7 +75,7 @@ export const loadUser = () => {
       let headers = {"Content-Type": "application/json"};
       let body = JSON.stringify({email, password});
 
-      return fetch("/api/lead/auth/users/create/", {headers, body, method: "POST"})
+      return fetch(BaseUrl + "auth/users/create/", {headers, body, method: "POST"})
         .then(res => {
           if (res.status < 500) {
             return res.json().then(data => {

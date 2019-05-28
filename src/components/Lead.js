@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
-import { NavBar } from './NavBar';
+// import { NavBar } from './NavBar';
 import stanley_img from '../dr_stanley.png';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
@@ -348,7 +348,6 @@ export class Lead extends Component {
 
         return (
             <div class="dashboard__page">
-                <NavBar />
                 <div class="lead__dashboard mb-5">
                     <div class="lead__dashboard__content pb-5">
                         <div class="lead__dashboard--left">
@@ -488,9 +487,9 @@ export class Lead extends Component {
 
                         {/* <span>Left Side</span> */}
                         <div class="lead__dashboard--right">
-                            <div class="recent__search">
+                            {/* <div class="recent__search">
                                 <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
-                            </div>
+                            </div> */}
 
                             <div class="recent__searchs" ref="recent__search">
                                 ...

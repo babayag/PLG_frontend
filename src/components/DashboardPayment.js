@@ -11,9 +11,9 @@ class DashboardPayment extends Component {
         
         let forfaitId = localStorage.getItem("idForfait")
 
-        let data = {...parsed,email: this.props.user.email, idForfait:forfaitId}
+        let data = {...parsed, email: this.props.user.email, idForfait:forfaitId}
 
-        let devUrlLocal = "/api/lead/executePayment";
+        let devUrlLocal = "http://127.0.0.1:8000/api/lead/executePayment";
         try {
             const res = await axios.post(devUrlLocal, data) //await fetch(devUrl);
             if(res.status === 200 || res.status === 201)
@@ -41,7 +41,7 @@ class DashboardPayment extends Component {
                 <div className="container plugin__page chrome__page">
                     <div className="row justify-content-center">
                         <div className="content col-sm-11 col-md-9 col-lg-7">
-                            <h1>Processing Payment...</h1>
+                            <h1>Payment Processing...</h1>
                             
                         </div>
                     </div>
