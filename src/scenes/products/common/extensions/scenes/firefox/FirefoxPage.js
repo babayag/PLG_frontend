@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { NavBar } from "../../../../common/NavBar";
+import NavBarDashboard from "../../../../users/components/NavBarDashboard";
 import { SliderContent } from "../Slider";
 
 export class FirefoxPage extends Component {
     render() {
         return (
             <div>
-                <NavBar /> 
+                {this.props.isSignedIn ? 
+                    <NavBarDashboard />
+                     :
+                    <NavBar />
+                }
                 <div className="container plugin__page chrome__page">
                     <div className="row justify-content-center">
                         <div className="content col-sm-11 col-md-9 col-lg-7">
