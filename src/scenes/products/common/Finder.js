@@ -13,7 +13,6 @@ const spinner = <FontAwesomeIcon icon={faSpinner} color="#333333" size="2x" spin
 const questionCirle = <FontAwesomeIcon icon={faQuestionCircle} color="#33313165" size="1x"/>
 const cookies = new Cookies();
 
-// const board = [ "uuu@.com", "url@iii.com"]
 
 export class Finder extends Component {
     constructor(props){
@@ -173,8 +172,8 @@ export class Finder extends Component {
     render() {
         return (
             <div className="finderContainer">
-                <div class="row finder justify-content-center mt-5">
-                  <div class="col-md-11 col-lg-7 mt-5 inner finder_home_page p-5">
+                <div class="row finder justify-content-center">
+                  <div className={this.props.shouldSetClassName ? "col-md-11 col-lg-11 inner finder_home_page p-5" : "col-md-11 col-lg-7 mt-5 inner finder_home_page p-5"}>
                     <div>
                       <h3>Emails Finder <span>{questionCirle}</span></h3>
                     </div>
@@ -224,7 +223,7 @@ export class Finder extends Component {
                     </div>
                   </div>
                 </div>
-                x
+                .
             </div>
         );
     }
