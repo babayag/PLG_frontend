@@ -53,32 +53,55 @@ class DashboardLead extends Component {
       $(el).slideToggle();
     }
 
-    /*When the value of an input changes, we directly set the state to the new value */
+    /***
+     * description: When the value of an input changes, we directly set the state to the new value 
+     * params: e (event)
+     * return: void
+     */
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
     };
 
+    /***
+     * description: When the user presses a key 
+     * params: e (event)
+     * return: void
+    */
     _handleKeyPress = e => { // When user presses on a keyboardtouch
         if(e.keyCode === 13){
             this.searchTheseData()
         }
     }
 
+    /***
+     * description: triggers the state that shows and hide spinner when searching emails
+     * params: void
+     * return: void
+    */
     showAndHide(){
         this.setState({
             isLoading : true,
         })
     }
 
+    /***
+     * description: triggers the state that shows and hide spinner when searching more emails
+     * params: void
+     * return: void
+    */
     showAndHideSearchMore() {
         this.setState({
             isSearchingMore: true
         })
     }
 
-    /*Displays the notifications with the following chraracteristics */
+    /***
+     * description: Displays the notification with the provided chraracteristics
+     * params: title: title of notification, message: message displayed in the notificatio body
+     * return: void
+    */
     addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
             title: title,
@@ -112,12 +135,13 @@ class DashboardLead extends Component {
             console.log(e)
         }
     }
-    
-    /* 
-    * description : the method send request for getting domain and emails on it for a particular niche and location
-    * params : 
-    * return : void
+
+    /***
+     * description: calls searchTheseDatas service and displays returned emails
+     * params: void
+     * return: void
     */
+    /*This is run when we hit on the search button */
     async searchTheseData(){
         this.setState({
             shouldWeDisplayTable: false,
@@ -135,8 +159,15 @@ class DashboardLead extends Component {
                 let niche = this.state.niche.toLowerCase()
                 let location = this.state.location.toLowerCase()
 
+                /***
+                 * description: calls BetterFinders service to get the emails corresponding to the provided niche and location
+                 * params:  niche, location, email: email of the user, p: number of pages  
+                 * return: void
+                */
                 await BetterFinders(niche, location, this.props.user.email, this.state.p ).then(data => {
 
+                    console.log(data);
+                    
                     if (typeof(data) == "string")
                 {
                     this.setState({
@@ -196,6 +227,11 @@ class DashboardLead extends Component {
 
     }
 
+    /***
+     * description: verifies if and object is empty
+     * params: oject to verify
+     * return: boolean (true if the object is empty and false if not)
+    */
     isEmpty(obj) {  //test if an object is empty or not
         for(var key in obj) {
             if(obj.hasOwnProperty(key))
@@ -204,12 +240,11 @@ class DashboardLead extends Component {
         return true;
     }
 
-    /* 
-    * description : the method display message "copied" when we click on it
-    * params : e (event)
-    * return : void
-    */
-
+    /***
+     * description: copy element we clicked on
+     * params: e (event)
+     * return: bool
+     */
     getEmailTextOnClick(e) {
         e.preventDefault();
         var emailText = e.target.innerHTML;
@@ -220,10 +255,10 @@ class DashboardLead extends Component {
         document.getElementById(e.currentTarget.id).className = "copiedElt";
     }
 
-    /* 
-    * description : the method display message "copy?" when we mousse leave on it
-    * params : e (event)
-    * return : void
+    /***
+     * description: display "Copy?"" when a user hovers an email
+     * params: e (event)
+     * return: void
     */
     displayCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
@@ -234,10 +269,10 @@ class DashboardLead extends Component {
 
     }
 
-    /* 
-    * description : the method erase message "copy?" when we mousse leave on it
-    * params : e (event)
-    * return : void
+    /***
+     * description: removes the displayed "Copy?" when user ends hovering an email
+     * params: e (event)
+     * return: void
     */
     eraseCopyText(e) {
         var idOfElt = "copy" + e.currentTarget.id;
@@ -246,10 +281,10 @@ class DashboardLead extends Component {
 
     }
 
-    /* 
-    * description : the method generate csv for data params
-    * params : data
-    * return : void
+    /***
+     * description: This function takes email and sources list, generate the csv file to download
+     * params: data : the data that will be writen in the CSV file
+     * return: void
     */
     generateCSV = (data) => {
         let csvContent = "data:text/csv;charset=utf-8,";
@@ -269,200 +304,204 @@ class DashboardLead extends Component {
         link.click();
     }
 
-    /* 
-    * description : the method sort the list of domain from which has emails to which has not email
-    * params : emailList
-    * return : void
+    /***
+     * description: This function sorts a list of domains basing on numbers of email per domains
+     * params: data : the domains list (with their emails) that will be sorted
+     * return: void
     */
-        sortEmails = (emailList) => {
-            let sortedEmailList = [...emailList];
-            for (var i = 0; i < sortedEmailList.length; i++) {
-                var len1 = sortedEmailList[i].Emails.length; // Length of each email domain table
-                for (var j = 0; j < sortedEmailList.length; j++) {
-                    var len2 = sortedEmailList[j].Emails.length; // Length of each email domain table
-                    if (len1 <len2) {
-                        let cache = sortedEmailList[i];
-                        sortedEmailList[i] = sortedEmailList[j];
-                        sortedEmailList[j] = cache;
+    sortEmails = (emailList) => {
+        let sortedEmailList = [...emailList];
+        for (var i = 0; i < sortedEmailList.length; i++) {
+            var len1 = sortedEmailList[i].Emails.length; // Length of each email domain table
+            for (var j = 0; j < sortedEmailList.length; j++) {
+                var len2 = sortedEmailList[j].Emails.length; // Length of each email domain table
+                if (len1 <len2) {
+                    let cache = sortedEmailList[i];
+                    sortedEmailList[i] = sortedEmailList[j];
+                    sortedEmailList[j] = cache;
+                }
+            }
+            
+        }
+        sortedEmailList.reverse();
+        return sortedEmailList;
+    }
+
+    
+    displayResults = () => {
+        let prevRemainingEmails = [...this.state.remainingEmails];
+        let nPrev = prevRemainingEmails.length;
+
+        let emailsToDisplay = [...this.state.foundEmails];
+
+        if (nPrev > 10){
+            // If there are more than ten emails
+            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails.slice(0, 10));
+            let newRemainingEmails = prevRemainingEmails.slice(10);
+
+            this.setState({ 
+                foundEmails: emailsToDisplay,
+                shouldWeDisplayTable: true, 
+                remainingEmails: newRemainingEmails, 
+                isShowmore: true,
+                forfaitFinished : '' 
+            });
+        }else{
+            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
+            this.setState({
+                foundEmails: emailsToDisplay,
+                shouldWeDisplayTable: true,  
+                remainingEmails: [],
+                isShowmore: false 
+            });
+        }
+    }
+
+
+     /***
+     * description: This function recalls searchTheseDatas service precising the current number of pages
+     * params: void
+     * return: void
+     */
+    searchMore = async() => {
+        await this.showAndHideSearchMore(); /*To show the spinner */
+        this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
+
+        try {
+            let niche = this.state.niche.toLowerCase()
+            let location = this.state.location.toLowerCase()
+
+
+            await BetterFinders( niche,location, this.props.user.email, this.state.p ).then(data => {
+                
+               
+                if (data.data.length !== 0) {
+                    var emailsThatWhereFound = data.data.Results;
+    
+                    var finalFoundEmails = [];
+                    if (emailsThatWhereFound.length !== 0) {
+                        for (var i = 0; i < emailsThatWhereFound.length; i++) {
+                            // console.log(emailsThatWhereFound[i].Domain);
+                            finalFoundEmails.push(emailsThatWhereFound[i]);
+                        }
+                        var emails = this.state.foundEmails.concat(finalFoundEmails);
+                        this.setState({
+                            foundEmails: this.sortEmails(emails)
+                        })
+
+                        this.checkFacebookAndGooglePixel(this.state.foundEmails)
+
+                        if(finalFoundEmails.length >= 10){
+                            this.setState({
+                                isShowmore: true,
+                                p: this.state.p + 10
+                            })
+                        }else{
+                            this.setState({
+                                isShowmore: false
+                            })
+                        }
+    
+                    } else { //no more lead
+                        finalFoundEmails = this.state.finalFoundEmails
                     }
                 }
-                
-            }
-            sortedEmailList.reverse();
-            return sortedEmailList;
-        }
-    
-        /* 
-    * description : the method display domain and email found on it
-    * params : 
-    * return : void
-    */
-        displayResults = () => {
-            let prevRemainingEmails = [...this.state.remainingEmails];
-            let nPrev = prevRemainingEmails.length;
-    
-            let emailsToDisplay = [...this.state.foundEmails];
-    
-            if (nPrev > 10){
-                // If there are more than ten emails
-                emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails.slice(0, 10));
-                let newRemainingEmails = prevRemainingEmails.slice(10);
-    
-                this.setState({ 
-                    foundEmails: emailsToDisplay,
-                    shouldWeDisplayTable: true, 
-                    remainingEmails: newRemainingEmails, 
-                    isShowmore: true,
-                    forfaitFinished : '' 
-                });
-            }else{
-                emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
-                this.setState({
-                    foundEmails: emailsToDisplay,
-                    shouldWeDisplayTable: true,  
-                    remainingEmails: [],
-                    isShowmore: false 
-                });
-            }
-        }
-
-        /* 
-    * description : the method sent the request for searching more emails
-    * params : 
-    * return : void
-    */
-        searchMore = async() => {
-            await this.showAndHideSearchMore(); /*To show the spinner */
-            this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
-    
-            try {
-                let niche = this.state.niche.toLowerCase()
-                let location = this.state.location.toLowerCase()
-
-
-                await BetterFinders( niche,location, this.props.user.email, this.state.p ).then(data => {
                     
-                    if (data.data.length !== 0) {
-                        var emailsThatWhereFound = data.data.Results;
-        
-                        var finalFoundEmails = [];
-                        if (emailsThatWhereFound.length !== 0) {
-                            for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                                // console.log(emailsThatWhereFound[i].Domain);
-                                finalFoundEmails.push(emailsThatWhereFound[i]);
-                            }
-                            var emails = this.state.foundEmails.concat(finalFoundEmails);
-                            this.setState({
-                                foundEmails: this.sortEmails(emails)
-                            })
+        })
 
-                            this.checkFacebookAndGooglePixel(this.state.foundEmails)
 
-                            if(finalFoundEmails.length >= 10){
-                                this.setState({
-                                    isShowmore: true,
-                                    p: this.state.p + 10
-                                })
-                            }else{
-                                this.setState({
-                                    isShowmore: false
-                                })
-                            }
-        
-                        } else { //no more lead
-                            finalFoundEmails = this.state.finalFoundEmails
-                        }
-                    }
-                        
+            
+        } catch (e) {
+            console.log(e);
+            this.setState({
+                isLoading: false,
+            });
+
+            this.addNotification("An error occured", "Please refresh the page and try again.");
+        }
+    } 
+
+
+    /***
+     * description: create a payment that will be executed
+     * params: forfait: {price: price of the forfait, niche, 
+ *          idForfait: Identifier of the forfait the user wants to pay  }  
+     * return: void
+    */
+    makePayment = async (forfait) => {
+        localStorage.setItem("idForfait", forfait.id);
+        this.setState({
+            isPaymentLoading: true,
+            chosenForfait: { ...forfait }
+        })
+
+        try {
+            /***
+             * description: calls the makePayments service to create a payment that will be executed
+             * params: price: price of the payment, email: email of the current user, 
+             *          idForfait: Identifier of the forfait the user wants to pay   
+             * return: void
+            */
+            makePayments(forfait.price, this.props.user.email, forfait.id).then(res => {
+
+                if (res.status === 200 || res.status === 201) {
+                    this.setState({
+                    isPaymentLoading: false,
+                })
+                window.location.href = res.data.redirect_url;
+                } else {
+                    console.log('error of notification ');
+                    this.addNotification("Please refresh the page and retry again")
+                }
             })
+        
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
 
+    /***
+     * description: this method calls checkFacebookAndGooglePixels service for each domain to check FB and Google pixels
+     * params: foundEmails : List of domains to check
+     * return: void
+     */
+    checkFacebookAndGooglePixel = async(foundEmails) => {
+        this.setState({
+            isSearchingMore: true   
+        })
+        for(var i=0; i<foundEmails.length; i++){
+            //I create an instance of the state foundEmais that I will use to set the checking value
+            var foundEmailsInstance = this.state.foundEmails;
+            try {
+                if(foundEmails[i].hasFacebookPixel == "pending"){
 
+                    await checkFacebookAndGooglePixels({ domain: foundEmails[i].Domain }).then(data => {
+
+                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
+
+                        foundEmailsInstance[i].hasFacebookPixel = data.data.hasFacebookPixel;
+                        foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
+                        
+                        //I update the state so that it displays the results on the table
+                        this.setState({
+                            foundEmails: foundEmailsInstance
+                        })
+
+                    })
+                    
+                }
                 
             } catch (e) {
-                console.log(e);
-                this.setState({
-                    isLoading: false,
-                });
-    
-                this.addNotification("An error occured", "Please refresh the page and try again.");
-            }
-        } 
-        /* 
-    * description : the method sent request for ordering a payment for a forfait choosen
-    * params : forfait
-    * return : void
-    */
-        makePayment = async (forfait) => {
-
-            localStorage.setItem("idForfait", forfait.id)
-            
-            this.setState({
-                isPaymentLoading: true,
-                chosenForfait: { ...forfait }
-            })
-
-            try {
-                console.log(forfait);
-                makePayments(forfait.price, this.props.user.email, forfait.id).then(res => {
-
-                    if (res.status === 200 || res.status === 201) {
-                        this.setState({
-                        isPaymentLoading: false,
-                    })
-                    window.location.href = res.data.redirect_url;
-                    } else {
-                        console.log('error of notification ');
-                        this.addNotification("Please refresh the page and retry again")
-                    }
-                })
+            console.log(e);
             
             }
-            catch (e) {
-                console.log(e)
-            }
+            
         }
-        /* 
-    * description : the method sent request to check if the pixel is valid
-    * params : foundEmails
-    * return : void
-    */
-        checkFacebookAndGooglePixel = async(foundEmails) => {
-    
-            this.setState({
-                isSearchingMore: true   
-            })
-            for(var i=0; i<foundEmails.length; i++){
-                //I create an instance of the state foundEmais that I will use to set the checking value
-                var foundEmailsInstance = this.state.foundEmails;
-                try {
-                    if(foundEmails[i].hasFacebookPixel == "pending"){
-    
-                        await checkFacebookAndGooglePixels({ domain: foundEmails[i].Domain }).then(data => {
-    
-                        //In my FoundEmalsInstance, I assign the values of the two variables I was checking
-    
-                            foundEmailsInstance[i].hasFacebookPixel = data.data.hasFacebookPixel;
-                            foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
-                          
-                            //I update the state so that it displays the results on the table
-                            this.setState({
-                                foundEmails: foundEmailsInstance
-                            })
-    
-                        })
-                        
-                    }
-                   
-                } catch (e) {
-                console.log(e);
-                
-                }
-                
-            }
-            this.setState({
-                isSearchingMore: false   
-            })
-        }
+        this.setState({
+            isSearchingMore: false   
+        })
+    }
 
 
     render() {

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getAllPayments } from '../../../../../../../../services/Api/historicService';
+import  moment  from 'moment';
 
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
@@ -24,6 +25,11 @@ class PaymentHistoric extends Component {
 
     componentDidMount() {
 
+        /***
+         * description: calls getAllPayments service to get the list of all the payments the user has ever made
+         * params:  email: email of the current user   
+         * return: void
+        */
         getAllPayments(this.props.user.email) .then(res => {
             this.setState({
                 payments: res,
@@ -37,14 +43,22 @@ class PaymentHistoric extends Component {
         
     }
 
-
+    /***
+     * description: triggers the state that shows and hide spinner when searching emails
+     * params: void
+     * return: void
+     */
     showAndHide(){
         this.setState({
             isLoading : true,
         })
     }
 
-    /*Displays the notifications with the following chraracteristics */
+    /***
+     * description: Displays the notification with the provided chraracteristics
+     * params: title: title of notification, message: message displayed in the notificatio body
+     * return: void
+     */
     addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
             title: title,
@@ -65,7 +79,7 @@ class PaymentHistoric extends Component {
         let historicList = <span className="historicPaymentSpinner"> {spinner}</span>;
         if(this.state.HistoricIsLoad) { 
             historicList = this.state.payments.map(payement => (
-                <tr><td>{payement.description}</td> <td>${payement.price}</td><td>{payement.date}</td> 
+                <tr><td>{payement.description}</td> <td>${payement.price}</td><td>{moment(payement.date).format("ddd GG MMM YYYY HH:mm",'en')}</td> 
                 <td className="display_valid">{payement.Isvalid ? "valid" : "expired"}</td></tr>
             ))
           

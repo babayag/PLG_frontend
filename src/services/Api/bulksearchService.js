@@ -2,17 +2,17 @@ import axios from 'axios';
 import {BaseUrl} from '../constante';
 
 
-/* 
-* description : the method guess the valid email by combination   
-* params : domain
-* return : a json object contain the list of valid emails
-*/
+/***
+         * description: gets the list of all emails and domains from the back-end
+         * params: a domain
+         * return: list of all email and domains matching with the current list of entring domain
+         */
+  
 async function getListEmail(domain){
     let Url = BaseUrl + "bulksearch"
-    
 
     return axios.post(Url, domain).then(response => {
-        // returning the data here allows the caller to get it through another .then(...)
+        
         return response.data.data
       })    
    

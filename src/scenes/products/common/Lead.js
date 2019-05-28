@@ -66,28 +66,34 @@ export class Lead extends Component {
             this.searchTheseData()
         }
     }
-        /***
-         * description: triggers the state that shows and hide spinner when searching emails
-         * params: void
-         * return: void
-         */
+
+    /***
+     * description: triggers the state that shows and hide spinner when searching emails
+     * params: void
+     * return: void
+     */
     showAndHide() {
         this.setState({
             isLoading: true
         })
     }
-         /***
-         * description: triggers the state that shows and hide spinner when searching more emails
-         * params: void
-         * return: void
-         */
+
+    /***
+     * description: triggers the state that shows and hide spinner when searching more emails
+     * params: void
+     * return: void
+    */
     showAndHideSearchMore() {
         this.setState({
             isSearchingMore: true
         })
     }
 
-    /*Displays the notifications with the following chraracteristics */
+    /***
+     * description: Displays the notification with the provided chraracteristics
+     * params: title: title of notification, message: message displayed in the notificatio body
+     * return: void
+    */
     addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
             title: title,
@@ -101,11 +107,12 @@ export class Lead extends Component {
             dismissable: { click: true }
         });
     }
-        /***
-         * description: calls searchTheseDatas service and displays returned emails
-         * params: void
-         * return: void
-         */
+
+    /***
+     * description: calls searchTheseDatas service and displays returned emails
+     * params: void
+     * return: void
+    */
     /*This is run when we hit on the search button */
     async searchTheseData() {
         this.setState({
@@ -338,11 +345,10 @@ export class Lead extends Component {
             this.addNotification("An error occured", "Please refresh the page and try again.");
         }
     } 
-
-    // 
+ 
     /***
      * description: this method calls checkFacebookAndGooglePixels service for each domain to check FB and Google pixels
-     * params: foundEmails : List os domains to check
+     * params: foundEmails : List of domains to check
      * return: void
      */
     checkFacebookAndGooglePixel = async(foundEmails) => {

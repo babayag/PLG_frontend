@@ -13,19 +13,17 @@ export class ExportPage extends Component{
             emails: [],
             domain: localStorage.getItem('domain')
          }
-
          this.findEmails();
     }
 
-    /* 
-    * description : the method send request for download email as csv
-    * params : 
-    * return : void
-    */
+    /***
+     * description: verify if the inputUrl matches the Url pattern calls getDomains service
+     * params: void
+     * return: void
+     */
     async findEmails() {
         var regEx = /\w+\.\w+/;
         
-        console.log(this.state.domain);
         if(!regEx.test(this.state.domain)) {
 
         }else{
@@ -45,6 +43,7 @@ export class ExportPage extends Component{
         return(
 
             <div>
+               
                 {this.props.isSignedIn ? 
                     <NavBarDashboard />
                      :

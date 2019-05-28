@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
 import Cookies from 'universal-cookie';
 import ReactNotification from "react-notifications-component";
-import {BrowserRouter , Route, Link} from "react-router-dom";
+import { Route } from "react-router-dom";
 import "react-notifications-component/dist/theme.css";
 import { SearchResults } from "./SearchResults";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -73,9 +72,7 @@ export class SearchBar extends Component {
         if(!regEx.test(this.state.message)) {
             this.addNotification("Error", "Please enter a domain name like 'medievaltimes.com'");
         }
-        // else if(this.state.numberOfSearches == 1){
-        //     this.addNotification("Error", "You need to Login to do more researches.")
-        // }
+        
         else{
             /*this resets the value of p so that it is 0 for each new research */
             this.setState({

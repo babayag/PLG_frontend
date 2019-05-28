@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { getAllSearches } from '../../../../../../../../services/Api/historicService';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import  moment  from 'moment'
 
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
@@ -27,7 +28,11 @@ class SearchHistoric extends Component {
 
     componentDidMount() {
 
-        
+        /***
+         * description: calls getAllSearches service to get the list of all the searches the user has ever made
+         * params:  email: email of the current user   
+         * return: void
+        */
         getAllSearches(this.props.user.email) .then(res => {
             this.setState({
                 searchList: res,
@@ -41,14 +46,22 @@ class SearchHistoric extends Component {
      
     }
 
-
+    /***
+     * description: triggers the state that shows and hide spinner when searching emails
+     * params: void
+     * return: void
+    */
     showAndHide(){
         this.setState({
             isLoading : true,
         })
     }
 
-    /*Displays the notifications with the following chraracteristics */
+    /***
+     * description: Displays the notification with the provided chraracteristics
+     * params: title: title of notification, message: message displayed in the notificatio body
+     * return: void
+     */
     addNotification(title, message) {
         this.notificationDOMRef.current.addNotification({
             title: title,
@@ -69,7 +82,7 @@ class SearchHistoric extends Component {
         let SearchList = <span className="searchHistoricSpinner"> {spinner} </span>;
         if(this.state.searchIsLoad) { 
             SearchList = this.state.searchList.map(search => (
-                <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.counter}</td><td>{search.created_at}</td></tr>
+                <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.counter}</td><td>{moment(search.created_at).format("ddd GG MMM YYYY HH:mm",'en')}</td></tr>
             ))
           
         }

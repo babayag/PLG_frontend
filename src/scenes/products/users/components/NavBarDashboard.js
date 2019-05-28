@@ -19,20 +19,22 @@ class NavBarDashboard extends Component {
   }
 
   state = {
-    email :"refresh....",
+    email :"refresh the page...",
   }
-
+    /***
+         * description: dropdown menu
+         * params: void
+         * return: void
+         */
     toggle = () => {
       const el = findDOMNode(this.refs.dropdown__content);
       $(el).slideToggle();
     }
-
-    /* 
-    * description : the method logout the user
-    * params : 
-    * return : void
-    */
-
+    /***
+         * description: this method delete completly current user token
+         * params: void
+         * return: void
+         */
     logout = () => {
 
       localStorage.removeItem("token");
@@ -56,8 +58,8 @@ class NavBarDashboard extends Component {
                         <a href="/dashboard/finder">Email Finder</a>
                         <a href="/dashboard/lead">Lead Finder</a>
                         <a href="/dashboard/bulksearch">Bulk Search</a>
-                        <a href="/dashboard/chrome">Chrome Extension</a>
-                        <a href="/dashboard/firefox">Firefox Extension</a>
+                        <a href="/chrome">Chrome Extension</a>
+                        <a href="/firefox">Firefox Extension</a>
                       </div>
                     </div>
                     {/*<a className="finder__link" href="/dashboard/finder">Finder</a>

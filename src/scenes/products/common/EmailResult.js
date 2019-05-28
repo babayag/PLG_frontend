@@ -74,7 +74,6 @@ export class EmailResult extends Component {
 
         return (
             <div class="resultBlock my_resultBlock">
-            {console.log(this.props.result.url)}
                 <div class="quaterWidthDiv my_quaterWidthDiv"> </div>
                 <div class="emailResult my_email_result">
                     <div class="email">
