@@ -4,9 +4,10 @@ import { applyMiddleware } from "redux";
 
 import forfaits from "./forfait/forfait";
 import auth from "./auth";
+import numberRequest from './leads/restOfrequest'
 
 const leadApp = combineReducers({
-  forfaits,auth,
+  forfaits,auth,numberRequest
 })
 
 export default createStore(leadApp , applyMiddleware(thunk));

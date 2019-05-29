@@ -14,6 +14,7 @@ import Forfait from "../../products/users/components/Forfait";
 import {BetterFinders} from '../../../services/Api/leadService';
 import {makePayments} from '../../../services/Api/paymentService';
 import {getRestOfUserRequests, checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
+import { loadNumberOfrequest } from "../../actions/leads/restOfRequest";
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
@@ -123,7 +124,7 @@ class DashboardLead extends Component {
     */
     componentDidMount() {
 
-        try {
+        /* try {
              getRestOfUserRequests(this.props.user.email ).then(data => {
                     this.setState({
                         request : data,
@@ -133,7 +134,8 @@ class DashboardLead extends Component {
 
         } catch (e) {
             console.log(e)
-        }
+        } */
+        this.props.getRestOfRequest(this.props.user.email);
     }
 
     /***
@@ -516,9 +518,9 @@ class DashboardLead extends Component {
             showmore = null;
         }
         let restRequest = "";
-        if(this.state.restRequestIsLoad){
+        if(this.props.numberRequest.isNumberRequestLoad){
 
-            restRequest = <b className="nb_request">{this.state.request}</b>
+            restRequest = <b className="nb_request">{this.props.numberRequest.numberOfRequest}</b>
         }
         return (
            
@@ -687,7 +689,16 @@ class DashboardLead extends Component {
 const mapStateToProps = state => {
     return {
         user: state.auth.user,
+        numberRequest : state.numberRequest,
     }
 }
 
-export default connect(mapStateToProps)(DashboardLead);
+const mapDispatchToProps = dispatch => {
+    return {
+      getRestOfRequest: (email) => {
+        dispatch(loadNumberOfrequest(email));
+      },
+    }
+  }
+
+export default connect(mapStateToProps,mapDispatchToProps)(DashboardLead);

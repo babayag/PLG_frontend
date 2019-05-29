@@ -55,14 +55,21 @@ async function BetterFinder(niche, location, email, p){
  * params: email of the current user
  * return: number of remaining requests
  */
-async function getRestOfUserRequest( email ){
+async function getRestOfUserRequest(email,dispatch){
   let Url = BaseUrl + "getRestOfrequest"
   
-
-  return axios.post(Url, { email: email }).then(response => {
+  console.log('lol --' + email);
+  return axios.post(Url, { email: email })
+    .then(response => {
       
       return response.data
-    })    
+    })
+    .then(numberOfRequest => {
+      return dispatch({
+        type : 'LOAD_REST_OF_REQUEST',
+        numberOfRequest
+      })
+    });    
  
 }
 
