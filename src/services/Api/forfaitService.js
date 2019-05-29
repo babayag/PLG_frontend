@@ -7,12 +7,19 @@ import {BaseUrl} from '../constante';
  * return: list of forfaits
  */
 
-async function getAllforfait(){
+async function getAllforfait(dispatch){
     let Url = BaseUrl + "getAllforfait"
   
-    return axios.post(Url).then(response => {
+    return axios.get(Url)
+      .then(response => {
         
         return response.data
+      })
+      .then(forfaits => {
+        return dispatch({
+            type: 'FETCH_FORFAIT',
+            forfaits
+          })
       })    
    
   }
