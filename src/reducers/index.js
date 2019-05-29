@@ -2,11 +2,11 @@ import { combineReducers, createStore } from 'redux';
 import thunk from "redux-thunk";
 import { applyMiddleware } from "redux";
 
-import notes from "./testIt";
+import forfaits from "./forfait/forfait";
 import auth from "./auth";
 
 const leadApp = combineReducers({
-  notes,auth,
+  forfaits,auth,
 })
 
 export default createStore(leadApp , applyMiddleware(thunk));

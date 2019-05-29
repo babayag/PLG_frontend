@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import $ from 'jquery';
 import { findDOMNode } from 'react-dom';
 import {getAllforfaits} from '../../../../services/Api/forfaitService';
-
+import { } from '../../../actions/forfait/forfait';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Aux from './Hoc';
+import { fetchForfait } from '../../../actions/forfait/forfait'
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="2x" spin/>
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 
 class Forfait extends Component {
 
-    state = {
-        isForfaits: false,
-        forfaits: []
-    }
-
+    
     /* 
     * description : the method load all forfait available
     * params : 
@@ -29,16 +27,7 @@ class Forfait extends Component {
          * params: void
          * return: void
          */
-        getAllforfaits().then(data => {
-            this.setState({
-                forfaits: data,
-                isForfaits: true,
-            })
-        }).catch(err => {
-            this.setState({ isForfaits: true });
-            console.log(err);
-        })
-       
+        this.props.fetchForfaits();
     }
         /***
          * description: dropdown menu
@@ -52,8 +41,9 @@ class Forfait extends Component {
 
     render() {
         let forfaitsList = <span> {spinner}</span>;
-        if(this.state.isForfaits) { 
-            forfaitsList = this.state.forfaits.map(forfait => (
+        if(!this.props.isForfaitLoading) { 
+            console.log(this.props.forfaits.forfaits);
+            forfaitsList = this.props.forfaits.forfaits.map(forfait => (
                 <h3 key={forfait.id} onClick={() => this.props.pay(forfait)}>{forfait.email} Emails -  {forfait.niche} Niches</h3>
             ))
         }
@@ -63,7 +53,7 @@ class Forfait extends Component {
                  <div class="recent__search">
                   <h3>
                     Get More Emails 
-                    {this.props.isPayLoading && <span> {spinner} </span>}
+                    {this.props.forfaits.isForfaitLoading && <span> {spinner} </span>}
                   </h3> 
                   <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
                 </div>
@@ -76,5 +66,18 @@ class Forfait extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+      forfaits: state.forfaits,
+    }
+  }
+  
+const mapDispatchToProps = dispatch => {
+    return {
+      fetchForfaits: () => {
+        dispatch(fetchForfait());
+      },
+    }
+  }
 
-export default Forfait;
+export default connect(mapStateToProps, mapDispatchToProps)(Forfait);
