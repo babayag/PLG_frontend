@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getAllPayments } from '../../../../../../../../services/Api/historicService';
 import  moment  from 'moment';
+import { fetchHistoric } from '../../../../../../../actions/historics/paymentHistoric'
 
 
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
@@ -15,10 +16,6 @@ class PaymentHistoric extends Component {
 
     constructor(props){
         super(props);
-        this.state = {
-            payments:[],
-            HistoricIsLoad : false
-        }
     }
 
 
@@ -29,18 +26,8 @@ class PaymentHistoric extends Component {
          * description: calls getAllPayments service to get the list of all the payments the user has ever made
          * params:  email: email of the current user   
          * return: void
-        */
-        getAllPayments(this.props.user.email) .then(res => {
-            this.setState({
-                payments: res,
-                HistoricIsLoad: true
-            })
-        })
-        .catch(err => {
-            
-            console.log(err);
-        })
-        
+        */        
+        this.props.fetchPaymentHistoric(this.props.user.email);
     }
 
     /***
@@ -77,8 +64,8 @@ class PaymentHistoric extends Component {
 
     render() {
         let historicList = <span className="historicPaymentSpinner"> {spinner}</span>;
-        if(this.state.HistoricIsLoad) { 
-            historicList = this.state.payments.map(payement => (
+        if(this.props.payments.isPaymentHistoricLoaded) { 
+            historicList = this.props.payments.payments.map(payement => (
                 <tr><td>{payement.description}</td> <td>${payement.price}</td><td>{moment(payement.date).format("ddd GG MMM YYYY HH:mm",'en')}</td> 
                 <td className="display_valid">{payement.Isvalid ? "valid" : "expired"}</td></tr>
             ))
@@ -116,7 +103,16 @@ class PaymentHistoric extends Component {
 const mapStateToProps = state => {
     return {
         user: state.auth.user,
+        payments: state.paymentHistoric
     }
 }
 
-export default connect(mapStateToProps)(PaymentHistoric);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchPaymentHistoric: (email) => {
+            dispatch(fetchHistoric(email));
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentHistoric);

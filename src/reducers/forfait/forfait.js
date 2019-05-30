@@ -13,9 +13,4 @@ export default function forfaits(state=initialState, action) {
         default:
             return state;
     }
-  }
-
-
-
-
-
+}

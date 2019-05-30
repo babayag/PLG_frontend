@@ -3,16 +3,22 @@ import {BaseUrl} from '../constante';
 
 /***
  * description: Gets the list of all the payments the user has ever made
- * params:  email: email of the current user   
+ * params:  email: email of the current user, dispatch   
  * return: The list of all the payments the user has ever made
  */
-async function getAllPayment(email){
+async function getAllPayment(email, dispatch){
     let Url = BaseUrl + "getAllPayement"
     
     return axios.post(Url,{email: email}).then(response => {
         console.log(response.data)
         return response.data
-    })    
+    })
+    .then(payments => {
+      return dispatch({
+          type: 'FETCH_PAYMENTS_HISTORIC',
+          payments
+        })
+    })  
    
 }
 
