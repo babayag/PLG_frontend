@@ -37,9 +37,7 @@ class DashboardLead extends Component {
             isShowmore: false,
             p:0,
             isPayamentLoading : false,
-            request:"",
             forfaitFinished:'',
-            restRequestIsLoad: false,
             
         }
         /*unless these, notification won't work */

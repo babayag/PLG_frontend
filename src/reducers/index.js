@@ -5,9 +5,10 @@ import { applyMiddleware } from "redux";
 import forfaits from "./forfait/forfait";
 import auth from "./auth";
 import numberRequest from './leads/restOfrequest'
+import recentSearch from './UserSearch/UserSearch';
 
 const leadApp = combineReducers({
-  forfaits,auth,numberRequest
-})
+  forfaits,auth,numberRequest,recentSearch
+});
 
 export default createStore(leadApp , applyMiddleware(thunk));

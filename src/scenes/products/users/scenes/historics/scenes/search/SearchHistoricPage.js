@@ -5,14 +5,11 @@ import NavBarDashboard from '../../../../components/NavBarDashboard';
 import  SearchHistoric  from './components/SearchHistoric';
 
 class SearchHistoricPage extends Component {
-  
     render() {
-       
         return (
             <div class="dashboard__page">
                 <NavBarDashboard />
                 <SearchHistoric />
-               
             </div>
         );
     }

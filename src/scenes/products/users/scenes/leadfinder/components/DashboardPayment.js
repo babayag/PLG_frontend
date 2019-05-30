@@ -58,6 +58,7 @@ class DashboardPayment extends Component {
 const mapStateToProps = state => {
     return {
         user: state.auth.user,
+        forfait : state.forfaits.forfaits,
     }
 }
 
