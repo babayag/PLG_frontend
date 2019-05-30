@@ -4,58 +4,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { getAllSearches } from '../../../../../../../../services/Api/historicService';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import  moment  from 'moment'
+import  moment  from 'moment';
+import {recentSearchLoading} from '../../../../../../../actions/UserSearch/UserSearch';
 
 
-const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
-const smallerSpinner = <FontAwesomeIcon icon={faSpinner} color="#fff" size="2x" spin/>
+
 
 class SearchHistoric extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            searchList:[],
-            searchIsLoad : false
-        }
-    }
-
-
-
+    
     componentDidMount() {
 
-        /***
-         * description: calls getAllSearches service to get the list of all the searches the user has ever made
-         * params:  email: email of the current user   
-         * return: void
-        */
-        getAllSearches(this.props.user.email) .then(res => {
-            this.setState({
-                searchList: res,
-                searchIsLoad: true
-            })
-        })
-        .catch(err => {
-                
-         console.log(err);
-        })
+      this.props.recentSearchLoading(this.props.user.email)
      
     }
 
-    /***
-     * description: triggers the state that shows and hide spinner when searching emails
-     * params: void
-     * return: void
-    */
-    showAndHide(){
-        this.setState({
-            isLoading : true,
-        })
-    }
 
     /***
      * description: Displays the notification with the provided chraracteristics
@@ -79,9 +44,10 @@ class SearchHistoric extends Component {
     
 
     render() {
-        let SearchList = <span className="searchHistoricSpinner"> {spinner} </span>;
-        if(this.state.searchIsLoad) { 
-            SearchList = this.state.searchList.map(search => (
+        let Searches = <span className="searchHistoricSpinner"> {spinner} </span>;
+       
+        if(this.props.search.searchIsLoad) { 
+            Searches = this.props.search.searchList.map(search => (
                 <tr><td>{search.niche}</td> <td>{search.location}</td><td>{search.counter}</td><td>{moment(search.created_at).format("ddd GG MMM YYYY HH:mm",'en')}</td></tr>
             ))
           
@@ -90,24 +56,19 @@ class SearchHistoric extends Component {
         return (
             <div class="dashboard__page">
                 <div className="historic" >
-
-
                     <div className="historicData">
-                       
                          <h1 id="title_h"> Leads History</h1> 
                             <table id="historictable">  
+                              <tbody>
                                 <tr>
                                     <th className="description">Niche</th>
                                     <th>Location</th>
                                     <th> x Times</th>
                                     <th className="isvalid">Date</th>
                                 </tr>
-
-                                    {SearchList}
-                    
+                                    {Searches}
+                              </tbody>
                             </table>
-  
-
                     </div>
                 </div>
             </div>
@@ -115,10 +76,23 @@ class SearchHistoric extends Component {
     }
 }
 
+
 const mapStateToProps = state => {
     return {
         user: state.auth.user,
+        search: state.recentSearch,
     }
 }
 
-export default connect(mapStateToProps)(SearchHistoric);
+const mapDispatchToProps = dispatch => {
+    return {
+        recentSearchLoading: (email) => {
+        return dispatch(recentSearchLoading(email));
+      }
+    }
+} 
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchHistoric);
+
+

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { EmailResult } from "./EmailResult";
-import {BrowserRouter , Route, Link} from "react-router-dom";
-import { CSVLink, CSVDownload } from "react-csv";
 import { SeeMoreButton } from "./SeeMoreButton";
 
 export class SearchResults extends Component {

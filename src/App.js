@@ -100,7 +100,6 @@ const mapStateToProps = state => {
     auth: state.auth,
   }
 }
-
 const mapDispatchToProps = dispatch => {
   return {
     loadUser: () => {
@@ -108,10 +107,7 @@ const mapDispatchToProps = dispatch => {
     }
   }
 }
-
 let RootContainer = connect(mapStateToProps,mapDispatchToProps)(RootContainerComponent);
-
-
 const advancedMatching = { em: 'some@email.com' };
 const options = {
     autoConfig: true, 	// set pixel's autoConfig
