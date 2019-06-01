@@ -157,7 +157,7 @@ export class SearchBar extends Component {
                 </div>
                 <div className="appendedResultBlock">
 
-                    { this.state.isAboutVisible ? <SearchResults firstResults={this.state.firstResults} requestedUrl={this.state.message} emailList={this.state.emails ? this.state.emails : null}/> : null }
+                    { !this.state.isload ? <SearchResults firstResults={this.state.firstResults} requestedUrl={this.state.message} emailList={this.state.emails ? this.state.emails : null}/> : null }
                 </div>
                 <div className="notReadyDiv">
                     <p>

@@ -1,21 +1,48 @@
 
 import axios from 'axios';
 import {BaseUrl} from '../constante';
-
 /***
  * description: gets the emails corresponding to the provided niche and location 
  * params: niche, location, p: number of pages   
  * return: list of the emails that were found
  */
-async function searchTheseData(niche, location, p){
+async function searchTheseData(niche, location, p, dispatch){
     let Url = BaseUrl + "normalFindLeads"
-    
 
-    return axios.post(Url, { niche: niche, city: location, p:p }).then(response => {
-        return response.data
-      })    
+    dispatch({type: 'LEAD_IS_LOADING'})
+    return axios.post(Url, { niche: niche, city: location, p:p })
+    .then(response => {
+          return response.data
+      })
+      .then(lead =>{
+          return dispatch({
+            type: 'LEAD_LOADED',
+            data: lead.data.Results
+        })
+      })   
+      .then(lead =>{
+        console.log(lead.data)
+        // resolve(lead, dispatch)
+          
+      })   
    
 }
+
+async function resolve(lead, dispatch){
+    if(lead.data >= 10){
+      console.log('LEAD_SHOW_MORE')
+      return dispatch({
+        type: 'LEAD_SHOW_MORE',
+        data: lead.data
+      })
+    }else{
+      console.log('LEAD_SHOW_MORE_<_10')
+      return dispatch({
+        type: 'LEAD_SHOW_MORE_<_10',
+        data: lead.data
+      })
+    }
+  }
 
 
   /***
@@ -26,9 +53,10 @@ async function searchTheseData(niche, location, p){
 async function checkFacebookAndGooglePixel(domain){
   let Url = BaseUrl + "checkpixel";
 
-  return axios.post(Url,domain ).then(response => {      
-    return response.data
-  })    
+  return axios.post(Url,domain )
+    .then(response => {      
+      return response.data
+    })    
  
 }
 

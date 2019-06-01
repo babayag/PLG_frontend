@@ -17,7 +17,7 @@ class SearchHistoric extends Component {
     
     componentDidMount() {
 
-      this.props.recentSearchLoading(this.props.user.email)
+      this.props.recentSearchLoadings(this.props.user.email)
      
     }
 
@@ -86,12 +86,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        recentSearchLoading: (email) => {
-        return dispatch(recentSearchLoading(email));
+        recentSearchLoadings: (email) => {
+        dispatch(recentSearchLoading(email));
       }
     }
 } 
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchHistoric);
 

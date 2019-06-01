@@ -10,7 +10,6 @@ async function getAllPayment(email){
     let Url = BaseUrl + "getAllPayement"
     
     return axios.post(Url,{email: email}).then(response => {
-        console.log(response.data)
         return response.data
     })    
    
