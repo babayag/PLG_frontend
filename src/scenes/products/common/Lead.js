@@ -134,6 +134,7 @@ export class Lead extends Component {
                         var emailsThatWhereFound = data.data.Results;
     
                         var finalFoundEmails = [];
+                        console.log(finalFoundEmails);
                         if (emailsThatWhereFound.length !== 0) {
                             for (var i = 0; i < emailsThatWhereFound.length; i++) {
                                
