@@ -1,9 +1,17 @@
+/***
+     * description: define initial state of searchList, error, searchIsLoad
+       */
 const initialState = {
     searchList: [],
     error:{},
     searchIsLoad : false
 };
 
+/***
+     * description: sets state according to different actions
+     * params: state, action
+     * return: global state
+    */
   export default function recentSearch (state = initialState, action){
 
     switch (action.type) {

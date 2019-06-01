@@ -7,13 +7,10 @@ import paymentHistoric from './historics/paymentHistoric';
 import auth from "./auth";
 import numberRequest from './leads/restOfrequest'
 import recentSearch from './UserSearch/UserSearch';
+import leadSearch from './lead/lead';
 
 const leadApp = combineReducers({
-  forfaits,//forfait
-  auth,
-  numberRequest,
-  paymentHistoric,
-  recentSearch,
+   auth, recentSearch, leadSearch,
 })
 
 export default createStore(leadApp , applyMiddleware(thunk));

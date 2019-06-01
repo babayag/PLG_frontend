@@ -11,6 +11,7 @@ import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {searchTheseDatas, searchMores, checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
+import {searchLeadAction} from '../../actions/lead/lead'
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
@@ -19,21 +20,17 @@ const smallerSpinnerViolet = <FontAwesomeIcon icon={faSpinner} color="#212529" s
 const valid = <FontAwesomeIcon icon={faCheck} color="#4EB92D"/> 
 const invalid = <FontAwesomeIcon icon={faTimes} color="#FF0515"/> 
 
-export class Lead extends Component {
+class Lead extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             niche: "",
             location: "",
-            isLoading: false, //has the search already stopped ??
-            isSearchingMore: false, // is it still searching more leads?
-            foundEmails: [],
+            // isSearchingMore: false, // is it still searching more leads?
             shouldWeDisplayTable: false,
-            remainingEmails: [],
-            isShowmore: false,
-            p:0
-
+            // isShowmore: false,
+            // p:0
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
@@ -67,27 +64,31 @@ export class Lead extends Component {
         }
     }
 
+    componentDidMount()
+    {
+        console.log(this.props.lead);
+    }
     /***
      * description: triggers the state that shows and hide spinner when searching emails
      * params: void
      * return: void
      */
-    showAndHide() {
-        this.setState({
-            isLoading: true
-        })
-    }
+    // showAndHide() {
+    //     this.setState({
+    //         isLoading: true
+    //     })
+    // }
 
     /***
      * description: triggers the state that shows and hide spinner when searching more emails
      * params: void
      * return: void
     */
-    showAndHideSearchMore() {
-        this.setState({
-            isSearchingMore: true
-        })
-    }
+    // showAndHideSearchMore() {
+    //     this.setState({
+    //         isSearchingMore: true
+    //     })
+    // }
 
     /***
      * description: Displays the notification with the provided chraracteristics
@@ -108,6 +109,56 @@ export class Lead extends Component {
         });
     }
 
+
+
+     /***
+     * description: this method calls checkFacebookAndGooglePixels service for each domain to check FB and Google pixels
+     * params: foundEmails : List of domains to check
+     * return: void
+     */
+     checkFacebookAndGooglePixel = async(foundEmails) => {
+
+        this.setState({
+            isSearchingMore: true   
+        })
+        for(var i=0; i<foundEmails.length; i++){
+            console.log(this.props.lead.foundEmails);
+            //I create an instance of the state foundEmails that I will use to set the checking value
+            var foundEmailsInstance = this.props.lead.foundEmails;
+            
+            try {
+                if(foundEmails[i].hasFacebookPixel == "pending"){
+
+                    await checkFacebookAndGooglePixels({ domain: foundEmails[i].Domain }).then(data => {
+
+                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
+
+                        foundEmailsInstance[i].hasFacebookPixel = data.data.hasFacebookPixel;
+                        foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
+                      
+                    //I update the state so that it displays the results on the table
+                    this.setState({
+                        foundEmails: foundEmailsInstance
+                    })
+
+                    })
+                    
+                }
+               
+            } catch (e) {
+            console.log(e);
+            
+            }
+            
+        }
+        this.setState({
+            isSearchingMore: false   
+        })
+    }
+
+
+
+
     /***
      * description: calls searchTheseDatas service and displays returned emails
      * params: void
@@ -117,22 +168,23 @@ export class Lead extends Component {
     async searchTheseData() {
         this.setState({
             shouldWeDisplayTable: false,
-            foundEmails: []
+            // foundEmails: []
         });
         /*One filed or both are empty */
         if (this.state.niche == "" || this.state.location == "") {
             this.addNotification("Error", "One field or both are empty");
         }
         else {
-            await this.showAndHide(); /*To show the spinner */
-            this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
+            // await this.showAndHide(); /*To show the spinner */
+            // this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
            
-                await searchTheseDatas(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.state.p).then(data => {
+                this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p)
+                // .then(data => {
                    
-
-                    if (data.data.length !== 0) {
-                        var emailsThatWhereFound = data.data.Results;
-    
+                    
+                    if (this.props.lead.foundEmails.length !== 0) {
+                        var emailsThatWhereFound = this.props.lead.foundEmails;
+                        
                         var finalFoundEmails = [];
                         console.log(finalFoundEmails);
                         if (emailsThatWhereFound.length !== 0) {
@@ -146,22 +198,23 @@ export class Lead extends Component {
     
     
                         // Sort Email list by number of emails
-                        var sortedEmails = this.sortEmails(finalFoundEmails);
-    
+                        // var sortedEmails = this.sortEmails(finalFoundEmails);
+                        this.sortEmails(finalFoundEmails);
+
                         this.setState({
-                            remainingEmails: sortedEmails,
-                            foundEmails: sortedEmails,
+                            // remainingEmails: sortedEmails,
+                            // foundEmails: sortedEmails,
                             shouldWeDisplayTable: true,
                         });
     
-                        if(finalFoundEmails.length >= 10){
-                            this.setState({
-                                isShowmore: true,
-                                p:10 
-                            })
-                        }
-    
-                        this.checkFacebookAndGooglePixel(this.state.foundEmails)
+                        // if(finalFoundEmails.length >= 10){
+                        //     this.setState({
+                        //         isShowmore: true,
+                        //         p:10 
+                        //     })
+                        // }
+
+                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails)
     
     
                     } else {
@@ -171,14 +224,15 @@ export class Lead extends Component {
                     }
                        
                         
-                     }).catch( err =>{
-                         console.log(err)
-                            this.setState({
-                                isLoading: false,
-                            });
+                    //  })
+                    //  .catch( err =>{
+                        //  console.log(err)
+                        //     this.setState({
+                        //         isLoading: false,
+                        //     });
             
-                            this.addNotification("An error occured", "Please refresh the page and try again.");
-                     })             
+                        //     this.addNotification("An error occured", "Please refresh the page and try again.");
+                    // })             
              
                 
         }
@@ -292,111 +346,71 @@ export class Lead extends Component {
      * return: void
      */
     searchMore = async() => {
-        await this.showAndHideSearchMore(); /*To show the spinner */
-        this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
+        // await this.showAndHideSearchMore(); /*To show the spinner */
+        // this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
 
         try {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
-            
-            await searchTheseDatas(niche, location, this.state.p).then(data => {
-                if (data.data.length !== 0) {
-                    var emailsThatWhereFound = data.data.Results;
+            let  newP = this.props.lead.p + 10
+            this.props.searchLeadActions(niche, location, newP)
+            // await searchTheseDatas(niche, location, this.state.p)
+            // .then(data => {
+                if (this.props.lead.foundEmails.length !== 0) {
+                    var emailsThatWhereFound = this.props.lead.foundEmails;
                         
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length !== 0) {
                         for (var i = 0; i < emailsThatWhereFound.length; i++) {
                             finalFoundEmails.push(emailsThatWhereFound[i]);
                         }
-                        var emails = this.state.foundEmails.concat(finalFoundEmails);
+                        var emails = this.props.lead.foundEmails.concat(finalFoundEmails);
                         this.setState({
                             foundEmails: this.sortEmails(emails)
                         })
                         
-                        console.log(data)
-                        this.checkFacebookAndGooglePixel(this.state.foundEmails) 
+                        // console.log(data)
+                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails) 
                         
                             
     
-                        if(finalFoundEmails.length >= 10){
-                            this.setState({
-                                isShowmore: true,
-                                p: this.state.p + 10
-                            })
-                        }else{
-                            this.setState({
-                                isShowmore: false
-                            })
-                        }
+                        // if(finalFoundEmails.length >= 10){
+                        //     this.setState({
+                        //         isShowmore: true,
+                        //         p: this.state.p + 10
+                        //     })
+                        // }
+                        // else{
+                        //     this.setState({
+                        //         isShowmore: false
+                        //     })
+                        // }
     
                     } else { //no more lead
-                        finalFoundEmails = this.state.finalFoundEmails
+                        finalFoundEmails = this.props.lead.foundEmails
                     }
                 }
 
-            })
+            // })
             
            
         } catch (e) {
-            console.log(e);
-            this.setState({
-                isLoading: false,
-            });
+            // console.log(e);
+            // this.setState({
+            //     isLoading: false,
+            // });
 
             this.addNotification("An error occured", "Please refresh the page and try again.");
         }
     } 
  
-    /***
-     * description: this method calls checkFacebookAndGooglePixels service for each domain to check FB and Google pixels
-     * params: foundEmails : List of domains to check
-     * return: void
-     */
-    checkFacebookAndGooglePixel = async(foundEmails) => {
-
-        this.setState({
-            isSearchingMore: true   
-        })
-        for(var i=0; i<foundEmails.length; i++){
-            //I create an instance of the state foundEmais that I will use to set the checking value
-            var foundEmailsInstance = this.state.foundEmails;
-            try {
-                if(foundEmails[i].hasFacebookPixel == "pending"){
-
-                    await checkFacebookAndGooglePixels({ domain: foundEmails[i].Domain }).then(data => {
-
-                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
-
-                        foundEmailsInstance[i].hasFacebookPixel = data.data.hasFacebookPixel;
-                        foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
-                      
-                    //I update the state so that it displays the results on the table
-                    this.setState({
-                        foundEmails: foundEmailsInstance
-                    })
-
-                    })
-                    
-                }
-               
-            } catch (e) {
-            console.log(e);
-            
-            }
-            
-        }
-        this.setState({
-            isSearchingMore: false   
-        })
-    }
-
-
+   
     render() {
         var showmore;
-        if(this.state.isShowmore){
+        if(this.props.lead.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Please wait... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
+                    <button onClick={this.searchMore} disabled={this.props.lead.isSearchingMore}>{this.props.lead.isSearchingMore ? <span>Please wait... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
                     
                 </div>
             )
@@ -405,11 +419,11 @@ export class Lead extends Component {
         }
 
         return (
-            <div class="dashboard__page">
-                <div class="lead__dashboard mb-5">
-                    <div class="lead__dashboard__content pb-5">
-                        <div class="lead__dashboard--left">
-                            <div class="inputs mb-5">
+            <div className="dashboard__page">
+                <div className="lead__dashboard mb-5">
+                    <div className="lead__dashboard__content pb-5">
+                        <div className="lead__dashboard--left">
+                            <div className="inputs mb-5">
                                 <input
                                     type="text"
                                     name="location"
@@ -428,19 +442,20 @@ export class Lead extends Component {
                                     value={this.state.niche}
                                     onKeyDown={this._handleKeyPress}
                                 />
-                                <button class="finder__btn dashboard_finder__btn" disabled={this.state.isLoading} onClick={() => this.searchTheseData()}><span>{this.state.isLoading ? <span>{smallerSpinner}</span> : <span>SEARCH</span>}</span></button>
+                                <button className="finder__btn dashboard_finder__btn" disabled={this.props.lead.isLoading} onClick={() => this.searchTheseData()}><span>{this.props.lead.isLoading ? <span>{smallerSpinner}</span> : <span>SEARCH</span>}</span></button>
                             </div>
 
                             {this.state.shouldWeDisplayTable ?  //can hide the whole table
                                 <div>
                                     <div className="titleOfTheInfo">
-                                        {this.state.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
+                                        {console.log(this.props.lead)}
+                                        {this.props.lead.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
                                             <span className="d-flex -flex-row justify-content-center align-items-center" id="lead__export">
-                                                {this.state.foundEmails.length == 1 ?
-                                                    <p className="lead__results_num">We found {this.state.foundEmails.length} Bussiness.</p> :
-                                                    <p className="lead__results_num">We found {this.state.foundEmails.length} Bussinesses.</p>
+                                                {this.props.lead.foundEmails.length == 1 ?
+                                                    <p className="lead__results_num">We found {this.props.lead.foundEmails.length} Bussiness.</p> :
+                                                    <p className="lead__results_num">We found {this.props.lead.foundEmails.length} Bussinesses.</p>
                                                 }
-                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, this.state.foundEmails)}>Export <span className="numberInExportBtn">{this.state.foundEmails.length}</span></button>
+                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, this.props.lead.foundEmails)}>Export <span className="numberInExportBtn">{this.props.lead.foundEmails.length}</span></button>
                                             </span>:
                                             <p>We found nothing.</p>
                                         }
@@ -448,10 +463,10 @@ export class Lead extends Component {
                                     </div>
 
                                     {/* <span>Table of results</span> */}
-                                    {this.state.foundEmails.length !== 0 ? //do we display the table? better, are there results?
+                                    {this.props.lead.foundEmails.length !== 0 ? //do we display the table? better, are there results?
                                         <div>
-                                            <table class="table dashboard__finder__results mt-5">
-                                                <thead class="thead-dark">
+                                            <table className="table dashboard__finder__results mt-5">
+                                                <thead className="thead-dark">
                                                     <tr>
                                                         <th scope="col">#</th>
                                                         <th scope="col" className="table__col--1">Business</th>
@@ -478,9 +493,9 @@ export class Lead extends Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {this.state.foundEmails.map((item, i) =>
+                                                    {this.props.lead.foundEmails.map((item, i) =>
                                                         <tr>
-                                                            <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
+                                                            <th scope="row">{this.props.lead.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
                                                             <td>{item.hasFacebookPixel == "pending" ? 
                                                                 smallerSpinnerViolet :
@@ -495,19 +510,19 @@ export class Lead extends Component {
                                                                 }
                                                             </td>
                                                             <td>
-                                                                <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
+                                                                <div id={"accordion" + this.props.lead.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {
                                                                         item.Emails.length !== 0 ?
-                                                                        <div class="card">
-                                                                            <div class="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.state.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
-                                                                                <h4 class="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
+                                                                        <div className="card">
+                                                                            <div className="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.props.lead.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
+                                                                                <h4 className="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
                                                                             </div>
 
-                                                                            <div id={"collapseOne" + this.state.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.state.foundEmails.indexOf(item)}>
-                                                                                <div class="card-body">
+                                                                            <div id={"collapseOne" + this.props.lead.foundEmails.indexOf(item)} className="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.props.lead.foundEmails.indexOf(item)}>
+                                                                                <div className="card-body">
                                                                                     {item.Emails.map((email, id) =>
                                                                                         <div>
-                                                                                            <span class="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={(i+"_"+id)}>
+                                                                                            <span className="foundEmailValue" onMouseLeave={this.eraseCopyText} onMouseMove={this.displayCopyText} onClick={this.getEmailTextOnClick} id={(i+"_"+id)}>
                                                                                             {email}</span>
                                                                                             <span className="copyMsg" id={"copy" + (i + "_" + id)} refs={"copy" + (i + "_" +id)}></span>
                                                                                         </div>
@@ -529,7 +544,7 @@ export class Lead extends Component {
                                     }
                                 </div> :
                                 <span>
-                                    {this.state.isLoading ?
+                                    {this.props.lead.isLoading ?
                                         <div className="titleOfTheInfo">
                                             <p>Wait while we find your Leads...</p>
                                             <span>{spinner}</span>
@@ -544,16 +559,16 @@ export class Lead extends Component {
                         </div>
 
                         {/* <span>Left Side</span> */}
-                        <div class="lead__dashboard--right">
+                        <div className="lead__dashboard--right">
                             {/* <div class="recent__search">
                                 <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
                             </div> */}
 
-                            <div class="recent__searchs" ref="recent__search">
+                            <div className="recent__searchs" ref="recent__search">
                                 ...
                         </div>
-                            <div class="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
-                            <div class="video__course">
+                            <div className="coldemail__title"><h3><span>LEARN HOW TO </span><b><a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">SEND COLD EMAIL THAT WORK</a></b></h3></div>
+                            <div className="video__course">
                                 <a target="_blank" href="https://support.leadmehome.io/i-suck-at-cold_emailing/">
                                     <img src={stanley_img} />
                                 </a>
@@ -570,10 +585,20 @@ export class Lead extends Component {
     }
 }
 
+
 const mapStateToProps = state => {
+    console.log(state.leadSearch)
     return {
-        user: state.auth.user,
+        lead: state.leadSearch,
     }
 }
 
-export default connect(mapStateToProps)(Lead);
+const mapDispatchToProps = dispatch => {
+    return {
+        searchLeadActions: (niche, location, p) => {
+          dispatch(searchLeadAction(niche, location, p));
+      },
+    }
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lead);
