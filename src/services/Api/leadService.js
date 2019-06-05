@@ -10,33 +10,35 @@ import {BaseUrl} from '../constante';
 
 async function searchTheseData(niche, location, p, dispatch){
   let Url = BaseUrl + "normalFindLeads"
-
-  dispatch({type: 'LEAD_IS_LOADING' })
+   
+  if(p = 0){
+    console.log('FETCH_INITIALIZE')
+    dispatch({
+      type: 'FETCH_INITIALIZE'
+    })
+  }
   return axios.post(Url, { niche: niche, city: location, p:p })
   .then(response => {
+    dispatch({type: 'FETCH_LOADING'})
         return response.data
     })
     .then(lead =>{
      
       if(lead.data.Results.length >= 10){
-        console.log(p)
-        console.log('LEAD_SHOW_MORE')
         return dispatch({
-          type: 'LEAD_SHOW_MORE',
+          type: 'FETCH_SHOW_MORE',
           data: lead.data.Results
         })
       }else{
-        console.log(p)
-        console.log('LEAD_SHOW_MORE_<_10')
         return dispatch({
-          type: 'LEAD_SHOW_MORE_<_10',
+          type: 'FETCH_SHOW_MORE_<_10',
           data: lead.data.Results
         })
      }
     })
     .catch(err =>{
       return dispatch({
-        type: 'ERROR',
+        type: 'FETCH_ERROR',
         error: err
       })
     })   

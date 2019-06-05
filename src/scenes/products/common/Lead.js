@@ -10,7 +10,7 @@ import stanley_img from '../img/dr_stanley.png';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import {searchTheseDatas, searchMores, checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
+import { checkFacebookAndGooglePixels } from '../../../services/Api/leadService';
 import {searchLeadAction} from '../../actions/lead/lead'
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
@@ -26,11 +26,7 @@ class Lead extends Component {
         super(props);
         this.state = {
             niche: "",
-            location: "",
-            // isSearchingMore: false, // is it still searching more leads?
-            shouldWeDisplayTable: false,
-            // isShowmore: false,
-            // p:0
+            location: ""
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
@@ -65,28 +61,6 @@ class Lead extends Component {
     }
 
     /***
-     * description: triggers the state that shows and hide spinner when searching emails
-     * params: void
-     * return: void
-     */
-    // showAndHide() {
-    //     this.setState({
-    //         isLoading: true
-    //     })
-    // }
-
-    /***
-     * description: triggers the state that shows and hide spinner when searching more emails
-     * params: void
-     * return: void
-    */
-    // showAndHideSearchMore() {
-    //     this.setState({
-    //         isSearchingMore: true
-    //     })
-    // }
-
-    /***
      * description: Displays the notification with the provided chraracteristics
      * params: title: title of notification, message: message displayed in the notificatio body
      * return: void
@@ -114,9 +88,6 @@ class Lead extends Component {
      */
      checkFacebookAndGooglePixel = async(foundEmails) => {
 
-        // this.setState({
-        //     isSearchingMore: true   
-        // })
         for(var i=0; i<foundEmails.length; i++){
             console.log(this.props.lead.foundEmails);
             //I create an instance of the state foundEmails that I will use to set the checking value
@@ -133,9 +104,7 @@ class Lead extends Component {
                         foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
                       
                     //I update the state so that it displays the results on the table
-                    this.setState({
-                        foundEmails: foundEmailsInstance
-                    })
+                  
 
                     })
                     
@@ -147,9 +116,6 @@ class Lead extends Component {
             }
             
         }
-        // this.setState({
-        //     isSearchingMore: false   
-        // })
     }
 
 
@@ -162,28 +128,19 @@ class Lead extends Component {
     */
     /*This is run when we hit on the search button */
     async searchTheseData() {
-        this.setState({
-            shouldWeDisplayTable: false,
-            // foundEmails: []
-        });
         /*One filed or both are empty */
         if (this.state.niche == "" || this.state.location == "") {
             this.addNotification("Error", "One field or both are empty");
         }
         else {
-            // await this.showAndHide(); /*To show the spinner */
-            // this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
-           
                 this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p)
-                // .then(data => {
+
             try {
-                 
-                    
+                
                     if (this.props.lead.foundEmails.length !== 0) {
                         var emailsThatWhereFound = this.props.lead.foundEmails;
                         
                         var finalFoundEmails = [];
-                        console.log(finalFoundEmails);
                         if (emailsThatWhereFound.length !== 0) {
                             for (var i = 0; i < emailsThatWhereFound.length; i++) {
                                
@@ -193,49 +150,16 @@ class Lead extends Component {
                         } else {
                             finalFoundEmails = []
                         }
-    
-    
-                        // Sort Email list by number of emails
-                        // var sortedEmails = this.sortEmails(finalFoundEmails);
+                        // Sort Email list by number of emails);
                         this.sortEmails(finalFoundEmails);
-
-                        this.setState({
-                            // remainingEmails: sortedEmails,
-                            // foundEmails: sortedEmails,
-                            shouldWeDisplayTable: true,
-                        });
     
-                        // if(finalFoundEmails.length >= 10){
-                        //     this.setState({
-                        //         isShowmore: true,
-                        //         p:10 
-                        //     })
-                        // }
-
-                        
-    
-    
-                    } else {
-                        this.setState({
-                            shouldWeDisplayTable: true
-                        });
-                    }
+                    } 
                        
                 } catch (error) {
 
                     this.addNotification("An error occured", "Please refresh the page and try again.");
-                }   
-                    //  })
-                    //  .catch( err =>{
-                        //  console.log(err)
-                        //     this.setState({
-                        //         isLoading: false,
-                        //     });
-            
-                             
-                    // })             
-             
-                
+                }           
+       
         }
 
     }
@@ -347,16 +271,12 @@ class Lead extends Component {
      * return: void
      */
     searchMore = async() => {
-        // await this.showAndHideSearchMore(); /*To show the spinner */
-        // this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
 
         try {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
      
             this.props.searchLeadActions(niche, location, this.props.lead.p)
-            // await searchTheseDatas(niche, location, this.state.p)
-            // .then(data => {
                 if (this.props.lead.foundEmails.length !== 0) {
                     var emailsThatWhereFound = this.props.lead.foundEmails;
                         
@@ -366,41 +286,16 @@ class Lead extends Component {
                             finalFoundEmails.push(emailsThatWhereFound[i]);
                         }
                         var emails = this.props.lead.foundEmails.concat(finalFoundEmails);
-                        // this.setState({
-                            this.sortEmails(emails)
-                        // })
+                        this.sortEmails(emails)
                         
-                        // console.log(data)
-                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails) 
-                        
-                            
-    
-                        // if(finalFoundEmails.length >= 10){
-                        //     this.setState({
-                        //         isShowmore: true,
-                        //         p: this.state.p + 10
-                        //     })
-                        // }
-                        // else{
-                        //     this.setState({
-                        //         isShowmore: false
-                        //     })
-                        // }
+                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails)
     
                     } else { //no more lead
                         finalFoundEmails = this.props.lead.foundEmails
                     }
                 }
-
-            // })
             
-           
         } catch (e) {
-            // console.log(e);
-            // this.setState({
-            //     isLoading: false,
-            // });
-
             this.addNotification("An error occured", "Please refresh the page and try again.");
         }
     } 
@@ -446,7 +341,7 @@ class Lead extends Component {
                                 <button className="finder__btn dashboard_finder__btn" disabled={this.props.lead.isLoading} onClick={() => this.searchTheseData()}><span>{this.props.lead.isLoading ? <span>{smallerSpinner}</span> : <span>SEARCH</span>}</span></button>
                             </div>
 
-                            {this.state.shouldWeDisplayTable ?  //can hide the whole table
+                            {this.props.lead.shouldWeDisplayTable ?  //can hide the whole table
                                 <div>
                                     <div className="titleOfTheInfo">
                                         {console.log(this.props.lead)}
@@ -561,9 +456,6 @@ class Lead extends Component {
 
                         {/* <span>Left Side</span> */}
                         <div className="lead__dashboard--right">
-                            {/* <div class="recent__search">
-                                <h3>Saved Search</h3> <h3 class="recent__search-icon" onClick={this.toggle}>{chevronDown}</h3>
-                            </div> */}
 
                             <div className="recent__searchs" ref="recent__search">
                                 ...
