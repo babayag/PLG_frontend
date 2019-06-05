@@ -6,45 +6,56 @@ import {BaseUrl} from '../constante';
  * params: niche, location, p: number of pages   
  * return: list of the emails that were found
  */
+
+
 async function searchTheseData(niche, location, p, dispatch){
-    let Url = BaseUrl + "normalFindLeads"
-console.log(p);
-    dispatch({type: 'LEAD_IS_LOADING'})
-    return axios.post(Url, { niche: niche, city: location, p:p })
-    .then(response => {
-          return response.data
-      })
-      .then(lead =>{
+  let Url = BaseUrl + "normalFindLeads"
+
+  dispatch({type: 'LEAD_IS_LOADING' })
+  return axios.post(Url, { niche: niche, city: location, p:p })
+  .then(response => {
+        return response.data
+    })
+    .then(lead =>{
+     
+      if(lead.data.Results.length >= 10){
         console.log(p)
-      if(p<10){
-        dispatch({type: 'LEAD_IS_INITIALIZING'})
+        console.log('LEAD_SHOW_MORE')
         return dispatch({
-          type: 'LEAD_LOADED',
+          type: 'LEAD_SHOW_MORE',
           data: lead.data.Results
+        })
+      }else{
+        console.log(p)
+        console.log('LEAD_SHOW_MORE_<_10')
+        return dispatch({
+          type: 'LEAD_SHOW_MORE_<_10',
+          data: lead.data.Results
+        })
+     }
+    })
+    .catch(err =>{
+      return dispatch({
+        type: 'ERROR',
+        error: err
       })
-      }
-      else{
-        console.log(lead.data);
-        resolve(lead, dispatch)
-      }
-  })   
+    })   
 }
 
-async function resolve(lead, dispatch){
-    if(lead.data.Results.length >= 10){
-      console.log('LEAD_SHOW_MORE')
-      return dispatch({
-        type: 'LEAD_SHOW_MORE',
-        data: lead.data.Results
-      })
-    }else{
-      console.log('LEAD_SHOW_MORE_<_10')
-      return dispatch({
-        type: 'LEAD_SHOW_MORE_<_10',
-        data: lead.data.Results
-      })
-    }
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   /***
@@ -106,7 +117,6 @@ async function getRestOfUserRequest(email,dispatch){
 
 
 export const searchTheseDatas = searchTheseData;
-export const resolves = resolve;
 export const checkFacebookAndGooglePixels = checkFacebookAndGooglePixel;
 export const BetterFinders = BetterFinder;
 export const getRestOfUserRequests = getRestOfUserRequest

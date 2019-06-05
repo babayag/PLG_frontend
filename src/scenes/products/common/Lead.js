@@ -64,10 +64,6 @@ class Lead extends Component {
         }
     }
 
-    componentDidMount()
-    {
-        console.log(this.props.lead);
-    }
     /***
      * description: triggers the state that shows and hide spinner when searching emails
      * params: void
@@ -118,9 +114,9 @@ class Lead extends Component {
      */
      checkFacebookAndGooglePixel = async(foundEmails) => {
 
-        this.setState({
-            isSearchingMore: true   
-        })
+        // this.setState({
+        //     isSearchingMore: true   
+        // })
         for(var i=0; i<foundEmails.length; i++){
             console.log(this.props.lead.foundEmails);
             //I create an instance of the state foundEmails that I will use to set the checking value
@@ -151,9 +147,9 @@ class Lead extends Component {
             }
             
         }
-        this.setState({
-            isSearchingMore: false   
-        })
+        // this.setState({
+        //     isSearchingMore: false   
+        // })
     }
 
 
@@ -180,7 +176,8 @@ class Lead extends Component {
            
                 this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p)
                 // .then(data => {
-                   
+            try {
+                 
                     
                     if (this.props.lead.foundEmails.length !== 0) {
                         var emailsThatWhereFound = this.props.lead.foundEmails;
@@ -191,6 +188,7 @@ class Lead extends Component {
                             for (var i = 0; i < emailsThatWhereFound.length; i++) {
                                
                                 finalFoundEmails.push(emailsThatWhereFound[i]);
+                                this.checkFacebookAndGooglePixel(this.props.lead.foundEmails)
                             }
                         } else {
                             finalFoundEmails = []
@@ -214,7 +212,7 @@ class Lead extends Component {
                         //     })
                         // }
 
-                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails)
+                        
     
     
                     } else {
@@ -223,7 +221,10 @@ class Lead extends Component {
                         });
                     }
                        
-                        
+                } catch (error) {
+
+                    this.addNotification("An error occured", "Please refresh the page and try again.");
+                }   
                     //  })
                     //  .catch( err =>{
                         //  console.log(err)
@@ -231,7 +232,7 @@ class Lead extends Component {
                         //         isLoading: false,
                         //     });
             
-                        //     this.addNotification("An error occured", "Please refresh the page and try again.");
+                             
                     // })             
              
                 
@@ -352,8 +353,8 @@ class Lead extends Component {
         try {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
-            let  newP = this.props.lead.p + 10
-            this.props.searchLeadActions(niche, location, newP)
+     
+            this.props.searchLeadActions(niche, location, this.props.lead.p)
             // await searchTheseDatas(niche, location, this.state.p)
             // .then(data => {
                 if (this.props.lead.foundEmails.length !== 0) {
@@ -365,9 +366,9 @@ class Lead extends Component {
                             finalFoundEmails.push(emailsThatWhereFound[i]);
                         }
                         var emails = this.props.lead.foundEmails.concat(finalFoundEmails);
-                        this.setState({
-                            foundEmails: this.sortEmails(emails)
-                        })
+                        // this.setState({
+                            this.sortEmails(emails)
+                        // })
                         
                         // console.log(data)
                         this.checkFacebookAndGooglePixel(this.props.lead.foundEmails) 
@@ -587,7 +588,6 @@ class Lead extends Component {
 
 
 const mapStateToProps = state => {
-    console.log(state.leadSearch)
     return {
         lead: state.leadSearch,
     }
