@@ -75,39 +75,8 @@ const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin
         
         else{
 
-            // await this.showAndHide();
-            // this.state.isload = false;
-            // this.state.isAboutVisible = true;
-            
             
             await this.props.fetchSearchEmails(this.state.userEntry, 0);
-            // console.log(this.props.searchBarState);
-            // console.log(this.props.searchBarState.valueOfp);
-            // console.log(this.state.userEntry);
-            // console.log(this.props.searchBarState);
-            //  console.log(this.props.searchBarState.isAboutVisible);
-            // await findEmails(this.state.userEntry, this.state.valueOfp).then(data => {
-            //     this.setState({
-            //         emails: data.data[0],
-            //         valueOfp :  data.data[1],
-            //         firstResults: data.data, /*set the value of the state*/
-            //         // numberOfSearches: newNumberOfSearches
-            //     });
-
-            //     localStorage.setItem('domain', this.state.userEntry);
-                
-                
-            //     this.setState({
-            //         isload : false,
-            //     });
-            // }).catch(err => {
-            //     console.log(err);
-            //     this.addNotification("An error occured", "Please refresh the page and try again.")
-            // })
-            
-            
-
-            /*Sets the value of the lastest search to whar the user has entered */
             this.setState({
                 latestSearch: this.state.userEntry
             });
@@ -186,13 +155,14 @@ const spinner = <FontAwesomeIcon icon={faSpinner} color="#ffffff" size="2x" spin
 
 }
 
+// is used for selecting the part of the data from the store that the connected component needs. 
 const mapStateToProps = state => {
     console.log(state.toggleSearchEmail);
     return {
       searchBarState: state.toggleSearchEmail,
     }
 }
-  
+  //  is used for dispatching actions to the store.
 const mapDispatchToProps = dispatch => {
     return {
       fetchSearchEmails: (url,p) => {

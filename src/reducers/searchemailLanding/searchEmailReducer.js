@@ -1,3 +1,6 @@
+
+
+// description : objet contain value of initial global state of search email.
 const initialState = { 
   isAboutVisible: false,
   emails : [],
@@ -7,6 +10,12 @@ const initialState = {
   valueOfp: 0, 
     error:{}
 };
+
+/* 
+* description : the method get state and action to update global state of search email.
+* params : url,p
+* return : new value  to add and previous value of global state for each case of type action
+*/
 
 export default function toggleSearchEmail(state=initialState, action) {
     switch (action.type) {

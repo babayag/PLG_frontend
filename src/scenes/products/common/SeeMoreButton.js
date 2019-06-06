@@ -29,48 +29,13 @@ import {fetchSeeMore} from '../../actions/searchEmail/seeMore';
     * return : void
     */
     async findNewEmails() {
-       
-        // this.setState({
-        //     isloading: true
-        // });
-        
+
         console.log(this.props.globalState);
         console.log(this.props);
     
     await this.props.fetchSeeMores(this.props.requestedUrl, this.props.seeMoreState.valueOfp);
     console.log(this.props.globalState);
    console.log(this.props.seeMoreState.valueOfp);
-   console.log("roland");
-   //console.log(this.props.globalState.emails);
-    //this.props.updateEmails(this.props.globalState.emails);
-    //  await findEmails(this.props.globalState.url, this.props.globalState.valueOfp).then(data => {
-    //          console.log(this.props.globalState);
-    //             this.setState({
-    //                 newResults: this.state.newResults.concat(data.data[0]),
-    //                 valueOfp : data.data[1],
-    //                 hideShowMore : data.data[2]
-    //             });
-    //             this.props.updateEmails(data.data[0])
-    //          }).catch(err =>{
-    //              console.log(err)
-    //             this.setState({
-    //                 isloading: false
-    //             });
-    //             this.addNotification("An error occured", "Please try again.")
-    //          })
-       
-    //         this.setState({
-    //             isloading: false
-    //         });
-    //         if(!this.state.hideShowMore){
-    //             this.setState({
-    //                 hideShowMore: true
-    //             });
-    //         }
-
-        
-           
-
      }
 
     addNotification(title, message) {
@@ -136,13 +101,16 @@ import {fetchSeeMore} from '../../actions/searchEmail/seeMore';
     }
 }
 
+// is used for selecting the part of the data from the store that the connected component needs. 
+
 const mapStateToProps = state => {
     console.log(state.toggleSearchEmail);
     return {
       seeMoreState: state.toggleSearchEmail,
     }
 }
-  
+    //  is used for dispatching actions to the store.
+
 const mapDispatchToProps = dispatch => {
     return {
       fetchSeeMores: (url,p) => {
