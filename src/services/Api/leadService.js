@@ -8,56 +8,51 @@ import {BaseUrl} from '../constante';
  */
 
 
-async function searchTheseData(niche, location, p, dispatch){
+async function searchTheseData(niche, location, p, Action, dispatch){
   let Url = BaseUrl + "normalFindLeads"
-   
-  if(p = 0){
-    console.log('FETCH_INITIALIZE')
-    dispatch({
-      type: 'FETCH_INITIALIZE'
-    })
-  }
-  return axios.post(Url, { niche: niche, city: location, p:p })
-  .then(response => {
-    dispatch({type: 'FETCH_LOADING'})
-        return response.data
+console.log(Action)
+  
+  dispatch({
+    type: 'FETCH_LOADING',
+    user: 'gest'
+  })  
+  return axios.post(Url, { niche: niche, city: location, p: p })
+  .then(response => {      
+      return response.data
     })
     .then(lead =>{
-     
+
+      if(Action[Action.length - 1] === 'FETCH_SHOW_MORE_<_10'){
+        console.log('FETCH_INITIALIZE')
+        return dispatch({
+          type: 'FETCH_INITIALIZE',
+          data: lead.data.Results,
+          user: 'gest'
+        })
+      }
+      
       if(lead.data.Results.length >= 10){
         return dispatch({
           type: 'FETCH_SHOW_MORE',
-          data: lead.data.Results
+          data: lead.data.Results,
+          user: 'gest'
         })
       }else{
         return dispatch({
           type: 'FETCH_SHOW_MORE_<_10',
-          data: lead.data.Results
+          data: lead.data.Results,
+          user: 'gest'
         })
      }
     })
     .catch(err =>{
       return dispatch({
         type: 'FETCH_ERROR',
-        error: err
+        error: err,
+        user: 'gest'
       })
     })   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   /***
@@ -81,14 +76,48 @@ async function checkFacebookAndGooglePixel(domain){
    * params: niche, location, email: email of the user, p: number of pages 
    * return: list of the emails that were found
    */
-async function BetterFinder(niche, location, email, p){
+async function BetterFinder(niche, location, Email, p, dispatch){
   let Url = BaseUrl + "betterfindlead"
-  
-
-  return axios.post(Url,{ niche: niche, city: location, email : email, p: p } ).then(response => {
-      
-      return response.data
-    })    
+  dispatch({type: 'FETCH_LOADING',  user: Email})
+  return axios.post(Url,{ niche: niche, city: location, email : Email, p: p })
+  .then(response => {
+    console.log(response)
+        return response.data
+    })
+    .then(lead =>{
+      if (typeof(lead) == "string")
+      {
+        console.log('FETCH_FORFAIT_FINISHED')
+        return dispatch({
+          type: 'FETCH_FORFAIT_FINISHED',
+          forfaitFinished: lead,
+          user: Email
+        })
+      }
+      if(lead.data.Results.length >= 10){
+        console.log('FETCH_SHOW_MORE')
+        return dispatch({
+          type: 'FETCH_SHOW_MORE',
+          data: lead.data.Results,
+          user: Email
+        })
+      }else{
+        console.log('FETCH_SHOW_MORE_<_10')
+        return dispatch({
+          type: 'FETCH_SHOW_MORE_<_10',
+          data: lead.data.Results,
+          user: Email
+        })
+     }
+    })
+    .catch(err =>{
+      console.log('FETCH_ERROR')
+      return dispatch({
+        type: 'FETCH_ERROR',
+        error: err,
+        user: Email
+      })
+    })  
  
 }
 
@@ -101,7 +130,6 @@ async function BetterFinder(niche, location, email, p){
 async function getRestOfUserRequest(email,dispatch){
   let Url = BaseUrl + "getRestOfrequest"
   
-  console.log('lol --' + email);
   return axios.post(Url, { email: email })
     .then(response => {
       

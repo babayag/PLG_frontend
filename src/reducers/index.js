@@ -10,7 +10,7 @@ import recentSearch from './UserSearch/UserSearch';
 import leadSearch from './lead/lead';
 
 const leadApp = combineReducers({
-   auth, recentSearch, leadSearch,
+   auth, recentSearch, leadSearch,numberRequest,paymentHistoric,forfaits   
 })
 
 export default createStore(leadApp , applyMiddleware(thunk));

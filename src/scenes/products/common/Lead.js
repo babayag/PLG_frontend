@@ -132,8 +132,8 @@ class Lead extends Component {
         if (this.state.niche == "" || this.state.location == "") {
             this.addNotification("Error", "One field or both are empty");
         }
-        else {
-                this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p)
+        else {  
+                this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p, this.props.lead.Actions)
 
             try {
                 
@@ -276,7 +276,7 @@ class Lead extends Component {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
      
-            this.props.searchLeadActions(niche, location, this.props.lead.p)
+            this.props.searchLeadActions(niche, location, this.props.lead.p, this.props.lead.Actions)
                 if (this.props.lead.foundEmails.length !== 0) {
                     var emailsThatWhereFound = this.props.lead.foundEmails;
                         
@@ -344,7 +344,6 @@ class Lead extends Component {
                             {this.props.lead.shouldWeDisplayTable ?  //can hide the whole table
                                 <div>
                                     <div className="titleOfTheInfo">
-                                        {console.log(this.props.lead)}
                                         {this.props.lead.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
                                             <span className="d-flex -flex-row justify-content-center align-items-center" id="lead__export">
                                                 {this.props.lead.foundEmails.length == 1 ?
@@ -480,6 +479,7 @@ class Lead extends Component {
 
 
 const mapStateToProps = state => {
+    console.log(state.leadSearch)
     return {
         lead: state.leadSearch,
     }
@@ -487,8 +487,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        searchLeadActions: (niche, location, p) => {
-          dispatch(searchLeadAction(niche, location, p));
+        searchLeadActions: (niche, location, p, Action) => {
+          dispatch(searchLeadAction(niche, location, p, Action));
       },
     }
 } 

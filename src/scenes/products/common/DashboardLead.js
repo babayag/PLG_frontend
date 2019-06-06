@@ -11,10 +11,11 @@ import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Forfait from "../../products/users/components/Forfait";
-import {BetterFinders} from '../../../services/Api/leadService';
+// import {BetterFinders} from '../../../services/Api/leadService';
 import {makePayments} from '../../../services/Api/paymentService';
-import {getRestOfUserRequests, checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
+import {checkFacebookAndGooglePixels} from '../../../services/Api/leadService';
 import { loadNumberOfrequest } from "../../actions/leads/restOfRequest";
+import { searchLeadActionConnect } from "../../actions/lead/lead";
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x"/>
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin/>
@@ -30,14 +31,14 @@ class DashboardLead extends Component {
         this.state = {
             niche: "",
             location: "",
-            isLoading: false, //has the search already stopped ??
-            isSearchingMore: false, // is it still searching more leads??
-            foundEmails: [],
-            shouldWeDisplayTable: false,
-            isShowmore: false,
-            p:0,
-            isPayamentLoading : false,
-            forfaitFinished:'',
+            // isLoading: false, //has the search already stopped ??
+            // isSearchingMore: false, // is it still searching more leads??
+            // foundEmails: [],
+            // shouldWeDisplayTable: false,
+            // isShowmore: false,
+            // p:0,
+            // isPayamentLoading : false,
+            // forfaitFinished:'',
             
         }
         /*unless these, notification won't work */
@@ -79,22 +80,22 @@ class DashboardLead extends Component {
      * params: void
      * return: void
     */
-    showAndHide(){
-        this.setState({
-            isLoading : true,
-        })
-    }
+    // showAndHide(){
+    //     this.setState({
+    //         isLoading : true,
+    //     })
+    // }
 
     /***
      * description: triggers the state that shows and hide spinner when searching more emails
      * params: void
      * return: void
     */
-    showAndHideSearchMore() {
-        this.setState({
-            isSearchingMore: true
-        })
-    }
+    // showAndHideSearchMore() {
+    //     this.setState({
+    //         isSearchingMore: true
+    //     })
+    // }
 
     /***
      * description: Displays the notification with the provided chraracteristics
@@ -143,17 +144,17 @@ class DashboardLead extends Component {
     */
     /*This is run when we hit on the search button */
     async searchTheseData(){
-        this.setState({
-            shouldWeDisplayTable: false,
-            foundEmails: []
-        });
+        // this.setState({
+        //     shouldWeDisplayTable: false,
+        //     // foundEmails: []
+        // });
         /*One filed or both are empty */
         if(this.state.niche == "" || this.state.location == ""){
             this.addNotification("Error", "One field or both are empty");
         }
         else{
-            await this.showAndHide(); /*To show the spinner */
-            this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
+            // await this.showAndHide(); /*To show the spinner */
+            // this.state.isLoading = false; /*Hide the spinner componnent when the search is finished */
 
             try {
                 let niche = this.state.niche.toLowerCase()
@@ -164,18 +165,20 @@ class DashboardLead extends Component {
                  * params:  niche, location, email: email of the user, p: number of pages  
                  * return: void
                 */
-                await BetterFinders(niche, location, this.props.user.email, this.state.p ).then(data => {
 
-                    console.log(data);
+                 this.props.searchLeadActionConnects(niche, location, this.props.user.email, this.props.lead.p )  
+                // .then(data => {
+
+                //     console.log(data);
                     
-                    if (typeof(data) == "string")
-                {
-                    this.setState({
-                        forfaitFinished : data
-                    })
-                }
-                if(data.data.length !== 0){
-                    var emailsThatWhereFound = data.data.Results;
+                //     if (typeof(data) == "string")
+                // {
+                //     this.setState({
+                //         forfaitFinished : data
+                //     })
+                // }
+                if(this.props.lead.foundEmails.length !== 0){
+                    var emailsThatWhereFound = this.props.lead.foundEmails;
     
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length != 0){
@@ -186,40 +189,42 @@ class DashboardLead extends Component {
                         finalFoundEmails = []
                     }
                         // Sort Email list by number of emails
-                    var sortEmails = this.sortEmails(finalFoundEmails);
+                    // var sortEmails = this.sortEmails(finalFoundEmails);
+                    this.sortEmails(finalFoundEmails);
 
-                    this.setState({
-                        remainingEmails: sortEmails,
-                        foundEmails: sortEmails,
-                        shouldWeDisplayTable: true,
-                    });
+                    // this.setState({
+                    //     remainingEmails: sortEmails,
+                    //     // foundEmails: sortEmails,
+                    //     // shouldWeDisplayTable: true,
+                    // });
 
-                    if(finalFoundEmails.length >= 10){
-                        this.setState({
-                            isShowmore: true,
-                            p:10 
-                        })
-                    }
+                    // if(finalFoundEmails.length >= 10){
+                    //     // this.setState({
+                    //     //     // isShowmore: true,
+                    //     //     p:10 
+                    //     // })
+                    // }
 
-                    this.checkFacebookAndGooglePixel(this.state.foundEmails);
+                    this.checkFacebookAndGooglePixel(this.props.lead.foundEmails);
 
-                }else{
-                    this.setState({
-                        // foundEmails: [],
-                        shouldWeDisplayTable: true
-                    });
                 }
+                // else{
+                //     // this.setState({
+                //     //     // foundEmails: [],
+                //     //     shouldWeDisplayTable: true
+                //     // });
+                // }
 
-                })
+                
 
 
                 // console.log(this.state.foundEmails);
 
             } catch (e) {
                 console.log(e);
-                this.setState({
-                    isLoading : false,
-                });
+                // this.setState({
+                //     isLoading : false,
+                // });
 
                 this.addNotification("An error occured", "Please refresh the page and try again.");
             }
@@ -328,34 +333,34 @@ class DashboardLead extends Component {
     }
 
     
-    displayResults = () => {
-        let prevRemainingEmails = [...this.state.remainingEmails];
-        let nPrev = prevRemainingEmails.length;
+    // displayResults = () => {
+    //     let prevRemainingEmails = [...this.props.lead.foundEmails];
+    //     let nPrev = prevRemainingEmails.length;
 
-        let emailsToDisplay = [...this.state.foundEmails];
+    //     let emailsToDisplay = [...this.props.lead.foundEmails];
 
-        if (nPrev > 10){
-            // If there are more than ten emails
-            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails.slice(0, 10));
-            let newRemainingEmails = prevRemainingEmails.slice(10);
+    //     if (nPrev > 10){
+    //         // If there are more than ten emails
+    //         emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails.slice(0, 10));
+    //         let newRemainingEmails = prevRemainingEmails.slice(10);
 
-            this.setState({ 
-                foundEmails: emailsToDisplay,
-                shouldWeDisplayTable: true, 
-                remainingEmails: newRemainingEmails, 
-                isShowmore: true,
-                forfaitFinished : '' 
-            });
-        }else{
-            emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
-            this.setState({
-                foundEmails: emailsToDisplay,
-                shouldWeDisplayTable: true,  
-                remainingEmails: [],
-                isShowmore: false 
-            });
-        }
-    }
+    //         this.setState({ 
+    //             // foundEmails: emailsToDisplay,
+    //             // shouldWeDisplayTable: true, 
+    //             remainingEmails: newRemainingEmails, 
+    //             // isShowmore: true,
+    //             // forfaitFinished : '' 
+    //         });
+    //     }else{
+    //         emailsToDisplay = emailsToDisplay.concat(prevRemainingEmails);
+    //         this.setState({
+    //             // foundEmails: emailsToDisplay,
+    //             // shouldWeDisplayTable: true,  
+    //             remainingEmails: [],
+    //             // isShowmore: false 
+    //         });
+    //     }
+    // }
 
 
      /***
@@ -364,58 +369,61 @@ class DashboardLead extends Component {
      * return: void
      */
     searchMore = async() => {
-        await this.showAndHideSearchMore(); /*To show the spinner */
-        this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
+        // await this.showAndHideSearchMore(); /*To show the spinner */
+        // this.state.isSearchingMore = false; /*Hide the spinner componnent when the search is finished */
 
         try {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
 
 
-            await BetterFinders( niche,location, this.props.user.email, this.state.p ).then(data => {
+             this.props.searchLeadActionConnects( niche, location, this.props.user.email, this.props.lead.p )
+            
+            // .then(data => {
                 
                
-                if (data.data.length !== 0) {
-                    var emailsThatWhereFound = data.data.Results;
+                if (this.props.lead.foundEmails.length !== 0) {
+                    var emailsThatWhereFound = this.props.lead.foundEmails;
     
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length !== 0) {
                         for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                            // console.log(emailsThatWhereFound[i].Domain);
+
                             finalFoundEmails.push(emailsThatWhereFound[i]);
                         }
-                        var emails = this.state.foundEmails.concat(finalFoundEmails);
-                        this.setState({
-                            foundEmails: this.sortEmails(emails)
-                        })
+                        // var emails = this.state.foundEmails.concat(finalFoundEmails);
+                        // this.setState({
+                        //     foundEmails: this.sortEmails(emails)
+                        // })
+                        this.sortEmails(finalFoundEmails)
 
-                        this.checkFacebookAndGooglePixel(this.state.foundEmails)
+                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails)
 
-                        if(finalFoundEmails.length >= 10){
-                            this.setState({
-                                isShowmore: true,
-                                p: this.state.p + 10
-                            })
-                        }else{
-                            this.setState({
-                                isShowmore: false
-                            })
-                        }
+                        // if(finalFoundEmails.length >= 10){
+                        //     this.setState({
+                        //         // isShowmore: true,
+                        //         // p: this.state.p + 10
+                        //     })
+                        // }else{
+                        //     // this.setState({
+                        //     //     isShowmore: false
+                        //     // })
+                        // }
     
                     } else { //no more lead
-                        finalFoundEmails = this.state.finalFoundEmails
+                        finalFoundEmails = this.props.lead.finalFoundEmails
                     }
                 }
                     
-        })
+        // })
 
 
             
         } catch (e) {
             console.log(e);
-            this.setState({
-                isLoading: false,
-            });
+            // this.setState({
+            //     isLoading: false,
+            // });
 
             this.addNotification("An error occured", "Please refresh the page and try again.");
         }
@@ -467,12 +475,12 @@ class DashboardLead extends Component {
      * return: void
      */
     checkFacebookAndGooglePixel = async(foundEmails) => {
-        this.setState({
-            isSearchingMore: true   
-        })
+        // this.setState({
+        //     isSearchingMore: true   
+        // })
         for(var i=0; i<foundEmails.length; i++){
             //I create an instance of the state foundEmais that I will use to set the checking value
-            var foundEmailsInstance = this.state.foundEmails;
+            var foundEmailsInstance = this.props.lead.foundEmails;
             try {
                 if(foundEmails[i].hasFacebookPixel == "pending"){
 
@@ -484,9 +492,9 @@ class DashboardLead extends Component {
                         foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
                         
                         //I update the state so that it displays the results on the table
-                        this.setState({
-                            foundEmails: foundEmailsInstance
-                        })
+                        // this.setState({
+                        //     foundEmails: foundEmailsInstance
+                        // })
 
                     })
                     
@@ -498,18 +506,18 @@ class DashboardLead extends Component {
             }
             
         }
-        this.setState({
-            isSearchingMore: false   
-        })
+        // this.setState({
+        //     isSearchingMore: false   
+        // })
     }
 
 
     render() {
         var showmore;
-        if(this.state.isShowmore){
+        if(this.props.lead.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
-                    <button onClick={this.searchMore} disabled={this.state.isSearchingMore}>{this.state.isSearchingMore ? <span>Searching... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
+                    <button onClick={this.searchMore} disabled={this.props.lead.isSearchingMore}>{this.props.lead.isSearchingMore ? <span>Searching... {smallerSpinnerViolet}</span> : <span>Show more</span>}</button>
                 </div>
             )
         }else{
@@ -545,26 +553,26 @@ class DashboardLead extends Component {
                                     value={this.state.niche}
                                     onKeyDown={this._handleKeyPress}
                                 />
-                                <button class="finder__btn dashboard_finder__btn" disabled={this.state.isLoading} onClick={() => this.searchTheseData()}><span>{this.state.isLoading ? <span>{smallerSpinner}</span> : <span>SEARCH</span>}</span></button>
+                                <button class="finder__btn dashboard_finder__btn" disabled={this.props.lead.isLoading} onClick={() => this.searchTheseData()}><span>{this.props.lead.isLoading ? <span>{smallerSpinner}</span> : <span>SEARCH</span>}</span></button>
                             </div>
-                            <div className="titleOfTheInfo endForfaitMessage"> {this.state.forfaitFinished}</div>
-                            {this.state.shouldWeDisplayTable ?  //can hide the whole table
+                            <div className="titleOfTheInfo endForfaitMessage"> {this.props.lead.forfaitFinished}</div>
+                            {this.props.lead.shouldWeDisplayTable ?  //can hide the whole table
                                 <div>
                                     <div className="titleOfTheInfo">
-                                        {this.state.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
+                                        {this.props.lead.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
                                             <span className="d-flex -flex-row justify-content-center align-items-center" id="lead__export">
-                                                {this.state.foundEmails.length == 1 ?
-                                                    <p className="lead__results_num">We found {this.state.foundEmails.length} Bussiness.</p> :
-                                                    <p className="lead__results_num">We found {this.state.foundEmails.length} Bussinesses.</p>
+                                                {this.props.lead.foundEmails.length == 1 ?
+                                                    <p className="lead__results_num">We found {this.props.lead.foundEmails.length} Bussiness.</p> :
+                                                    <p className="lead__results_num">We found {this.props.lead.foundEmails.length} Bussinesses.</p>
                                                 }
-                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, this.state.foundEmails)}>Export <span className="numberInExportBtn">{this.state.foundEmails.length}</span></button>
+                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, this.props.lead.foundEmails)}>Export <span className="numberInExportBtn">{this.props.lead.foundEmails.length}</span></button>
                                             </span>:
                                             <p>We found nothing.</p>
                                         }
                                     </div>
 
                                     {/* <span>Table of results</span> */}
-                                    {this.state.foundEmails.length !== 0 ? //do we display the table? better, are there results?
+                                    {this.props.lead.foundEmails.length !== 0 ? //do we display the table? better, are there results?
                                         <div>
                                             <table class="table dashboard__finder__results mt-5">
                                                 <thead class="thead-dark">
@@ -594,9 +602,9 @@ class DashboardLead extends Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {this.state.foundEmails.map((item, i) =>
+                                                    {this.props.lead.foundEmails.map((item, i) =>
                                                         <tr>
-                                                            <th scope="row">{this.state.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
+                                                            <th scope="row">{this.props.lead.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
                                                             <td>{item.hasFacebookPixel == "pending" ? 
                                                                 smallerSpinnerViolet :
@@ -611,15 +619,15 @@ class DashboardLead extends Component {
                                                                 }
                                                             </td>
                                                             <td>
-                                                                <div id={"accordion" + this.state.foundEmails.indexOf(item)} className="my-2 mr-3">
+                                                                <div id={"accordion" + this.props.lead.foundEmails.indexOf(item)} className="my-2 mr-3">
                                                                     {
                                                                         item.Emails.length !== 0 ?
                                                                         <div class="card">
-                                                                            <div class="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.state.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
+                                                                            <div class="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.props.lead.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
                                                                                 <h4 class="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
                                                                             </div>
 
-                                                                            <div id={"collapseOne" + this.state.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.state.foundEmails.indexOf(item)}>
+                                                                            <div id={"collapseOne" + this.props.lead.foundEmails.indexOf(item)} class="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.props.lead.foundEmails.indexOf(item)}>
                                                                                 <div class="card-body">
                                                                                     {item.Emails.map((email, id) =>
                                                                                         <div>
@@ -645,7 +653,7 @@ class DashboardLead extends Component {
                                     }
                                 </div> :
                                 <span>
-                                    {this.state.isLoading ?
+                                    {this.props.lead.isLoading ?
                                         <div className="titleOfTheInfo">
                                             <p>Wait while we find your Leads...</p>
                                             <span>{spinner}</span>
@@ -688,6 +696,7 @@ const mapStateToProps = state => {
     return {
         user: state.auth.user,
         numberRequest : state.numberRequest,
+        lead: state.leadSearch,
     }
 }
 
@@ -695,6 +704,9 @@ const mapDispatchToProps = dispatch => {
     return {
       getRestOfRequest: (email) => {
         dispatch(loadNumberOfrequest(email));
+      }, 
+      searchLeadActionConnects: (niche, location, email, p) => {
+        dispatch(searchLeadActionConnect(niche, location, email, p));
       },
     }
   }
