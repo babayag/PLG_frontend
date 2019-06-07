@@ -14,7 +14,6 @@ const initialState = {
         shouldWeDisplayTable: false,
         p:0,
         error: {},
-        Actions: []
     };
 
 /***
@@ -27,30 +26,29 @@ const initialState = {
  
     switch (action.type) {
         
-      case 'FETCH_INITIALIZE':
+      case 'INIT':
           console.log("INITIALIZE")
-        return {...state, user: action.user, foundEmails: ([].concat(action.data)) ,shouldWeDisplayTable: true};
+        return {...state, isLoading: false, user: action.user, foundEmails: [] ,shouldWeDisplayTable: false, p:0};
 
       case 'FETCH_LOADING':
           console.log(state)
-        return {...state, isLoading: true, user: action.user, Actions: state.Actions.concat(action.type)};
+        return {...state, isLoading: true, user: action.user};
 
       case 'FETCH_SHOW_MORE':
           console.log(state)
-        return {...state, user: action.user, foundEmails: (state.foundEmails.concat(action.data)), isLoading: false,  isSearchingMore: false, isShowmore: true, p: state.p + 10, shouldWeDisplayTable: true, Actions: state.Actions.concat(action.type)};
+        return {...state, user: action.user, foundEmails: (state.foundEmails.concat(action.data)), isLoading: false,  isSearchingMore: false, isShowmore: true, p: state.p + 10, shouldWeDisplayTable: true};
     
       case 'FETCH_SHOW_MORE_<_10':
           console.log(state)
-        return {...state, user: action.user, foundEmails: (state.foundEmails.concat(action.data)), isLoading: false, isSearchingMore: false, isShowmore: false, p: state.p, shouldWeDisplayTable: true, 
-          Actions: state.Actions.concat(action.type)};
+        return {...state, user: action.user, foundEmails: (state.foundEmails.concat(action.data)), isLoading: false, isSearchingMore: false, isShowmore: false, p: state.p, shouldWeDisplayTable: true};
 
       case 'FETCH_FORFAIT_FINISHED':
           console.log(state)
-        return {...state, user: action.user, foundEmails: (state.foundEmails.concat(action.data)), forfaitFinished: action.forfaitFinished, Actions: state.Actions.concat(action.type)};
+        return {...state, user: action.user, foundEmails: (state.foundEmails.concat(action.data)), forfaitFinished: action.forfaitFinished};
 
       case 'FETCH_ERROR':
           console.log(state)
-        return {...state, user: action.user, err: action.error , isLoading: false, isSearchingMore: false, isShowmore: false, p: state.p, shouldWeDisplayTable: false, Actions: state.Actions.concat(action.type)};
+        return {...state, user: action.user, err: action.error , isLoading: false, isSearchingMore: false, isShowmore: false, p: state.p, shouldWeDisplayTable: false};
 
         default:
             console.log(state)

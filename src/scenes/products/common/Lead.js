@@ -12,6 +12,7 @@ import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { checkFacebookAndGooglePixels } from '../../../services/Api/leadService';
 import {searchLeadAction} from '../../actions/lead/lead'
+import {init} from '../../actions/lead/lead'
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
@@ -133,7 +134,8 @@ class Lead extends Component {
             this.addNotification("Error", "One field or both are empty");
         }
         else {  
-                this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p, this.props.lead.Actions)
+                this.props.initActions();
+                this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p)
 
             try {
                 
@@ -276,7 +278,7 @@ class Lead extends Component {
             let niche = this.state.niche.toLowerCase()
             let location = this.state.location.toLowerCase()
      
-            this.props.searchLeadActions(niche, location, this.props.lead.p, this.props.lead.Actions)
+            this.props.searchLeadActions(niche, location, this.props.lead.p)
                 if (this.props.lead.foundEmails.length !== 0) {
                     var emailsThatWhereFound = this.props.lead.foundEmails;
                         
@@ -477,7 +479,6 @@ class Lead extends Component {
     }
 }
 
-
 const mapStateToProps = state => {
     console.log(state.leadSearch)
     return {
@@ -487,9 +488,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        searchLeadActions: (niche, location, p, Action) => {
-          dispatch(searchLeadAction(niche, location, p, Action));
+        searchLeadActions: (niche, location, p) => {
+          dispatch(searchLeadAction(niche, location, p));
       },
+        initActions: () => {
+          dispatch(init());
+      },
+
     }
 } 
 

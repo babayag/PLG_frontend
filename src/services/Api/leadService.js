@@ -7,10 +7,16 @@ import {BaseUrl} from '../constante';
  * return: list of the emails that were found
  */
 
+async function initData(dispatch){
+  
+  dispatch({
+    type: 'INIT',
+    user: 'gest'
+  }) 
 
-async function searchTheseData(niche, location, p, Action, dispatch){
+}
+async function searchTheseData(niche, location, p, dispatch){
   let Url = BaseUrl + "normalFindLeads"
-console.log(Action)
   
   dispatch({
     type: 'FETCH_LOADING',
@@ -21,15 +27,6 @@ console.log(Action)
       return response.data
     })
     .then(lead =>{
-
-      if(Action[Action.length - 1] === 'FETCH_SHOW_MORE_<_10'){
-        console.log('FETCH_INITIALIZE')
-        return dispatch({
-          type: 'FETCH_INITIALIZE',
-          data: lead.data.Results,
-          user: 'gest'
-        })
-      }
       
       if(lead.data.Results.length >= 10){
         return dispatch({
@@ -149,4 +146,5 @@ async function getRestOfUserRequest(email,dispatch){
 export const searchTheseDatas = searchTheseData;
 export const checkFacebookAndGooglePixels = checkFacebookAndGooglePixel;
 export const BetterFinders = BetterFinder;
+export const initDatas = initData;
 export const getRestOfUserRequests = getRestOfUserRequest
