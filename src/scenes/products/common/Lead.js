@@ -10,9 +10,7 @@ import stanley_img from '../img/dr_stanley.png';
 import MappleToolTip from 'reactjs-mappletooltip';
 import ReactNotification from "react-notifications-component";
 import { faSpinner, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { checkFacebookAndGooglePixels } from '../../../services/Api/leadService';
-import {searchLeadAction} from '../../actions/lead/lead'
-import {init} from '../../actions/lead/lead'
+import {checkPixelAction, hideShowMore, searchLeadAction, init} from '../../actions/lead/lead';
 
 const chevronDown = <FontAwesomeIcon icon={faChevronDown} color="#333333" size="1x" />
 const spinner = <FontAwesomeIcon icon={faSpinner} color="#5e06d2" size="3x" spin />
@@ -27,7 +25,8 @@ class Lead extends Component {
         super(props);
         this.state = {
             niche: "",
-            location: ""
+            location: "", 
+            domain: []
         }
         /*unless these, notification won't work */
         this.addNotification = this.addNotification.bind(this);
@@ -60,6 +59,33 @@ class Lead extends Component {
             this.searchTheseData()
         }
     }
+ 
+      /***
+     * description: This function sorts a list of domains basing on numbers of email per domains
+     * params: data : the domains list (with their emails) that will be sorted
+     * return: void
+     */
+    sortEmails = (emailList) => {
+        console.log('SORT_EMAIL')
+        let sortedEmailList = [...emailList];
+        for (var i = 0; i < sortedEmailList.length; i++) {
+            var len1 = sortedEmailList[i].Emails.length; // Length of each email domain table
+            for (var j = 0; j < sortedEmailList.length; j++) {
+                var len2 = sortedEmailList[j].Emails.length; // Length of each email domain table
+                if (len1 <len2) {
+                    let cache = sortedEmailList[i];
+                    sortedEmailList[i] = sortedEmailList[j];
+                    sortedEmailList[j] = cache;
+                }
+            }
+            
+        }
+        sortedEmailList.reverse();
+        return sortedEmailList;
+    }
+
+
+
 
     /***
      * description: Displays the notification with the provided chraracteristics
@@ -81,7 +107,6 @@ class Lead extends Component {
     }
 
 
-
      /***
      * description: this method calls checkFacebookAndGooglePixels service for each domain to check FB and Google pixels
      * params: foundEmails : List of domains to check
@@ -90,25 +115,11 @@ class Lead extends Component {
      checkFacebookAndGooglePixel = async(foundEmails) => {
 
         for(var i=0; i<foundEmails.length; i++){
-            console.log(this.props.lead.foundEmails);
-            //I create an instance of the state foundEmails that I will use to set the checking value
-            var foundEmailsInstance = this.props.lead.foundEmails;
-            
+                     
             try {
                 if(foundEmails[i].hasFacebookPixel == "pending"){
 
-                    await checkFacebookAndGooglePixels({ domain: foundEmails[i].Domain }).then(data => {
-
-                    //In my FoundEmalsInstance, I assign the values of the two variables I was checking
-
-                        foundEmailsInstance[i].hasFacebookPixel = data.data.hasFacebookPixel;
-                        foundEmailsInstance[i].hasGooglePixel = data.data.hasGooglePixel;
-                      
-                    //I update the state so that it displays the results on the table
-                  
-
-                    })
-                    
+                    this.props.checkPixelActions( foundEmails[i].Domain )                    
                 }
                
             } catch (e) {
@@ -117,6 +128,9 @@ class Lead extends Component {
             }
             
         }
+
+        // this.props.hideShowMores();
+
     }
 
 
@@ -133,30 +147,12 @@ class Lead extends Component {
         if (this.state.niche == "" || this.state.location == "") {
             this.addNotification("Error", "One field or both are empty");
         }
-        else {  
-                this.props.initActions();
-                this.props.searchLeadActions(this.state.niche.toLowerCase(), this.state.location.toLowerCase(),this.props.lead.p)
+        else {                                 
 
             try {
-                
-                    if (this.props.lead.foundEmails.length !== 0) {
-                        var emailsThatWhereFound = this.props.lead.foundEmails;
-                        
-                        var finalFoundEmails = [];
-                        if (emailsThatWhereFound.length !== 0) {
-                            for (var i = 0; i < emailsThatWhereFound.length; i++) {
-                               
-                                finalFoundEmails.push(emailsThatWhereFound[i]);
-                                this.checkFacebookAndGooglePixel(this.props.lead.foundEmails)
-                            }
-                        } else {
-                            finalFoundEmails = []
-                        }
-                        // Sort Email list by number of emails);
-                        this.sortEmails(finalFoundEmails);
-    
-                    } 
-                       
+                    this.props.initActions();
+                    await this.props.searchLeadActions(this.state.niche.toLowerCase(), 
+                    this.state.location.toLowerCase(),this.props.lead.p)                       
                 } catch (error) {
 
                     this.addNotification("An error occured", "Please refresh the page and try again.");
@@ -243,30 +239,6 @@ class Lead extends Component {
         link.click();
     }
 
-
-    /***
-     * description: This function sorts a list of domains basing on numbers of email per domains
-     * params: data : the domains list (with their emails) that will be sorted
-     * return: void
-     */
-    sortEmails = (emailList) => {
-        let sortedEmailList = [...emailList];
-        for (var i = 0; i < sortedEmailList.length; i++) {
-            var len1 = sortedEmailList[i].Emails.length; // Length of each email domain table
-            for (var j = 0; j < sortedEmailList.length; j++) {
-                var len2 = sortedEmailList[j].Emails.length; // Length of each email domain table
-                if (len1 <len2) {
-                    let cache = sortedEmailList[i];
-                    sortedEmailList[i] = sortedEmailList[j];
-                    sortedEmailList[j] = cache;
-                }
-            }
-            
-        }
-        sortedEmailList.reverse();
-        return sortedEmailList;
-    }
-
     /***
      * description: This function recalls searchTheseDatas service precising the current number of pages
      * params: void
@@ -279,19 +251,18 @@ class Lead extends Component {
             let location = this.state.location.toLowerCase()
      
             this.props.searchLeadActions(niche, location, this.props.lead.p)
+            
                 if (this.props.lead.foundEmails.length !== 0) {
                     var emailsThatWhereFound = this.props.lead.foundEmails;
-                        
+                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails);
+                        // this.props.hideShowMores();
+
                     var finalFoundEmails = [];
                     if (emailsThatWhereFound.length !== 0) {
                         for (var i = 0; i < emailsThatWhereFound.length; i++) {
                             finalFoundEmails.push(emailsThatWhereFound[i]);
-                        }
-                        var emails = this.props.lead.foundEmails.concat(finalFoundEmails);
-                        this.sortEmails(emails)
+                        }                       
                         
-                        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails)
-    
                     } else { //no more lead
                         finalFoundEmails = this.props.lead.foundEmails
                     }
@@ -305,6 +276,9 @@ class Lead extends Component {
    
     render() {
         var showmore;
+        let sortedEmail = this.sortEmails(this.props.lead.foundEmails);
+        this.checkFacebookAndGooglePixel(this.props.lead.foundEmails);
+
         if(this.props.lead.isShowmore){
             showmore = (
                 <div id="shomorelead" className="emailResult seeMoreBtnParentFirstChild seemorebtn">
@@ -315,6 +289,7 @@ class Lead extends Component {
         }else{
             showmore = null;
         }
+       
 
         return (
             <div className="dashboard__page">
@@ -346,13 +321,13 @@ class Lead extends Component {
                             {this.props.lead.shouldWeDisplayTable ?  //can hide the whole table
                                 <div>
                                     <div className="titleOfTheInfo">
-                                        {this.props.lead.foundEmails.length > 0 ? // all this logic is to determine if we should write plural or singular results title
+                                        {sortedEmail.length > 0 ? // all this logic is to determine if we should write plural or singular results title
                                             <span className="d-flex -flex-row justify-content-center align-items-center" id="lead__export">
-                                                {this.props.lead.foundEmails.length == 1 ?
-                                                    <p className="lead__results_num">We found {this.props.lead.foundEmails.length} Bussiness.</p> :
-                                                    <p className="lead__results_num">We found {this.props.lead.foundEmails.length} Bussinesses.</p>
+                                                {sortedEmail.length == 1 ?
+                                                    <p className="lead__results_num">We found {sortedEmail.length} Bussiness.</p> :
+                                                    <p className="lead__results_num">We found {sortedEmail.length} Bussinesses.</p>
                                                 }
-                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, this.props.lead.foundEmails)}>Export <span className="numberInExportBtn">{this.props.lead.foundEmails.length}</span></button>
+                                                <button className="exportBtn" onClick={this.generateCSV.bind(this, sortedEmail)}>Export <span className="numberInExportBtn">{sortedEmail.length}</span></button>
                                             </span>:
                                             <p>We found nothing.</p>
                                         }
@@ -360,7 +335,7 @@ class Lead extends Component {
                                     </div>
 
                                     {/* <span>Table of results</span> */}
-                                    {this.props.lead.foundEmails.length !== 0 ? //do we display the table? better, are there results?
+                                    {sortedEmail.length !== 0 ? //do we display the table? better, are there results?
                                         <div>
                                             <table className="table dashboard__finder__results mt-5">
                                                 <thead className="thead-dark">
@@ -390,9 +365,9 @@ class Lead extends Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {this.props.lead.foundEmails.map((item, i) =>
+                                                    {sortedEmail.map((item, i) =>
                                                         <tr>
-                                                            <th scope="row">{this.props.lead.foundEmails.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
+                                                            <th scope="row">{sortedEmail.indexOf(item) + 1}</th>  {/*This is the number of the row in the left side of each row*/}
                                                             <td className="email">{item.Domain}</td>
                                                             <td>{item.hasFacebookPixel == "pending" ? 
                                                                 smallerSpinnerViolet :
@@ -407,15 +382,15 @@ class Lead extends Component {
                                                                 }
                                                             </td>
                                                             <td>
-                                                                <div id={"accordion" + this.props.lead.foundEmails.indexOf(item)} className="my-2 mr-3">
+                                                                <div id={"accordion" + sortedEmail.indexOf(item)} className="my-2 mr-3">
                                                                     {
                                                                         item.Emails.length !== 0 ?
                                                                         <div className="card">
-                                                                            <div className="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + this.props.lead.foundEmails.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
+                                                                            <div className="card-header d-flex align-items-center" id="headingOne" data-toggle="collapse" data-target={"#collapseOne" + sortedEmail.indexOf(item)} aria-expanded="true" aria-controls="collapseOne">
                                                                                 <h4 className="mb-0 mr-auto">Show Emails </h4> <h4>{chevronDown}</h4>
                                                                             </div>
 
-                                                                            <div id={"collapseOne" + this.props.lead.foundEmails.indexOf(item)} className="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + this.props.lead.foundEmails.indexOf(item)}>
+                                                                            <div id={"collapseOne" + sortedEmail.indexOf(item)} className="collapse " aria-labelledby="headingOne" data-parent={"#accordion" + sortedEmail.indexOf(item)}>
                                                                                 <div className="card-body">
                                                                                     {item.Emails.map((email, id) =>
                                                                                         <div>
@@ -488,11 +463,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        checkPixelActions: (domain) => {
+          dispatch(checkPixelAction(domain));
+      },
         searchLeadActions: (niche, location, p) => {
           dispatch(searchLeadAction(niche, location, p));
       },
         initActions: () => {
           dispatch(init());
+      },
+        hideShowMores: () => {
+          dispatch(hideShowMore());
       },
 
     }

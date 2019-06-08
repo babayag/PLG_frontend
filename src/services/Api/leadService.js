@@ -15,6 +15,15 @@ async function initData(dispatch){
   }) 
 
 }
+
+async function hideShowMoreButton(dispatch){
+  
+  dispatch({
+    type: 'HIDE_SHOW_MORE_BTN'
+  }) 
+
+}
+
 async function searchTheseData(niche, location, p, dispatch){
   let Url = BaseUrl + "normalFindLeads"
   
@@ -57,13 +66,24 @@ async function searchTheseData(niche, location, p, dispatch){
    * params: domain 
    * return: an object like {domain: domain, hasFbPixel: boolean, hasGooglePixel: boolean}
    */
-async function checkFacebookAndGooglePixel(domain){
+async function checkFacebookAndGooglePixel(domain, dispatch){
   let Url = BaseUrl + "checkpixel";
-
-  return axios.post(Url,domain )
-    .then(response => {      
-      return response.data
-    })    
+  console.log('checkpixel')
+  return axios.post(Url, { domain: domain } )
+    .then(response => { 
+      return dispatch({
+        type: 'FETCH_CHECK_PIXEL',
+        data: response.data,
+        user: 'gest'
+      })
+    })
+    .catch(err =>{
+      return dispatch({
+        type: 'FETCH_ERROR',
+        error: err,
+        user: 'gest'
+      })
+    })     
  
 }
 
@@ -145,6 +165,7 @@ async function getRestOfUserRequest(email,dispatch){
 
 export const searchTheseDatas = searchTheseData;
 export const checkFacebookAndGooglePixels = checkFacebookAndGooglePixel;
+export const hideShowMoreButtons = hideShowMoreButton;
 export const BetterFinders = BetterFinder;
 export const initDatas = initData;
 export const getRestOfUserRequests = getRestOfUserRequest

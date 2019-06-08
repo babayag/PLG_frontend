@@ -1,5 +1,6 @@
 import {searchTheseDatas} from '../../../services/Api/leadService';
 import {BetterFinders} from '../../../services/Api/leadService';
+import {checkFacebookAndGooglePixels, hideShowMoreButtons} from '../../../services/Api/leadService';
 import {initDatas} from '../../../services/Api/leadService';
 
 
@@ -17,6 +18,24 @@ export const searchLeadActionConnect = (niche, location, email, p) => {
     return dispatch => {
       
       return BetterFinders(niche, location, email, p, dispatch)
+       
+    } 
+}
+
+export const checkPixelAction = (domain) => {
+
+    return dispatch => {
+      
+      return checkFacebookAndGooglePixels(domain, dispatch)
+       
+    } 
+}
+
+export const hideShowMore = () => {
+
+    return dispatch => {
+      
+      return hideShowMoreButtons(dispatch)
        
     } 
 }
