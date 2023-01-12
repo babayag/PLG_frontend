@@ -6970,10 +6970,10 @@ pako@~1.0.5:
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.8.tgz#6844890aab9c635af868ad5fecc62e8acbba3ea4"
   integrity sha512-6i0HVbUfcKaTv+EG8ZTr75az7GFXcLYk9UyLEg7Notv/Ma+z/UG3TCoz6GiNeOrn1E/e63I0X/Hpw18jHOTUnA==
 
-papaparse@^4.3.6:
-  version "4.6.3"
-  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-4.6.3.tgz#742e5eaaa97fa6c7e1358d2934d8f18f44aee781"
-  integrity sha512-LRq7BrHC2kHPBYSD50aKuw/B/dGcg29omyJbKWY3KsYUZU69RKwaBHu13jGmCYBtOc4odsLCrFyk6imfyNubJQ==
+papaparse@^5.3.0:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.2.tgz#d1abed498a0ee299f103130a6109720404fbd467"
+  integrity sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==
 
 parallel-transform@^1.1.0:
   version "1.1.0"
@@ -8137,12 +8137,12 @@ react-async-script-loader@^0.3.0:
   dependencies:
     hoist-non-react-statics "^1.0.3"
 
-react-csv-reader@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/react-csv-reader/-/react-csv-reader-1.2.2.tgz#f518e29e4c3f9205ed60cb560e1a371c3f8cae1a"
-  integrity sha512-k4kpdEgJm6KiZ87yQTrB4gvlwsXgRZaSR/BZ0dAp+ry/EdlmJn983MTdWnR4htgx91RdjSFqEb75WDcW8OD11g==
+react-csv-reader@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/react-csv-reader/-/react-csv-reader-3.5.2.tgz#8eead2dbbdfc0474faa59a420da581e354105c75"
+  integrity sha512-SRjVAHaLOFy3s7R8iJdN0PHcIdLs+8MHy97fsZeSPD1feB/Fg2qidgALmu9DUHneMa0rkNDG/qeFp//r7HWH8Q==
   dependencies:
-    papaparse "^4.3.6"
+    papaparse "^5.3.0"
 
 react-csv@^1.1.1:
   version "1.1.1"
